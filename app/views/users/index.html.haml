@@ -1,0 +1,17 @@
+%h1 List of all users
+
+
+%table
+  %tr
+    %th First name
+    %th Last name
+    %th Email
+    %th Gender
+    %th Age
+  - @users.each do |user|
+    %tr
+      %th= user.first_name
+      %th= user.last_name
+      %th= user.email
+      %th= user.gender
+      %th= user.age
