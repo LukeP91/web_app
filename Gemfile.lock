@@ -203,11 +203,11 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
-  devise
-  haml
+  devise (~> 4.3.0)
+  haml (~> 4.0.7)
   haml-rails (~> 0.9)
   jbuilder (~> 2.5)
-  jquery-rails
+  jquery-rails (~> 4.3.1)
   listen (~> 3.0.5)
   pg (~> 0.18)
   puma (~> 3.0)
