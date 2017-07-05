@@ -1,19 +1,19 @@
-%h1 List of all users
-
-
-%table
-  %tr
-    %th First name
-    %th Last name
-    %th Email
-    %th Gender
-    %th Age
-  - @users.each do |user|
+- model_class = User
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+%table.table.table-striped
+  %thead
     %tr
-      %th= user.first_name
-      %th= user.last_name
-      %th= user.email
-      %th= user.gender
-      %th= user.age
-
-= link_to "Log out", destroy_user_session_path, method: :delete
+      %th= model_class.human_attribute_name(:email)
+      %th= model_class.human_attribute_name(:first_name)
+      %th= model_class.human_attribute_name(:last_name)
+      %th= model_class.human_attribute_name(:gender)
+      %th= model_class.human_attribute_name(:age)
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= user.email
+        %td= user.first_name
+        %td= user.last_name
+        %td= user.gender
+        %td= user.age
