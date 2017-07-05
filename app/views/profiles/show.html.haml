@@ -30,5 +30,5 @@
     %br
     = current_user.age
 
-= link_to t('.back', :default => t("helpers.links.back")), root_path, :class => 'btn btn-default'
--# = link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(@user), :class => 'btn btn-default'
+= link_to t('.back', :default => t("helpers.links.back")), root_path, :class => 'btn btn-danger'
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_profile_path, :class => 'btn btn-success'
