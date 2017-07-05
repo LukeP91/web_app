@@ -21,14 +21,14 @@ gem 'twitter-bootstrap-rails', '~> 4.0.0'
 gem 'simple_form', '~> 3.5.0'
 
 group :development, :test do
-  gem 'byebug', platform: :mri
+  gem 'byebug', '~> 9.0.6', platform: :mri
   gem 'rspec-rails', '~> 3.5'
 end
 
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
-  gem 'spring'
+  gem 'spring', '~> 2.0.2'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
