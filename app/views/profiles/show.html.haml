@@ -1,0 +1,34 @@
+- model_class = User
+
+.page-header
+  %h1=t '.title', :default => current_user.full_name
+
+%p
+  %strong= model_class.human_attribute_name(:email) + ':'
+  %br
+  = current_user.email
+
+%p
+  %strong= model_class.human_attribute_name(:first_name) + ':'
+  %br
+  = current_user.first_name
+
+%p
+  %strong= model_class.human_attribute_name(:last_name) + ':'
+  %br
+  = current_user.last_name
+
+- if current_user.gender
+  %p
+    %strong= model_class.human_attribute_name(:gender) + ':'
+    %br
+    = current_user.gender
+
+- if current_user.age
+  %p
+    %strong= model_class.human_attribute_name(:age) + ':'
+    %br
+    = current_user.age
+
+= link_to t('.back', :default => t("helpers.links.back")), root_path, :class => 'btn btn-default'
+-# = link_to t('.edit', :default => t("helpers.links.edit")), edit_user_path(@user), :class => 'btn btn-default'
