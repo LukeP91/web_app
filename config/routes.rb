@@ -3,5 +3,5 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  root to: 'users#index'
+  root to: 'dashboard#index'
 end

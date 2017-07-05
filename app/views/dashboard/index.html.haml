@@ -15,3 +15,5 @@
       %th= user.email
       %th= user.gender
       %th= user.age
+
+= link_to "Log out", destroy_user_session_path, method: :delete
