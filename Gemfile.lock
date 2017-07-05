@@ -217,7 +217,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug
+  byebug (~> 9.0.6)
   coffee-rails (~> 4.2)
   devise (~> 4.3.0)
   haml (~> 4.0.7)
@@ -231,7 +231,7 @@ DEPENDENCIES
   rspec-rails (~> 3.5)
   sass-rails (~> 5.0)
   simple_form (~> 3.5.0)
-  spring
+  spring (~> 2.0.2)
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
   twitter-bootstrap-rails (~> 4.0.0)
