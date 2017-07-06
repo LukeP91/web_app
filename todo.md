@@ -8,9 +8,9 @@ This is a spec for a candidate evaluation app.
 1. After navigating to the root directory using a web browser, the app should display a login page. If the user is logged in, then user listing is being displayed.
   Hint: it is usually a good idea to use a gem / working component to solve "standard" problems for a web app. In this context: https://github.com/plataformatec/devise
 
-### TO DO
-
 1.5 Add profile for user. Allow user to edit his profile.
+
+### TO DO
 
 2. Userbase consists of two types of users: regular and admin.
   Hint: Do not overcomplicate this. Also stuff that may come handy later: https://github.com/ryanb/cancan or https://github.com/elabs/pundit
