@@ -19,6 +19,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise', '~> 4.3.0'
 gem 'twitter-bootstrap-rails', '~> 4.0.0'
 gem 'simple_form', '~> 3.5.0'
+gem 'pundit', '~> 1.1.0'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.6', platform: :mri
