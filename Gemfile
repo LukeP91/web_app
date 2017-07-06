@@ -19,6 +19,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise', '~> 4.3.0'
 gem 'twitter-bootstrap-rails', '~> 4.0.0'
 gem 'simple_form', '~> 3.5.0'
+gem 'pundit', '~> 1.1.0'
 
 group :development, :test do
   gem 'byebug', '~> 9.0.6', platform: :mri
@@ -31,5 +32,3 @@ group :development do
   gem 'spring', '~> 2.0.2'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
