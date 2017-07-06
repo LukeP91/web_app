@@ -4,29 +4,29 @@
   %h1=t '.title', :default => current_user.full_name
 
 %p
-  %strong= model_class.human_attribute_name(:email) + ':'
+  %strong #{ model_class.human_attribute_name(:email) }:
   %br
   = current_user.email
 
 %p
-  %strong= model_class.human_attribute_name(:first_name) + ':'
+  %strong #{ model_class.human_attribute_name(:first_name) }:
   %br
   = current_user.first_name
 
 %p
-  %strong= model_class.human_attribute_name(:last_name) + ':'
+  %strong #{ model_class.human_attribute_name(:last_name) }:
   %br
   = current_user.last_name
 
 - if current_user.gender
   %p
-    %strong= model_class.human_attribute_name(:gender) + ':'
+    %strong #{ model_class.human_attribute_name(:gender) }:
     %br
     = current_user.gender
 
 - if current_user.age
   %p
-    %strong= model_class.human_attribute_name(:age) + ':'
+    %strong #{ model_class.human_attribute_name(:age) }:
     %br
     = current_user.age
 
