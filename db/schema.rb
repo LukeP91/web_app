@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20170706184850) do
     t.string   "last_name"
     t.string   "gender"
     t.integer  "age"
-    t.boolean  "is_admin",               default: false, null: false
+    t.boolean  "admin",                  default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
