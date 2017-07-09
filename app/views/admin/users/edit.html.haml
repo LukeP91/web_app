@@ -2,3 +2,5 @@
   %h1=t '.title', default: [:'helpers.titles.edit', 'Edit %{model}'], model: User.model_name.human.titleize
 
 = render partial: "form"
+
+= link_to t('.cancel', default: t("helpers.links.cancel")), admin_user_path(@user), class: 'btn btn-default'
