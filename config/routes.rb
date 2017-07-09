@@ -7,6 +7,6 @@ Rails.application.routes.draw do
   resource :profile, only: [:show, :edit, :update]
 
   namespace :admin do
-    resources :users, only: [:index]
+    resources :users
   end
 end
