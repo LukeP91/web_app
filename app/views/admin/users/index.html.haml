@@ -14,7 +14,7 @@
 
       %th= User.human_attribute_name(:age)
 
-      %th=t '.actions', :default => t("helpers.actions")
+      %th=t '.actions', default: t("helpers.actions")
   %tbody
     - @users.each do |user|
       %tr
@@ -30,10 +30,16 @@
 
         %td
           = link_to t('.show', default: t("helpers.links.show")),
-            admin_user_path(user), class: 'btn btn-default btn-xs'
+              admin_user_path(user), class: 'btn btn-default btn-xs'
 
           = link_to t('.edit', defaul: t("helpers.links.edit")),
-            edit_admin_user_path(user), class: 'btn btn-default btn-xs'
+              edit_admin_user_path(user), class: 'btn btn-default btn-xs'
 
           - if current_user.id != user.id
-            = link_to t('.destroy', default: t("helpers.links.destroy")), admin_user_path(user), method: :delete, data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-xs btn-danger'
+            = link_to t('.destroy', default: t("helpers.links.destroy")),
+              admin_user_path(user), method: :delete,
+              data: { confirm: t('.confirm', default: t("helpers.links.confirm",
+                      default: 'Are you sure?')) }, class: 'btn btn-xs btn-danger'
+
+= link_to t('.new', default: t("helpers.links.new")), new_admin_user_path,
+    class: 'btn btn-primary'

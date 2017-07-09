@@ -11,6 +11,22 @@ class Admin::UsersController < ApplicationController
     authorize @users
   end
 
+  def new
+    @user = User.new
+  end
+
+  def create
+    user = User.new(user_params)
+    user.password = 'secret'
+    user.password_confirmation = 'secret'
+
+    if user.save
+      redirect_to admin_user_path(user)
+    else
+      render 'new'
+    end
+  end
+
   def edit
     @user = User.find(params[:id])
     authorize @user
