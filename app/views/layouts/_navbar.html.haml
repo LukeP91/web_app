@@ -1,6 +1,7 @@
 = nav_bar fixed: :top, brand: "Web App" do
   = menu_group do
-    = menu_item "Home", root_path
-    = menu_item "Profile", profile_path
+    = menu_item "Profile", root_path
+    - if current_user.admin
+      = menu_item "Admin Panel", admin_users_path
   = menu_group pull: :right do
     = menu_item "Log Out", destroy_user_session_path, method: :delete
