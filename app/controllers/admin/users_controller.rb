@@ -7,7 +7,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.all.order(:email)
     authorize @users
   end
 
@@ -17,13 +17,20 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
-    authorize @user
-    if @user.update_attributes(user_params)
+    user = User.find(params[:id])
+    authorize user
+    if user.update_attributes(user_params)
       redirect_to admin_user_path
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    user = User.find(params[:id])
+    authorize user
+    user.destroy
+    redirect_to admin_users_path
   end
 
   private
