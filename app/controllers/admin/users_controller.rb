@@ -13,6 +13,7 @@ class Admin::UsersController < ApplicationController
 
   def new
     @user = User.new
+    @interest = @user.interests.build
   end
 
   def create
@@ -57,6 +58,8 @@ class Admin::UsersController < ApplicationController
       params[:user].delete(:password)
     end
     params.require(:user).permit(:email, :first_name, :last_name, :age, :gender,
-                                 :admin, :password, :password_confirmation)
+                                 :admin, :password, :password_confirmation,
+                                 interests_attributes: [:id, :name,
+                                                        :category, :_destroy])
   end
 end

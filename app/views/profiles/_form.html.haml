@@ -19,6 +19,15 @@
 
   = f.error_span :age
 
+  %h3 Interests
+
+  #interests
+    = f.simple_fields_for :interests do |interest|
+      = render 'interest_fields', f: interest
+
+    .links
+      = link_to_add_association 'add interest', f, :interests
+
   = f.button :submit, class: 'btn-primary'
 
   = link_to t('.cancel', default: t("helpers.links.cancel")), profile_path, class: 'btn btn-default'
