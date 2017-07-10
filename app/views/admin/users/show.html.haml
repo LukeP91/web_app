@@ -28,4 +28,18 @@
     %br
     = @user.age
 
+- if @user.interests.any?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th= Interest.human_attribute_name(:name)
+
+        %th= Interest.human_attribute_name(:category)
+    %tbody
+      - @user.interests.each do |interest|
+        %tr
+          %td= interest.name
+
+          %td= interest.category
+
 = link_to t('.back', default: t("helpers.links.back")), admin_users_path, class: 'btn btn-danger'

@@ -28,5 +28,18 @@
     %br
     = current_user.age
 
+- if current_user.interests.any?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th= Interest.human_attribute_name(:name)
+
+        %th= Interest.human_attribute_name(:category)
+    %tbody
+      - current_user.interests.each do |interest|
+        %tr
+          %td= interest.name
+
+          %td= interest.category
 = link_to t('.back', default: t("helpers.links.back")), root_path, class: 'btn btn-danger'
 = link_to t('.edit', default: t("helpers.links.edit")), edit_profile_path, class: 'btn btn-success'
