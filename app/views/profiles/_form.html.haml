@@ -11,7 +11,7 @@
 
   = f.error_span :last_name
 
-  = f.input :gender, collection: ["Male", "Female"]
+  = f.input :gender, collection: gender_list, include_blank: false
 
   = f.error_span :gender
 

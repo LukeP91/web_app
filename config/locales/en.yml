@@ -21,3 +21,5 @@
 
 en:
   hello: "Hello world"
+  alerts:
+    permission_denied: "You are not authorized to perform this action."
