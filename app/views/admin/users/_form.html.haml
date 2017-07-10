@@ -11,17 +11,13 @@
 
   = f.error_span :last_name
 
-  = f.input :gender, collection: ["Male", "Female"]
+  = f.input :gender, collection: gender_list, include_blank: false
 
   = f.error_span :gender
 
   = f.input :age, collection: 1..120
 
   = f.error_span :age
-
-  = f.input :admin, collection: [true, false]
-
-  = f.error_span :admin
 
   = f.input :password
 
@@ -30,6 +26,10 @@
   = f.input :password_confirmation
 
   = f.error_span :password_confirmation
+
+  = f.input :admin, as: :boolean, checked_value: true, unchecked_value: false
+
+  = f.error_span :admin
 
   %h3 Interests
 
