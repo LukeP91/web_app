@@ -16,8 +16,12 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
-
+  
   def interests_list
     interests.pluck(:name).join(', ')
+  end
+
+  def values_to_export
+    [first_name, last_name, gender, age, interests.map(&:name)].flatten!
   end
 end
