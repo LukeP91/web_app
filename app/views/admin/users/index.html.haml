@@ -1,6 +1,8 @@
 .page-header
   %h1=t '.title', default: User.model_name.human.pluralize.titleize
-
+  %p
+    =t 'admin.interest_statistic'
+    = Interest.count_of_interests
 %table.table.table-striped
   %thead
     %tr
