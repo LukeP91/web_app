@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   resource :profile, only: [:show, :edit, :update]
 
   namespace :admin do
-    resources :users
+    resources :users do
+      collection do
+        get 'export'
+      end
+    end
   end
 end

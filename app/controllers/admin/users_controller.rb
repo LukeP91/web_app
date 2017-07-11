@@ -50,6 +50,13 @@ class Admin::UsersController < ApplicationController
     redirect_to admin_users_path
   end
 
+  def export
+    users = User.all
+    respond_to do |format|
+      format.csv { send_data ExportUsersAsCSV.export(users), filename: "users_export-#{Date.today}.csv" }
+    end
+  end
+
   private
 
   def user_params
