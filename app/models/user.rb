@@ -18,6 +18,6 @@ class User < ApplicationRecord
   end
 
   def interests_list
-    interests.map(&:name).join(', ')
+    interests.pluck(:name).join(', ')
   end
 end
