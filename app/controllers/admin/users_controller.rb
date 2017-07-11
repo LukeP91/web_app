@@ -53,7 +53,10 @@ class Admin::UsersController < ApplicationController
   def export
     users = User.all
     respond_to do |format|
-      format.csv { send_data ExportUsersAsCSV.export(users), filename: "users_export-#{Date.today}.csv" }
+      format.csv do
+        send_data ExportUsersAsCSV.export(users),
+                  filename: "users_export-#{Date.today}.csv"
+      end
     end
   end
 
