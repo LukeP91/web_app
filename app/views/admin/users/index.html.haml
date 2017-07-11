@@ -44,5 +44,5 @@
 = link_to t('.new', default: t("helpers.links.new")), new_admin_user_path,
     class: 'btn btn-primary'
 
-= link_to "Export to CSV", export_admin_users_path({:format => :csv }),
+= link_to "Export to CSV", export_admin_users_path({ format: :csv }),
     class: 'btn btn-success'
