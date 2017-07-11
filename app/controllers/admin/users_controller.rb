@@ -1,6 +1,5 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
-  helper_method :gender_list
 
   def show
     @user = User.find(params[:id])
@@ -66,7 +65,7 @@ class Admin::UsersController < ApplicationController
       ])
   end
 
-  def gender_list
+  helper_method def gender_list
     ["male", "female"]
   end
 end

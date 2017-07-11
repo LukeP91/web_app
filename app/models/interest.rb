@@ -5,7 +5,7 @@ class Interest < ApplicationRecord
   validates :category, presence: true
 
   scope :with_category, ->(category) { where(category: category) }
-  scope :with_name_starting_with, ->(name_substring) { where("name LIKE ?", "#{name_substring}%") }
+  scope :with_name_starting_with, ->(partial_name) { where("name LIKE ?", "#{partial_name}%") }
 
   def self.female_interests_count
     users = User.with_gender("female").with_age_between(20..30)
