@@ -10,6 +10,9 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :interests, reject_if: :all_blank, allow_destroy: true
 
+  scope :with_age_between, ->(age_range) { where(age: age_range) }
+  scope :with_gender, ->(gender) { where(gender: gender) }
+
   def full_name
     "#{first_name} #{last_name}"
   end

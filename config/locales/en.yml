@@ -23,3 +23,5 @@ en:
   hello: "Hello world"
   alerts:
     permission_denied: "You are not authorized to perform this action."
+  admin:
+    interest_statistic: "Number of interests starting with 'cosm' from 'health' for women age 20-30:"
