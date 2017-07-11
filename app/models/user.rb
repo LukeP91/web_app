@@ -14,7 +14,7 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def user_data_for_csv
+  def csv_format
     [first_name, last_name, gender, age, interests.map(&:name)].flatten!
   end
 end
