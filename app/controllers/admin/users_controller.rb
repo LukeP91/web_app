@@ -74,4 +74,8 @@ class Admin::UsersController < ApplicationController
         :id, :name, :category, :_destroy
       ])
   end
+
+  helper_method def gender_list
+    ["male", "female"]
+  end
 end

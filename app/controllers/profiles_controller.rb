@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
-
+  helper_method :gender_list
   def show
   end
 
@@ -21,5 +21,9 @@ class ProfilesController < ApplicationController
     params.require(:user).permit(:email, :first_name, :last_name, :age, :gender,
                                  interests_attributes: [:id, :name, :category,
                                                         :_destroy])
+  end
+
+  def gender_list
+    ["male", "female"]
   end
 end

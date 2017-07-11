@@ -1,6 +1,8 @@
 .page-header
   %h1=t '.title', default: User.model_name.human.pluralize.titleize
-
+  %p
+    =t 'admin.interest_statistic'
+    = Interest.female_interests_count
 %table.table.table-striped
   %thead
     %tr
@@ -13,6 +15,8 @@
       %th= User.human_attribute_name(:gender)
 
       %th= User.human_attribute_name(:age)
+
+      %th= User.human_attribute_name(:interests)
 
       %th=t '.actions', default: t("helpers.actions")
   %tbody
@@ -28,6 +32,8 @@
 
         %td= user.age
 
+        %td= user.interests_list
+
         %td
           = link_to t('.show', default: t("helpers.links.show")),
               admin_user_path(user), class: 'btn btn-default btn-xs'
@@ -36,10 +42,10 @@
               edit_admin_user_path(user), class: 'btn btn-default btn-xs'
 
           - if current_user.id != user.id
-            = link_to t('.destroy', default: t("helpers.links.destroy")),
+            = link_to '',
               admin_user_path(user), method: :delete,
               data: { confirm: t('.confirm', default: t("helpers.links.confirm",
-                      default: 'Are you sure?')) }, class: 'btn btn-xs btn-danger'
+                      default: 'Are you sure?')) }, class: 'btn btn-xs btn-danger glyphicon glyphicon-trash'
 
 = link_to t('.new', default: t("helpers.links.new")), new_admin_user_path,
     class: 'btn btn-primary'
