@@ -24,9 +24,9 @@ This is a spec for a candidate evaluation app.
 
 7. On the regular users listing, admin can see a button "Export to CSV". After clicking a link, user gets a csv file with exported users. Hint https://www.ruby-toolbox.com/categories/reporting however you don't have to use any external gem. Feel free to use https://ruby-doc.org/stdlib-2.0.0/libdoc/csv/rdoc/CSV.html
 
-### TO DO
-
 8. On the user listing, everybody can see a mailbox icon. Everyone can click it. A click triggers an action where the email is being sent to the target user with content "current_user_email sends his regards". The recipient is of course the target user.   Requirement: use Service Object pattern to implement the email sending functionality. Hint: https://rubygems.org/gems/mailcatcher/versions/0.6.1
+
+### TO DO
 
 9. On the user listing there should be a search_field so users should be able to scope the listing by inputing the email. Bonus points for considering SQL injections while developing the feature. Hint: https://github.com/activerecord-hackery/ransack
 
