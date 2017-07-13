@@ -22,9 +22,9 @@ This is a spec for a candidate evaluation app.
 
 6. The admin panel should display a number which shows the amount of interests in the system of "health" type, chosen by women aged between 20 and 30, and the names of interests should start with "cosm". The query should be written using SQL or appriopriate DSL offered for instance by ActiveRecord. Usng Ruby for data manipualtion here is a faux pas. In other words, show me your SQL magic. Requirement: you should write a query with a subquery for this task.
 
-### TO DO
-
 7. On the regular users listing, admin can see a button "Export to CSV". After clicking a link, user gets a csv file with exported users. Hint https://www.ruby-toolbox.com/categories/reporting however you don't have to use any external gem. Feel free to use https://ruby-doc.org/stdlib-2.0.0/libdoc/csv/rdoc/CSV.html
+
+### TO DO
 
 8. On the user listing, everybody can see a mailbox icon. Everyone can click it. A click triggers an action where the email is being sent to the target user with content "current_user_email sends his regards". The recipient is of course the target user.   Requirement: use Service Object pattern to implement the email sending functionality. Hint: https://rubygems.org/gems/mailcatcher/versions/0.6.1
 
