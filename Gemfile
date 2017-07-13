@@ -23,10 +23,9 @@ gem 'pundit', '~> 1.1.0'
 gem "cocoon", '~> 1.2.10'
 
 group :development, :test do
-  gem 'pry-rails'
+  gem 'pry-rails', '~> 0.3.6'
   gem 'byebug', '~> 9.0.6', platform: :mri
   gem 'rspec-rails', '~> 3.5'
-  gem 'pry-rails'
 end
 
 group :development do
