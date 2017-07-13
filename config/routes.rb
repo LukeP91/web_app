@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       collection do
         get 'export'
       end
+      member do
+        get 'send_email'
+      end
     end
   end
 end
