@@ -1,34 +1,34 @@
 .page-header
-  %h1=t '.title', default: @user.full_name
+  %h1=t '.title', default: user.full_name
 
 %p
   %strong #{ User.human_attribute_name(:email) }:
   %br
-  = @user.email
+  = user.email
 
 %p
   %strong #{ User.human_attribute_name(:first_name) }:
   %br
-  = @user.first_name
+  = user.first_name
 
 %p
   %strong #{ User.human_attribute_name(:last_name) }:
   %br
-  = @user.last_name
+  = user.last_name
 
-- if @user.gender
+- if user.gender
   %p
     %strong #{ User.human_attribute_name(:gender) }:
     %br
-    = @user.gender
+    = user.gender
 
-- if @user.age
+- if user.age
   %p
     %strong #{ User.human_attribute_name(:age) }:
     %br
-    = @user.age
+    = user.age
 
-- if @user.interests.any?
+- if user.interests.any?
   %h4 Interests:
 
   %table.table.table-striped
@@ -38,11 +38,11 @@
 
         %th= Interest.human_attribute_name(:category)
     %tbody
-      - @user.interests.each do |interest|
+      - user.interests.each do |interest|
         %tr
           %td= interest.name
 
           %td= interest.category
 
 = link_to t('.back', default: t("helpers.links.back")), admin_users_path, class: 'btn btn-danger'
-= link_to t('.edit', default: t("helpers.links.edit")), edit_admin_user_path(@user), class: 'btn btn-success'
+= link_to t('.edit', default: t("helpers.links.edit")), edit_admin_user_path(user), class: 'btn btn-success'

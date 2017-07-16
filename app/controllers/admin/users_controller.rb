@@ -2,18 +2,21 @@ class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @user = User.find(params[:id])
-    authorize @user
+    user = User.find(params[:id])
+    authorize user
+    render 'admin/users/show', locals: { user: user}
   end
 
   def index
-    @users = User.all.order(:email)
-    authorize @users
+    users = User.all.order(:email)
+    authorize users
+    render 'admin/users/index', locals: { users: users}
   end
 
   def new
-    @user = User.new
-    @interest = @user.interests.build
+    user = User.new
+    interest = user.interests.build
+    render 'admin/users/new', locals: { user: user, interest: interest }
   end
 
   def create
@@ -29,8 +32,9 @@ class Admin::UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
-    authorize @user
+    user = User.find(params[:id])
+    authorize user
+    render 'admin/users/edit', locals: { user: user}
   end
 
   def update
