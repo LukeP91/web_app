@@ -1,0 +1,8 @@
+.container
+  .row
+    .span12
+      = search_form_for [:admin, q], html: { class: 'form-search form-horizontal' } do |f|
+
+        = f.search_field :email_cont, placeholder: "Search Emails"
+
+        = f.submit class: 'btn btn-default'

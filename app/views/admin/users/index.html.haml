@@ -3,6 +3,9 @@
   %p
     =t 'admin.interest_statistic'
     = Interest.female_interests_count
+
+= render 'admin/users/search', { q: q }
+
 %table.table.table-striped
   %thead
     %tr

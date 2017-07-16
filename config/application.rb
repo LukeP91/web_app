@@ -1,6 +1,8 @@
 require_relative 'boot'
 
 require 'csv'
+require File.expand_path('../boot', __FILE__)
+ENV['RANSACK_FORM_BUILDER'] = '::SimpleForm::FormBuilder'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
