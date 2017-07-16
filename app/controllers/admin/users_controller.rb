@@ -8,9 +8,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    users = User.all.order(:email)
+    q = User.ransack(params[:q])
+    users = q.result(distinct: true).order(:email)
     authorize users
-    render 'admin/users/index', locals: { users: users}
+    render 'admin/users/index', locals: { q: q, users: users}
   end
 
   def new

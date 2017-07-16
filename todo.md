@@ -33,9 +33,8 @@ This is a spec for a candidate evaluation app.
 ### Extra tasks
 
 10. invitation email
-
-11. add seeds with 1000 users. Send welcome email to all. User Resque https://github.com/resque/resque
-    Button at the top of users table
+11. add seeds with 1000 users.
+12. Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table.
 
 ## How to get started aka the workflow requirements
 1. Download the repo and upload it as your own. Do not fork it.
