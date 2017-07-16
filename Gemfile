@@ -27,6 +27,8 @@ group :development, :test do
   gem 'pry-rails', '~> 0.3.6'
   gem 'byebug', '~> 9.0.6', platform: :mri
   gem 'rspec-rails', '~> 3.5'
+  gem 'factory_girl_rails', '~> 4.8'
+  gem 'ffaker', '~> 2.2'
 end
 
 group :development do
