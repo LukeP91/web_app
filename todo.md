@@ -1,7 +1,6 @@
 # recruitment-web-app
 This is a spec for a candidate evaluation app.
 
-
 ## App requirements
 
 ### DONE
@@ -30,15 +29,15 @@ This is a spec for a candidate evaluation app.
 
 ### Extra tasks
 
-10. invitation email
+* add seeds with 1000 users.
 
-11. add seeds with 1000 users.
+* Add page object tests to project and add unit tests to statistic logic. Include test for search by first and last name. Age.
 
-12. Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table.
+* Expand search to first name, last name, age
 
-13. Expand search to first name, last name, age
+* Invitation email
 
-14. Add page object tests to project and add unit tests to statistic logic.
+* Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table.
 
 ## How to get started aka the workflow requirements
 1. Download the repo and upload it as your own. Do not fork it.
