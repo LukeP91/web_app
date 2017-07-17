@@ -26,15 +26,19 @@ This is a spec for a candidate evaluation app.
 
 8. On the user listing, everybody can see a mailbox icon. Everyone can click it. A click triggers an action where the email is being sent to the target user with content "current_user_email sends his regards". The recipient is of course the target user.   Requirement: use Service Object pattern to implement the email sending functionality. Hint: https://rubygems.org/gems/mailcatcher/versions/0.6.1
 
-### TO DO
-
 9. On the user listing there should be a search_field so users should be able to scope the listing by inputing the email. Bonus points for considering SQL injections while developing the feature. Hint: https://github.com/activerecord-hackery/ransack
 
 ### Extra tasks
 
 10. invitation email
+
 11. add seeds with 1000 users.
+
 12. Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table.
+
+13. Expand search to first name, last name, age
+
+14. Add page object tests to project and add unit tests to statistic logic.
 
 ## How to get started aka the workflow requirements
 1. Download the repo and upload it as your own. Do not fork it.

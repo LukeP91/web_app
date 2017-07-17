@@ -4,20 +4,20 @@ class Admin::UsersController < ApplicationController
   def show
     user = User.find(params[:id])
     authorize user
-    render 'admin/users/show', locals: { user: user}
+    render :show, locals: { user: user}
   end
 
   def index
     q = User.ransack(params[:q])
     users = q.result(distinct: true).order(:email)
     authorize users
-    render 'admin/users/index', locals: { q: q, users: users}
+    render :index, locals: { q: q, users: users}
   end
 
   def new
     user = User.new
     interest = user.interests.build
-    render 'admin/users/new', locals: { user: user, interest: interest }
+    render :new, locals: { user: user, interest: interest }
   end
 
   def create
@@ -28,14 +28,14 @@ class Admin::UsersController < ApplicationController
     if user.save
       redirect_to admin_user_path(user)
     else
-      render 'new'
+      render :new
     end
   end
 
   def edit
     user = User.find(params[:id])
     authorize user
-    render 'admin/users/edit', locals: { user: user}
+    render :edit, locals: { user: user}
   end
 
   def update
@@ -44,7 +44,7 @@ class Admin::UsersController < ApplicationController
     if user.update_attributes(user_params)
       redirect_to admin_user_path
     else
-      render 'edit'
+      render :edit
     end
   end
 
