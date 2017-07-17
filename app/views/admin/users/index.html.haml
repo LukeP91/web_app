@@ -3,6 +3,9 @@
   %p
     =t 'admin.interest_statistic'
     = Interest.female_interests_count
+
+= render 'admin/users/search', { q: q }
+
 %table.table.table-striped
   %thead
     %tr
@@ -20,7 +23,7 @@
 
       %th=t '.actions', default: t("helpers.actions")
   %tbody
-    - @users.each do |user|
+    - users.each do |user|
       %tr
         %td= user.email
 

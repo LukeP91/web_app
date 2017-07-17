@@ -1,6 +1,6 @@
 .page-header
   %h1=t '.title', default: [:'helpers.titles.new', 'New %{model}'], model: User.model_name.human.titleize
 
-= render partial: "form"
+= render partial: "form", locals: { user: user }
 
 = link_to t('.cancel', default: t("helpers.links.cancel")), admin_users_path, class: 'btn btn-default'
