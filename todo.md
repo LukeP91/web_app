@@ -27,9 +27,11 @@ This is a spec for a candidate evaluation app.
 
 9. On the user listing there should be a search_field so users should be able to scope the listing by inputing the email. Bonus points for considering SQL injections while developing the feature. Hint: https://github.com/activerecord-hackery/ransack
 
+* add seeds with 1000 users.
+
 ### Extra tasks
 
-* add seeds with 1000 users.
+* Async request for sending email
 
 * Add page object tests to project and add unit tests to statistic logic. Include test for search by first and last name. Age.
 
@@ -38,6 +40,8 @@ This is a spec for a candidate evaluation app.
 * Invitation email
 
 * Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table.
+
+* add readme to project
 
 ## How to get started aka the workflow requirements
 1. Download the repo and upload it as your own. Do not fork it.
