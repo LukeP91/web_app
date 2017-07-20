@@ -1,6 +1,6 @@
 .form-group
-  = f.input :name
+  = f.input :name, input_html: { id: "interest_name" }
 
-  = f.input :category, collection: %w(health hobby work)
+  = f.input :category, input_html: { id: "interest_category" }, collection: %w(health hobby work)
 
   = link_to_remove_association "Remove interest", f, wrapper_class: 'form-group'

@@ -28,6 +28,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', '~> 4.8'
   gem 'ffaker', '~> 2.2'
+  gem 'capybara', '~> 2.13'
+  gem 'capybara-webkit', '~> 1.14'
 end
 
 group :development do
