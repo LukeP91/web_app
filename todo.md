@@ -29,17 +29,34 @@ This is a spec for a candidate evaluation app.
 
 * add seeds with 1000 users.
 
+* It serves server side rendered pages
+
 ### Extra tasks
-
-* Async request for sending email
-
 * Add page object tests to project and add unit tests to statistic logic. Include test for search by first and last name. Age.
 
-* Expand search to first name, last name, age
+* It has at least one custom rake task:
+  * move seeds to rake task with organization name
 
-* Invitation email
+* It provide full text search (can be PostgreSQL FTS)
+  * Expand search to first name, last name, age
+  * Try PostgreSQL full-text search function
 
-* Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table.
+* It uses queues (e.g. Sidekiq):
+  * Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table.
+  * Async request for sending email.
+  * Invitation email
+  * Change regards email to async email
+
+* Three 3rd party integrations
+  * Sending Email / SMS (Send welcome SMS)
+  * Synchronization of Data between APIs (Every 6 hours synchronize data with Facebook events. Every 6 hours update statistics about fetched events)
+  * One without ready to use wrapper (HTTParty only) ( Search for open JSON API without rails-ready wrapper)
+
+* It serves json api (in jsonapi or graphql standard) ( Add endpoint for users) [http://jsonapi.org/]
+* Authentication & Authorization (session and token based) (Together with jsonapi)
+
+* 5 models with relations to each other
+  * At least one n-n relation
 
 * add readme to project
 
