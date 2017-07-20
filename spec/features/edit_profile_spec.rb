@@ -1,7 +1,10 @@
 require "rails_helper"
 
 describe "Edit profile", type: :feature do
-  let(:user) { create(:user, :male, :older_than_30) }
+  before :each do
+    @user = create(:user, :male, :older_than_30)
+  end
+
   let(:modified_user) { { email: "changed_email@example.com",
                           first_name: "Modified",
                           last_name: "Modified",
@@ -11,8 +14,8 @@ describe "Edit profile", type: :feature do
   scenario "Signed in user can edit his profile" do
     visit "/"
     within("#new_user") do
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
+      fill_in 'Email', with: @user.email
+      fill_in 'Password', with: @user.password
     end
     click_button 'Log in'
     click_link 'Edit'
@@ -36,8 +39,8 @@ describe "Edit profile", type: :feature do
   scenario "Signed in user can add interest to his profile" do
     visit "/"
     within("#new_user") do
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
+      fill_in 'Email', with: @user.email
+      fill_in 'Password', with: @user.password
     end
     click_button 'Log in'
     click_link 'Edit'
