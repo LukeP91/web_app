@@ -46,6 +46,7 @@ describe "Edit profile", type: :feature do
     click_link 'Edit'
     expect(page).to have_css("h1", text: "Edit User")
     click_link 'add interest'
+    # add sleep to wait for name element
     within('#interests') do
       fill_in 'Name', with: "Interest"
       select 'health', from: 'Category'

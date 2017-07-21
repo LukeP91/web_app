@@ -1,22 +1,4 @@
 ☐ practice git commands for rebase and solving merge conflicts
-☐ install and practice zsh for (install rvm)
+☐ practice zsh
 ☐ refactor service objects, each of them should implement call method
-
-✔ Add organization scope ( use normal scope). Fix scopes. @done (8/1/2017, 4:19:08 PM)
-✔ read about delegate @done (8/1/2017, 4:19:12 PM)
-✔ User picks organization when registering @done (7/24/2017, 10:54:40 AM)
-✔ Display organization name in navbar @done (7/22/2017, 4:34:25 PM)
-✔ Refactor rake task (organization name, subdomain, admin_email, admin_password @done (7/24/2017, 12:01:46 PM)
-✔ Create Category model @done (7/22/2017, 5:10:19 PM)
-✔ Create Category controller @done (7/22/2017, 6:04:06 PM)
-✔ Create Interest controller @done (7/22/2017, 6:04:08 PM)
-✔ Refactor FactoryGirl @done (7/24/2017, 11:24:28 AM)
-✔ Remove cocoon @done (7/24/2017, 10:54:44 AM)
-✔ Simple form select object from relation @done (7/24/2017, 10:54:49 AM)
-✔ auto fix double quote to single quote @done (8/1/2017, 4:19:15 PM)
-✔ run rubocop on whole project @done (8/2/2017, 8:34:05 AM)śś
-✔ add proper associations in models @done (8/2/2017, 12:17:25 PM)
-✔ add proper migration to double @done (8/2/2017, 12:17:26 PM)
-✔ scope interests and organization @done (8/2/2017, 12:17:28 PM)
-✔ fix factories for interest and organization @done (8/2/2017, 12:17:29 PM)
-
+☐ https://github.com/natritmeyer/site_prism#siteprism
