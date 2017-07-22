@@ -14,6 +14,8 @@
 
     = f.input :password_confirmation, required: true
 
+    = f.association :organization, include_blank: false
+
   .form-actions
     = f.button :submit, "Sign up"
 

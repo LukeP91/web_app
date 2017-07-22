@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 20170707222163612) do
 
   create_table "users_interests", force: :cascade do |t|
     t.integer "user_id",     null: false
-    t.integer "category_id", null: false
-    t.index ["category_id"], name: "index_users_interests_on_category_id", using: :btree
+    t.integer "interest_id", null: false
+    t.index ["interest_id"], name: "index_users_interests_on_interest_id", using: :btree
     t.index ["user_id"], name: "index_users_interests_on_user_id", using: :btree
   end
 
