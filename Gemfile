@@ -20,7 +20,6 @@ gem 'devise', '~> 4.3.0'
 gem 'twitter-bootstrap-rails', '~> 4.0.0'
 gem 'simple_form', '~> 3.5.0'
 gem 'pundit', '~> 1.1.0'
-gem "cocoon", '~> 1.2.10'
 gem 'ransack', '~> 1.8', '>= 1.8.2'
 
 group :development, :test do
