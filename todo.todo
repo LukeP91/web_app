@@ -1,3 +1,19 @@
 ☐ practice git commands for rebase and solving merge conflicts
-☐ install and practice zsh for git
+☐ install and practice zsh for (install rvm)
+☐ refactor service objects, each of them should implement call method
+
+☐ add custom validations and move interest collection to helper method
+☐ Add organization scope
+☐ User picks organization when registering
+✔ Display organization name in navbar @done (7/22/2017, 4:34:25 PM)
+☐ Refactor rake task (organization name, subdomain, admin_email, admin_password
+✔ Create Category model @done (7/22/2017, 5:10:19 PM)
+☐ Create Category controller
+☐ Create Interest controller
+☐ Refactor FactoryGirl
+☐ Remove cocoon
+☐ Simple form select object from relation
+☐ auto fix double quote to single quote
+
+Interests and categories belongs to organization
 
