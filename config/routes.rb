@@ -15,5 +15,8 @@ Rails.application.routes.draw do
         get 'send_email'
       end
     end
+
+    resources :categories
+    resources :interests
   end
 end

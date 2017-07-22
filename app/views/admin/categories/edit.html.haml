@@ -1,0 +1,8 @@
+- model_class = Category
+
+.page-header
+  %h1=t '.title', default: [:'helpers.titles.edit', 'Edit %{model}'], model: model_class.model_name.human.titleize
+
+= render "admin/categories/form", locals: { category: category }
+
+= link_to t('.cancel', default: t("helpers.links.cancel")), admin_categories_path, class: 'btn btn-default'

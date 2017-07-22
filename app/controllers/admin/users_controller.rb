@@ -16,7 +16,7 @@ class Admin::UsersController < ApplicationController
 
   def new
     user = User.new
-    interest = user.interests.build
+    authorize user
     render :new, locals: { user: user, interest: interest }
   end
 
@@ -24,6 +24,7 @@ class Admin::UsersController < ApplicationController
     user = User.new(user_params)
     user.password = 'secret'
     user.password_confirmation = 'secret'
+    authorize user
 
     if user.save
       redirect_to admin_user_path(user)
@@ -81,9 +82,8 @@ class Admin::UsersController < ApplicationController
 
     params.require(:user).permit(
       :email, :first_name, :last_name, :age, :gender, :admin, :password,
-      :password_confirmation, interests_attributes: [
-        :id, :name, :category, :_destroy
-      ])
+      :password_confirmation
+      )
   end
 
   helper_method def gender_list

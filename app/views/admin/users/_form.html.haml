@@ -31,13 +31,8 @@
 
   = f.error_span :admin
 
-  %h3 Interests
+  = f.association :interest, include_blank: false
 
-  #interests
-    = f.simple_fields_for :interests do |interest|
-      = render 'interest_fields', f: interest
-
-    .links
-      = link_to_add_association 'add interest', f, :interests
+  = f.error_span :interest
 
   = f.button :submit, class: 'btn-primary'
