@@ -1,10 +1,10 @@
 class Interest < ApplicationRecord
-  belongs_to :user
+  has_many :users
+  belongs_to :category
 
   validates :name, presence: true
-  validates :category, presence: true
 
-  scope :with_category, ->(category) { where(category: category) }
+  scope :with_category, ->(category) { where(category: category.name) }
   scope :with_name_starting_with, ->(partial_name) { where("name LIKE ?", "#{partial_name}%") }
 
   def self.female_interests_count

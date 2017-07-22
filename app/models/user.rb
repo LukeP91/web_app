@@ -2,7 +2,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :interests, dependent: :destroy, inverse_of: :user
+  belongs_to :organization
+  has_many :interests, through: :users_interests
+  has_many :users_interests
 
   validates :first_name, presence: true
   validates :last_name, presence: true

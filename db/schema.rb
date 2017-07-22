@@ -10,19 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170709222350) do
+ActiveRecord::Schema.define(version: 20170707222163612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.index ["name"], name: "index_categories_on_name", using: :btree
+  end
+
   create_table "interests", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.string   "name",       null: false
-    t.string   "category",   null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id",     null: false
+    t.string   "name",        null: false
+    t.string   "category",    null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
     t.index ["name"], name: "index_interests_on_name", using: :btree
     t.index ["user_id"], name: "index_interests_on_user_id", using: :btree
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "name",      null: false
+    t.string "subdomain", null: false
+    t.index ["name"], name: "index_organizations_on_name", using: :btree
+    t.index ["subdomain"], name: "index_organizations_on_subdomain", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,8 +56,16 @@ ActiveRecord::Schema.define(version: 20170709222350) do
     t.string   "gender"
     t.integer  "age"
     t.boolean  "admin",                  default: false, null: false
+    t.integer  "organization_id",        default: 1,     null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  end
+
+  create_table "users_interests", force: :cascade do |t|
+    t.integer "user_id",     null: false
+    t.integer "category_id", null: false
+    t.index ["category_id"], name: "index_users_interests_on_category_id", using: :btree
+    t.index ["user_id"], name: "index_users_interests_on_user_id", using: :btree
   end
 
 end
