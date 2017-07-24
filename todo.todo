@@ -2,7 +2,8 @@
 ☐ install and practice zsh for (install rvm)
 ☐ refactor service objects, each of them should implement call method
 
-☐ Add organization scope
+☐ Add organization scope ( use normal scope). Fix scopes.
+☐ read about delegate
 ✔ User picks organization when registering @done (7/24/2017, 10:54:40 AM)
 ✔ Display organization name in navbar @done (7/22/2017, 4:34:25 PM)
 ✔ Refactor rake task (organization name, subdomain, admin_email, admin_password @done (7/24/2017, 12:01:46 PM)
@@ -13,6 +14,7 @@
 ✔ Remove cocoon @done (7/24/2017, 10:54:44 AM)
 ✔ Simple form select object from relation @done (7/24/2017, 10:54:49 AM)
 ☐ auto fix double quote to single quote
+
 
 Interests and categories belongs to organization
 

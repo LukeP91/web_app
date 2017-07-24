@@ -2,7 +2,7 @@
   %h1=t '.title', default: User.model_name.human.pluralize.titleize
   %p
     =t 'admin.interest_statistic'
-    -# = Interest.female_interests_count
+    = Interest.female_interests_count
 
 = render 'admin/users/search', { q: q }
 

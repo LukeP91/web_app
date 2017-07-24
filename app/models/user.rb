@@ -10,7 +10,6 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :email, presence: true
 
-  default_scope { where(organization_id: current_user.organization_id) }
   scope :with_age_between, ->(age_range) { where(age: age_range) }
   scope :with_gender, ->(gender) { where(gender: gender) }
 
