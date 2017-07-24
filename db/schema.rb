@@ -21,14 +21,11 @@ ActiveRecord::Schema.define(version: 20170707222163612) do
   end
 
   create_table "interests", force: :cascade do |t|
-    t.integer  "user_id",     null: false
     t.string   "name",        null: false
-    t.string   "category",    null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "category_id"
     t.index ["name"], name: "index_interests_on_name", using: :btree
-    t.index ["user_id"], name: "index_interests_on_user_id", using: :btree
   end
 
   create_table "organizations", force: :cascade do |t|

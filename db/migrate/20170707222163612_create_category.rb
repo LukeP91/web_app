@@ -5,5 +5,7 @@ class CreateCategory < ActiveRecord::Migration[5.0]
     end
 
     add_column :interests, :category_id, :integer, index: true
+    remove_column :interests, :user_id, :integer, index: true
+    remove_column :interests, :category
   end
 end

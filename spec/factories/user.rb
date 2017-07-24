@@ -6,6 +6,7 @@ FactoryGirl.define do
     admin false
     password "password"
     password_confirmation "password"
+    organization { build :organization }
 
     factory :admin do
       email "admin@example.com"
@@ -38,7 +39,8 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        create_list(:interest, evaluator.interests_count, user: user)
+        interests_list = create_list(:interest, evaluator.interests_count)
+        user.interests = interests_list
       end
     end
   end

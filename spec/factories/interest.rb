@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :interest do
     name { "cos#{FFaker::Lorem.word}" }
-    category { %w(health hobby work).sample }
+    category { build :category }
   end
 end
