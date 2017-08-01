@@ -31,8 +31,10 @@
 
   = f.error_span :admin
 
-  = f.association :interest, include_blank: false
+  %h3 Interests
 
-  = f.error_span :interest
+  = f.association :interests, include_blank: false
+
+  = f.error_span :interests
 
   = f.button :submit, class: 'btn-primary'

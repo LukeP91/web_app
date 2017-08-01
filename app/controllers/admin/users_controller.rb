@@ -17,7 +17,7 @@ class Admin::UsersController < ApplicationController
   def new
     user = User.new
     authorize user
-    render :new, locals: { user: user, interest: interest }
+    render :new, locals: { user: user }
   end
 
   def create
@@ -82,7 +82,7 @@ class Admin::UsersController < ApplicationController
 
     params.require(:user).permit(
       :email, :first_name, :last_name, :age, :gender, :admin, :password,
-      :password_confirmation
+      :password_confirmation, interest_ids: []
       )
   end
 
