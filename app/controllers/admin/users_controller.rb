@@ -4,14 +4,14 @@ class Admin::UsersController < ApplicationController
   def show
     user = User.find(params[:id])
     authorize user
-    render :show, locals: { user: user}
+    render :show, locals: { user: user }
   end
 
   def index
     q = User.ransack(params[:q])
     users = q.result(distinct: true).order(:email)
     authorize users
-    render :index, locals: { q: q, users: users}
+    render :index, locals: { q: q, users: users }
   end
 
   def new
@@ -36,7 +36,7 @@ class Admin::UsersController < ApplicationController
   def edit
     user = User.find(params[:id])
     authorize user
-    render :edit, locals: { user: user}
+    render :edit, locals: { user: user }
   end
 
   def update
@@ -83,10 +83,10 @@ class Admin::UsersController < ApplicationController
     params.require(:user).permit(
       :email, :first_name, :last_name, :age, :gender, :admin, :password,
       :password_confirmation, interest_ids: []
-      )
+    )
   end
 
   helper_method def gender_list
-    ["male", "female"]
+    %w[male female]
   end
 end
