@@ -1,8 +1,8 @@
 require 'factory_girl_rails'
 
 namespace :db do
-  desc "This task populate db with seed data"
-  task :populate, [:org_name, :org_subdomain, :admin_mail, :admin_password] => :environment do |task, args|
+  desc 'This task populate db with seed data'
+  task :populate, %i[org_name org_subdomain admin_mail admin_password] => :environment do |_task, args|
     organization = FactoryGirl.create(
       :organization,
       name: args.org_name,
