@@ -8,7 +8,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    q = User.ransack(params[:q])
+    q = User.from_current_user_organization(current_user.organization_id).ransack(params[:q])
     users = q.result(distinct: true).order(:email)
     authorize users
     render :index, locals: { q: q, users: users }
@@ -24,6 +24,7 @@ class Admin::UsersController < ApplicationController
     user = User.new(user_params)
     user.password = 'secret'
     user.password_confirmation = 'secret'
+    user.organization = current_user.organization
     authorize user
 
     if user.save
@@ -57,7 +58,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def export
-    users = User.all
+    users = User.from_current_user_organization(current_user.organization_id)
     respond_to do |format|
       format.csv do
         send_data ExportUsersAsCSV.export(users),
