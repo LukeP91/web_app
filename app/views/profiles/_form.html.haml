@@ -20,13 +20,10 @@
   = f.error_span :age
 
   %h3 Interests
+  
+  = f.association :interests, include_blank: false
 
-  #interests
-    = f.simple_fields_for :interests do |interest|
-      = render 'interest_fields', f: interest
-
-    .links
-      = link_to_add_association 'add interest', f, :interests
+  = f.error_span :interests
 
   = f.button :submit, class: 'btn-primary'
 

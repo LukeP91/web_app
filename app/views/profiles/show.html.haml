@@ -42,6 +42,7 @@
         %tr
           %td= interest.name
 
-          %td= interest.category
+          %td= interest.category_name
+
 = link_to t('.back', default: t("helpers.links.back")), root_path, class: 'btn btn-danger'
 = link_to t('.edit', default: t("helpers.links.edit")), edit_profile_path, class: 'btn btn-success'
