@@ -2,13 +2,15 @@ class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    user = User.find(params[:id])
+    user = User.in_organization(current_organization).find(params[:id])
     authorize user
     render :show, locals: { user: user }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_users_path
   end
 
   def index
-    q = User.from_current_user_organization(current_user.organization_id).ransack(params[:q])
+    q = User.in_organization(current_organization).ransack(params[:q])
     users = q.result(distinct: true).order(:email)
     authorize users
     render :index, locals: { q: q, users: users }
@@ -35,30 +37,36 @@ class Admin::UsersController < ApplicationController
   end
 
   def edit
-    user = User.find(params[:id])
+    user = User.in_organization(current_organization).find(params[:id])
     authorize user
     render :edit, locals: { user: user }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_users_path
   end
 
   def update
-    user = User.find(params[:id])
+    user = User.in_organization(current_organization).find(params[:id])
     authorize user
     if user.update(user_params)
       redirect_to admin_user_path(user)
     else
       render :edit
     end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_users_path
   end
 
   def destroy
-    user = User.find(params[:id])
+    user = User.in_organization(current_organization).find(params[:id])
     authorize user
     user.destroy
+    redirect_to admin_users_path
+  rescue ActiveRecord::RecordNotFound
     redirect_to admin_users_path
   end
 
   def export
-    users = User.from_current_user_organization(current_user.organization_id)
+    users = User.in_organization(current_organization)
     respond_to do |format|
       format.csv do
         send_data ExportUsersAsCSV.export(users),
@@ -68,8 +76,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def send_email
-    user = User.find(params[:id])
+    user = User.in_organization(current_organization).find(params[:id])
     SendEmail.send_to(current_user, user)
+    redirect_to admin_users_path
+  rescue ActiveRecord::RecordNotFound
     redirect_to admin_users_path
   end
 
