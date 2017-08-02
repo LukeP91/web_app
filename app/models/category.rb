@@ -5,5 +5,5 @@ class Category < ApplicationRecord
 
   validates :name, presence: true
 
-  scope :from_organization, ->(organization_id) { where(organization_id: organization_id) }
+  scope :in_organization, ->(organization) { where(organization: organization) }
 end
