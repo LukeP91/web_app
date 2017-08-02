@@ -6,7 +6,7 @@ class ProfilesController < ApplicationController
   def edit; end
 
   def update
-    if current_user.update_attributes(user_params)
+    if current_user.update(user_params)
       redirect_to profile_path
     else
       render 'edit'
