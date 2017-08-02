@@ -41,7 +41,7 @@ class Admin::InterestsController < ApplicationController
     authorize interest
 
     if interest.update(interest_params)
-      redirect_to admin_interest_path
+      redirect_to admin_interest_path(interest)
     else
       render :edit, locals: { interest: interest }
     end
