@@ -39,7 +39,8 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        interests_list = create_list(:interest, evaluator.interests_count)
+        binding.pry
+        interests_list = create_list(:interest, evaluator.interests_count, organization: user.organization)
         user.interests = interests_list
       end
     end
