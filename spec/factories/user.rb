@@ -4,21 +4,21 @@ FactoryGirl.define do
     last_name  { FFaker::Name.last_name }
     sequence(:email) { |n| "#{first_name}.#{last_name}_#{n}@example.com".downcase }
     admin false
-    password "password"
-    password_confirmation "password"
+    password 'password'
+    password_confirmation 'password'
     organization { build :organization }
 
     factory :admin do
-      email "admin@example.com"
+      email 'admin@example.com'
       admin true
     end
 
     trait :female do
-      gender "female"
+      gender 'female'
     end
 
     trait :male do
-      gender "male"
+      gender 'male'
     end
 
     trait :older_than_30 do
