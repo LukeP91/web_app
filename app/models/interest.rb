@@ -15,6 +15,6 @@ class Interest < ApplicationRecord
   def self.female_interests_count(organization)
     users = User.in_organization(organization).with_gender('female').with_age_between(20..30)
     with_name_starting_with('cosm').with_category('health').joins(:users_interests)
-                                   .where(users_interests: { user_id: users }).count
+      .where(users_interests: { user_id: users }).count
   end
 end
