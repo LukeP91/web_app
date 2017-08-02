@@ -40,7 +40,7 @@ class Admin::CategoriesController < ApplicationController
     category = Category.find(params[:id])
     authorize category
 
-    if category.update_attributes(category_params)
+    if category.update(category_params)
       redirect_to admin_category_path(category)
     else
       render :edit

@@ -40,7 +40,7 @@ class Admin::InterestsController < ApplicationController
     interest = Interest.find(params[:id])
     authorize interest
 
-    if interest.update_attributes(interest_params)
+    if interest.update(interest_params)
       redirect_to admin_interest_path
     else
       render :edit, locals: { interest: interest }
