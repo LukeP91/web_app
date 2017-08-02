@@ -2,7 +2,7 @@ class Admin::CategoriesController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    category = Category.from_organization(current_organization).find(params[:id])
+    category = Category.in_organization(current_organization).find(params[:id])
     authorize category
     render :show, locals: { category: category }
   rescue ActiveRecord::RecordNotFound
@@ -10,7 +10,7 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def index
-    categories = Category.from_organization(current_organization)
+    categories = Category.in_organization(current_organization)
     authorize categories
     render :index, locals: { categories: categories }
   end
@@ -33,7 +33,7 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def edit
-    category = Category.from_organization(current_organization).find(params[:id])
+    category = Category.in_organization(current_organization).find(params[:id])
     authorize category
     render :edit, locals: { category: category }
   rescue ActiveRecord::RecordNotFound
@@ -41,7 +41,7 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def update
-    category = Category.from_organization(current_organization).find(params[:id])
+    category = Category.in_organization(current_organization).find(params[:id])
     authorize category
 
     if category.update(category_params)
@@ -54,7 +54,7 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def destroy
-    category = Category.from_organization(current_organization).find(params[:id])
+    category = Category.in_organization(current_organization).find(params[:id])
     authorize category
     category.destroy
     redirect_to admin_categories_path
