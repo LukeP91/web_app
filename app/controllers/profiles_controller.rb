@@ -1,11 +1,9 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if current_user.update_attributes(user_params)
@@ -22,6 +20,6 @@ class ProfilesController < ApplicationController
   end
 
   helper_method def gender_list
-    ["male", "female"]
+    %w[male female]
   end
 end
