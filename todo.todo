@@ -17,4 +17,8 @@
 ✔ run rubocop on whole project @done (8/2/2017, 8:34:05 AM)
 
 Interests and categories belongs to organization !!!
+☐ add proper associations in models
+☐ add proper migration to double
+☐ scope interests and organization
+☐ fix factories for interest and organization
 
