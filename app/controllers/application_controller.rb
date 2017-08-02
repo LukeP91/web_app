@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     redirect_to(request.referrer || root_path, alert: t('alerts.permission_denied'))
   end
+
+  helper_method def current_organization
+    current_user.organization
+  end
 end

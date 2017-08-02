@@ -2,13 +2,15 @@ class Admin::InterestsController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    interest = Interest.find(params[:id])
+    interest = Interest.from_organization(current_organization).find(params[:id])
     authorize interest
     render :show, locals: { interest: interest }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_interests_path
   end
 
   def index
-    interests = Interest.all
+    interests = Interest.from_organization(current_organization)
     authorize interests
     render :index, locals: { interests: interests }
   end
@@ -31,13 +33,15 @@ class Admin::InterestsController < ApplicationController
   end
 
   def edit
-    interest = Interest.find(params[:id])
+    interest = Interest.from_organization(current_organization).find(params[:id])
     authorize interest
     render :edit, locals: { interest: interest }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_interests_path
   end
 
   def update
-    interest = Interest.find(params[:id])
+    interest = Interest.from_organization(current_organization).find(params[:id])
     authorize interest
 
     if interest.update(interest_params)
@@ -45,13 +49,17 @@ class Admin::InterestsController < ApplicationController
     else
       render :edit, locals: { interest: interest }
     end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_interests_path
   end
 
   def destroy
-    interest = Interest.find(params[:id])
+    interest = Interest.from_organization(current_organization).find(params[:id])
     authorize interest
     interest.destroy
     redirect_to admin_interest_path
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_interests_path
   end
 
   private
