@@ -14,11 +14,9 @@
 ✔ Remove cocoon @done (7/24/2017, 10:54:44 AM)
 ✔ Simple form select object from relation @done (7/24/2017, 10:54:49 AM)
 ✔ auto fix double quote to single quote @done (8/1/2017, 4:19:15 PM)
-✔ run rubocop on whole project @done (8/2/2017, 8:34:05 AM)
-
-Interests and categories belongs to organization !!!
-☐ add proper associations in models
-☐ add proper migration to double
-☐ scope interests and organization
-☐ fix factories for interest and organization
+✔ run rubocop on whole project @done (8/2/2017, 8:34:05 AM)śś
+✔ add proper associations in models @done (8/2/2017, 12:17:25 PM)
+✔ add proper migration to double @done (8/2/2017, 12:17:26 PM)
+✔ scope interests and organization @done (8/2/2017, 12:17:28 PM)
+✔ fix factories for interest and organization @done (8/2/2017, 12:17:29 PM)
 
