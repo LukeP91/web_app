@@ -31,11 +31,14 @@ This is a spec for a candidate evaluation app.
 
 * It serves server side rendered pages
 
-### Extra tasks
-* Add page object tests to project and add unit tests to statistic logic. Include test for search by first and last name. Age.
-
 * It has at least one custom rake task:
   * move seeds to rake task with organization name
+
+* 5 models with relations to each other
+  * At least one n-n relation
+
+### Extra tasks
+* Add page object tests to project and add unit tests to statistic logic. Include test for search by first and last name. Age.
 
 * It provide full text search (can be PostgreSQL FTS)
   * Expand search to first name, last name, age
@@ -54,9 +57,6 @@ This is a spec for a candidate evaluation app.
 
 * It serves json api (in jsonapi or graphql standard) ( Add endpoint for users) [http://jsonapi.org/]
 * Authentication & Authorization (session and token based) (Together with jsonapi)
-
-* 5 models with relations to each other
-  * At least one n-n relation
 
 * add readme to project
 
