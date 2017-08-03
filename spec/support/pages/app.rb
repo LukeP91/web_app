@@ -10,4 +10,8 @@ class App
   def edit_profile_page
     EditProfilePage.new
   end
+
+  def admin_index_page
+    Admin::IndexPage.new
+  end
 end
