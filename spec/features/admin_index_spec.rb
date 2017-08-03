@@ -12,7 +12,7 @@ describe "Admin listing", type: :feature do
       app.login_page.login(admin)
       expect(app.home_page).to be_displayed
 
-      click_link 'Admin Panel'
+      app.home_page.menu.admin_panel_link.click
       expect(app.admin_index_page).to be_displayed
     end
 
@@ -25,7 +25,7 @@ describe "Admin listing", type: :feature do
       app.login_page.login(admin)
       expect(app.home_page).to be_displayed
 
-      click_link 'Admin Panel'
+      app.home_page.menu.admin_panel_link.click
       expect(app.admin_index_page).to be_displayed
       expect(app.admin_index_page.text).to include admin.full_name
       expect(app.admin_index_page.text).to include user.full_name
@@ -42,7 +42,7 @@ describe "Admin listing", type: :feature do
       app.login_page.login(user)
       expect(app.home_page).to be_displayed
 
-      expect(page).to_not have_link 'Admin Panel'
+      expect(app.home_page.menu).to have_no_admin_panel_link
       app.admin_index_page.load
       expect(app.home_page).to be_displayed
     end
