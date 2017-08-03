@@ -4,9 +4,9 @@
 ☐ https://github.com/natritmeyer/site_prism#siteprism
 
 PageObjectMapping:
-  ☐ home
-  ☐ login
-  ☐ edit_profile
+  ✔ home @done (8/3/2017, 1:14:32 PM)
+  ✔ login @done (8/3/2017, 1:14:34 PM)
+  ✔ edit_profile @done (8/3/2017, 1:54:20 PM)
   ☐ navbar_section
   Admin:
     ☐ index
@@ -21,9 +21,9 @@ PageObjectMapping:
 
 Tests:
   Profile:
-    ☐ logged in user can see his Profile
-    ☐ user not logged in is redirected to login page
-    ☐ user can edit his profile
+    ✔ logged in user can see his Profile @done (8/3/2017, 1:14:38 PM)
+    ✔ user not logged in is redirected to login page @done (8/3/2017, 1:14:41 PM)
+    ✔ user can edit his profile @done (8/3/2017, 1:54:24 PM)
   Admin:
     ☐ can access dashboard (proper data is displayed on index page)
     ☐ can see other users profiles
