@@ -1,38 +1,60 @@
-require "rails_helper"
+require 'rails_helper'
 
-describe "Admin show", type: :feature do
-  before :each do
-    @admin = create(:admin)
-    @complete_user = create(:user_with_interests, :male, :older_than_30)
+describe 'Admin show', type: :feature do
+  context 'User with admin privileges' do
+    let(:organization) { create(:organization) }
+    let(:admin) { create(:admin, organization: organization) }
+
+    scenario 'can see users profiles from his organization' do
+      user = create(:user_with_interests, :male, :older_than_30, organization: organization)
+
+      app = App.new
+      app.home_page.load
+      app.login_page.login(admin)
+      expect(app.home_page).to be_displayed
+
+      app.home_page.menu.admin_panel_link.click
+      expect(app.admin_index_page).to be_displayed
+
+      app.admin_show_page.show_button(id: user.id.to_s).click
+      expect(app.home_page.text).to include user.full_name
+      expect(app.home_page.text).to include user.email
+      expect(app.home_page.text).to include user.first_name
+      expect(app.home_page.text).to include user.last_name
+      expect(app.home_page.text).to include user.gender
+      expect(app.home_page.text).to include user.age.to_s
+    end
+
+    scenario 'can see users profiles from his organization' do
+      user = create(:user_with_interests, :male, :older_than_30)
+
+      app = App.new
+      app.home_page.load
+      app.login_page.login(admin)
+      expect(app.home_page).to be_displayed
+
+      app.home_page.menu.admin_panel_link.click
+      expect(app.admin_index_page).to be_displayed
+
+      # page.find(:xpath, "//a[@href='/admin/users/#{user.id}']/../..").click_link('Show')
+      app.admin_show_page.load(id: user.id)
+      expect(app.admin_index_page).to be_displayed
+    end
   end
 
-  scenario "User with admin privileges can see other users profiles" do
-    visit "/"
-    within("#new_user") do
-      fill_in 'Email', with: @admin.email
-      fill_in 'Password', with: @admin.password
-    end
-    click_button 'Log in'
-    click_link 'Admin Panel'
-    expect(page).to have_css("h1", text: 'Users')
-    page.find(:xpath, "//a[@href='/admin/users/#{@complete_user.id}']/../..").click_link('Show')
-    expect(page).to have_css("h1", text: @complete_user.full_name)
-    expect(page).to have_css("p", text: @complete_user.email)
-    expect(page).to have_css("p", text: @complete_user.first_name)
-    expect(page).to have_css("p", text: @complete_user.last_name)
-    expect(page).to have_css("p", text: @complete_user.gender)
-    expect(page).to have_css("p", text: @complete_user.age)
-  end
+  context 'User without admin privileges' do
+    let(:user) { create(:user_with_interests, :male, :older_than_30) }
 
-  scenario "User without admin privileges can't see other users profiles" do
-    visit "/"
-    within("#new_user") do
-      fill_in 'Email', with: @complete_user.email
-      fill_in 'Password', with: @complete_user.password
+    scenario "can't see other users profiles" do
+      app = App.new
+      app.home_page.load
+      app.login_page.login(user)
+      expect(app.home_page).to be_displayed
+
+      expect(app.home_page.menu).to have_no_admin_panel_link
+
+      app.admin_show_page.load(id: user.id)
+      expect(app.home_page).to be_displayed
     end
-    click_button 'Log in'
-    expect(page).to_not have_link 'Admin Panel'
-    visit "/admin/users/#{@complete_user.id}"
-    expect(current_path).to eq "/"
   end
 end

@@ -2,7 +2,6 @@ require "rails_helper"
 
 describe "Admin listing", type: :feature do
   context 'user with admin privileges' do
-
     let(:organization) { create(:organization) }
     let(:admin) { create(:admin, organization: organization) }
 
