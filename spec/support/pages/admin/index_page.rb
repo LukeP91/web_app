@@ -1,3 +1,7 @@
-class Admin::IndexPage < SitePrism::Page
-  set_url '/admin/users'
+module Admin
+  class IndexPage < SitePrism::Page
+    section :menu, Sections::Menu, '.navbar'
+
+    set_url '/admin/users'
+  end
 end
