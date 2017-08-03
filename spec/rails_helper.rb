@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'support/factory_girl'
+require 'site_prism'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -58,5 +59,4 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  Capybara.javascript_driver = :webkit
 end
