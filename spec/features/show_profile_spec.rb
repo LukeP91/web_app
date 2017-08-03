@@ -44,7 +44,7 @@ describe 'Show profile', type: :feature do
       app = App.new
       app.home_page.load
 
-      expect(page).to have_content 'Log in'
+      expect(app.login_page.text).to have_content 'Log in'
     end
   end
 end

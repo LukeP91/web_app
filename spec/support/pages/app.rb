@@ -1,6 +1,3 @@
-require_relative 'home'
-require_relative 'login_page'
-
 class App
   def home_page
     Home.new
@@ -8,5 +5,9 @@ class App
 
   def login_page
     LoginPage.new
+  end
+
+  def edit_profile_page
+    EditProfilePage.new
   end
 end
