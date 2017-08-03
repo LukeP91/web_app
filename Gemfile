@@ -29,7 +29,7 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.8'
   gem 'ffaker', '~> 2.2'
   gem 'capybara', '~> 2.13'
-  gem 'capybara-webkit', '~> 1.14'
+  gem 'selenium-webdriver', '~> 3.4', '>= 3.4.4'
   gem 'site_prism', '~> 2.9'
 end
 

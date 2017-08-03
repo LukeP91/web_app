@@ -2,3 +2,63 @@
 ☐ practice zsh
 ☐ refactor service objects, each of them should implement call method
 ☐ https://github.com/natritmeyer/site_prism#siteprism
+
+PageObjectMapping:
+  ☐ home
+  ☐ login
+  ☐ edit_profile
+  ☐ navbar_section
+  Admin:
+    ☐ index
+    ☐ show
+    ☐ edit
+    ☐ new
+    Category:
+      ☐ index
+      ☐ show
+      ☐ edit
+      ☐ new
+
+Tests:
+  Profile:
+    ☐ logged in user can see his Profile
+    ☐ user not logged in is redirected to login page
+    ☐ user can edit his profile
+  Admin:
+    ☐ can access dashboard (proper data is displayed on index page)
+    ☐ can see other users profiles
+    ☐ can edit other users
+    ☐ can delete users
+    ☐ can't delete himself
+    ☐ can only see users from his organization
+    ☐ can't see profile of users from not his organization
+    ☐ can't edit users not from his organization
+    ☐ can't delete users not from his organization
+    ☐ can send email to user
+    ☐ can search by email
+    ☐ can search by first name (it should fail for now)
+    ☐ can search by last name (it should fail for now)
+    ☐ can search by age (it should fail for now)
+    Not_admin:
+      ☐ can't access dashboard (should be redirected to his profile page)
+      ☐ can't see other users profiles (should be redirected to his profile page)
+      ☐ can't edit other users (should be redirected to his profile page)
+      ☐ can't delete users (should be redirected to his profile page)
+      ☐ can't only see users from his organization (should be redirected to his profile page)
+      ☐ can't see profile of users from not his organization
+      ☐ can't edit users not from his organization
+      ☐ can't delete users not from his organization
+      ☐ can't send email to user (should be redirected to his profile page)
+      ☐ can't search by email (should be redirected to his profile page)
+      ☐ can't search by first name (should be redirected to his profile page)
+      ☐ can't search by last name (should be redirected to his profile page)
+      ☐ can't search by age (should be redirected to his profile page)
+    Interest:
+      ☐ add Interest
+      ☐ show Interest
+      ☐ edit interest
+      ☐ delete interest
+      ☐ not admin cant perform those actions
+      ☐ can see only interests belonging to admin organization
+    Category:
+      ☐ can see only categories belonging to his organization
