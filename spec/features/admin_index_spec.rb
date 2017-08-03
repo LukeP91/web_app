@@ -1,29 +1,50 @@
 require "rails_helper"
 
 describe "Admin listing", type: :feature do
-  let(:admin) { create(:admin) }
-  let(:complete_user) { create(:user_with_interests, :male, :older_than_30) }
+  context 'user with admin privileges' do
 
-  scenario "User with admin privileges can access dashboard" do
-    visit "/"
-    within("#new_user") do
-      fill_in 'Email', with: admin.email
-      fill_in 'Password', with: admin.password
+    let(:organization) { create(:organization) }
+    let(:admin) { create(:admin, organization: organization) }
+
+    scenario "can access dashboard" do
+      app = App.new
+      app.home_page.load
+      app.login_page.login(admin)
+      expect(app.home_page).to be_displayed
+
+      click_link 'Admin Panel'
+      expect(app.admin_index_page).to be_displayed
     end
-    click_button 'Log in'
-    click_link 'Admin Panel'
-    expect(page).to have_css("h1", text: 'Users')
+
+    scenario 'can see only users from his organization' do
+      user = create(:user, organization: organization)
+      user_in_other_org = create(:user)
+
+      app = App.new
+      app.home_page.load
+      app.login_page.login(admin)
+      expect(app.home_page).to be_displayed
+
+      click_link 'Admin Panel'
+      expect(app.admin_index_page).to be_displayed
+      expect(app.admin_index_page.text).to include admin.full_name
+      expect(app.admin_index_page.text).to include user.full_name
+      expect(app.admin_index_page.text).to_not include user_in_other_org.full_name
+    end
   end
 
-  scenario "User without admin privileges can't access dashboard" do
-    visit "/"
-    within("#new_user") do
-      fill_in 'Email', with: complete_user.email
-      fill_in 'Password', with: complete_user.password
+  context 'user without admin privileges' do
+    let(:user) { create(:user_with_interests, :male, :older_than_30) }
+
+    scenario "can't access dashboard" do
+      app = App.new
+      app.home_page.load
+      app.login_page.login(user)
+      expect(app.home_page).to be_displayed
+
+      expect(page).to_not have_link 'Admin Panel'
+      app.admin_index_page.load
+      expect(app.home_page).to be_displayed
     end
-    click_button 'Log in'
-    expect(page).to_not have_link 'Admin Panel'
-    visit "/admin/users"
-    expect(page).to have_css("h1", text: complete_user.full_name)
   end
 end

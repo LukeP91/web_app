@@ -19,10 +19,7 @@ describe 'Edit profile', type: :feature do
     scenario 'can edit his profile' do
       app = App.new
       app.home_page.load
-
-      app.login_page.email_field.set @user.email
-      app.login_page.password_field.set @user.password
-      app.login_page.login_button.click
+      app.login_page.login(@user)
 
       app.home_page.edit_button.click
       expect(app.edit_profile_page).to be_displayed
@@ -50,10 +47,7 @@ describe 'Edit profile', type: :feature do
 
       app = App.new
       app.home_page.load
-
-      app.login_page.email_field.set @user.email
-      app.login_page.password_field.set @user.password
-      app.login_page.login_button.click
+      app.login_page.login(@user)
 
       app.home_page.edit_button.click
       expect(app.edit_profile_page).to be_displayed

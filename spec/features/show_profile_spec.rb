@@ -9,10 +9,8 @@ describe 'Show profile', type: :feature do
     scenario 'with mandatory data can see basic info on profile' do
       app = App.new
       app.home_page.load
-
-      app.login_page.email_field.set user.email
-      app.login_page.password_field.set user.password
-      app.login_page.login_button.click
+      app.login_page.login(user)
+      expect(app.home_page).to be_displayed
 
       expect(app.home_page.text).to include user.full_name
       expect(app.home_page.text).to include user.email
@@ -25,10 +23,8 @@ describe 'Show profile', type: :feature do
     scenario 'with complete data can see all his info on profile' do
       app = App.new
       app.home_page.load
-
-      app.login_page.email_field.set complete_user.email
-      app.login_page.password_field.set complete_user.password
-      app.login_page.login_button.click
+      app.login_page.login(complete_user)
+      expect(app.home_page).to be_displayed
 
       expect(app.home_page.text).to include complete_user.full_name
       expect(app.home_page.text).to include complete_user.email
