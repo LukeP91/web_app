@@ -2,16 +2,18 @@ require 'rails_helper'
 
 describe 'Edit profile', type: :feature do
   context 'signed in user' do
-    before :each do
+    before do
       @user = create(:user, :male, :older_than_30)
     end
 
     let(:modified_user) do
-      { email: 'changed_email@example.com',
+      {
+        email: 'changed_email@example.com',
         first_name: 'Modified',
         last_name: 'Modified',
         gender: 'female',
-        age: 15 }
+        age: 15
+      }
     end
 
     scenario 'can edit his profile' do
@@ -32,6 +34,7 @@ describe 'Edit profile', type: :feature do
       app.edit_profile_page.age_field.select modified_user[:age]
       app.edit_profile_page.update_button.click
 
+      expect(app.home_page).to be_displayed
       expect(app.home_page.text).to include "#{modified_user[:first_name]} #{modified_user[:last_name]}"
       expect(app.home_page.text).to include modified_user[:email]
       expect(app.home_page.text).to include modified_user[:first_name]
@@ -59,6 +62,7 @@ describe 'Edit profile', type: :feature do
       app.edit_profile_page.interests_field.select 'test2'
       app.edit_profile_page.update_button.click
 
+      expect(app.home_page).to be_displayed
       expect(app.home_page.text).to include('test1', 'test2')
       expect(app.home_page.text).to_not include 'test3'
     end
@@ -69,7 +73,7 @@ describe 'Edit profile', type: :feature do
       app = App.new
       app.home_page.load
 
-      expect(app.login_page.text).to have_content 'Log in'
+      expect(app.login_page).to be_displayed
     end
   end
 end
