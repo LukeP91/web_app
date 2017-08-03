@@ -1,6 +1,6 @@
 class App
   def home_page
-    Home.new
+    Profile::Home.new
   end
 
   def login_page
@@ -8,7 +8,7 @@ class App
   end
 
   def edit_profile_page
-    EditProfilePage.new
+    Profile::EditPage.new
   end
 
   def admin_index_page

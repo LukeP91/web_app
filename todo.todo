@@ -30,7 +30,7 @@ Tests:
     ☐ can edit other users
     ☐ can delete users
     ☐ can't delete himself
-    ☐ can only see users from his organization
+    ✔ can only see users from his organization @done (8/3/2017, 3:13:22 PM)
     ☐ can't see profile of users from not his organization
     ☐ can't edit users not from his organization
     ☐ can't delete users not from his organization
