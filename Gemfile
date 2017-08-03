@@ -30,6 +30,7 @@ group :development, :test do
   gem 'ffaker', '~> 2.2'
   gem 'capybara', '~> 2.13'
   gem 'capybara-webkit', '~> 1.14'
+  gem 'site_prism', '~> 2.9'
 end
 
 group :development do
