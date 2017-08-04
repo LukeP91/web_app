@@ -16,14 +16,14 @@ describe 'Admin show', type: :feature do
       app.home_page.menu.admin_panel_link.click
       expect(app.admin_index_page).to be_displayed
 
-      app.admin_show_page.show_button(user.id).click
-
-      expect(app.home_page.text).to include user.full_name
-      expect(app.home_page.text).to include user.email
-      expect(app.home_page.text).to include user.first_name
-      expect(app.home_page.text).to include user.last_name
-      expect(app.home_page.text).to include user.gender
-      expect(app.home_page.text).to include user.age.to_s
+      app.admin_index_page.show_button(user.id).click
+      expect(app.admin_show_page).to be_displayed
+      expect(app.admin_show_page.text).to include user.full_name
+      expect(app.admin_show_page.text).to include user.email
+      expect(app.admin_show_page.text).to include user.first_name
+      expect(app.admin_show_page.text).to include user.last_name
+      expect(app.admin_show_page.text).to include user.gender
+      expect(app.admin_show_page.text).to include user.age.to_s
     end
 
     scenario "can't see users profiles from his organization" do
@@ -44,15 +44,13 @@ describe 'Admin show', type: :feature do
   end
 
   context 'User without admin privileges' do
-    let(:user) { create(:user_with_interests, :male, :older_than_30) }
+    let(:user) { create(:user) }
 
     scenario "can't see other users profiles" do
       app = App.new
       app.home_page.load
       app.login_page.login(user)
       expect(app.home_page).to be_displayed
-
-      expect(app.home_page.menu).to have_no_admin_panel_link
 
       app.admin_show_page.load(id: user.id)
       expect(app.home_page).to be_displayed

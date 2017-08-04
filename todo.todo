@@ -9,9 +9,9 @@ PageObjectMapping:
   ✔ edit_profile @done (8/3/2017, 1:54:20 PM)
   ☐ navbar_section
   Admin:
-    ☐ index
-    ☐ show
-    ☐ edit
+    ✔ index @done (8/4/2017, 10:42:40 AM)
+    ✔ show @done (8/4/2017, 10:42:45 AM)
+    ✔ edit @done (8/4/2017, 11:26:48 AM)
     ☐ new
     Category:
       ☐ index
@@ -26,13 +26,13 @@ Tests:
     ✔ user can edit his profile @done (8/3/2017, 1:54:24 PM)
   Admin:
     ☐ can access dashboard (proper data is displayed on index page)
-    ☐ can see other users profiles
-    ☐ can edit other users
+    ✔ can see other users profiles @done (8/4/2017, 10:42:50 AM)
+    ✔ can edit other users @done (8/4/2017, 11:26:52 AM)
     ☐ can delete users
     ☐ can't delete himself
     ✔ can only see users from his organization @done (8/3/2017, 3:13:22 PM)
-    ☐ can't see profile of users from not his organization
-    ☐ can't edit users not from his organization
+    ✔ can't see profile of users from not his organization @done (8/4/2017, 10:42:54 AM)
+    ✔ can't edit users not from his organization @done (8/4/2017, 11:26:59 AM)
     ☐ can't delete users not from his organization
     ☐ can send email to user
     ☐ can search by email
@@ -40,14 +40,10 @@ Tests:
     ☐ can search by last name (it should fail for now)
     ☐ can search by age (it should fail for now)
     Not_admin:
-      ☐ can't access dashboard (should be redirected to his profile page)
-      ☐ can't see other users profiles (should be redirected to his profile page)
-      ☐ can't edit other users (should be redirected to his profile page)
+      ✔ can't access dashboard (should be redirected to his profile page) @done (8/4/2017, 10:43:02 AM)
+      ✔ can't see other users profiles (should be redirected to his profile page) @done (8/4/2017, 10:43:03 AM)
+      ✔ can't edit other users (should be redirected to his profile page) @done (8/4/2017, 11:27:02 AM)
       ☐ can't delete users (should be redirected to his profile page)
-      ☐ can't only see users from his organization (should be redirected to his profile page)
-      ☐ can't see profile of users from not his organization
-      ☐ can't edit users not from his organization
-      ☐ can't delete users not from his organization
       ☐ can't send email to user (should be redirected to his profile page)
       ☐ can't search by email (should be redirected to his profile page)
       ☐ can't search by first name (should be redirected to his profile page)
