@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin delete', type: :feature do
+describe 'Admin::Users#delete', type: :feature do
   context 'User with admin privileges' do
     let(:organization) { create(:organization) }
     let(:admin) { create(:admin, organization: organization) }

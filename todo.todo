@@ -17,9 +17,9 @@ PageObjectMapping:
     ☐ new
     Category:
       ☐ index
+    Interest:
+      ☐ index
       ☐ show
-      ☐ edit
-      ☐ new
 
 Tests:
   Profile:
