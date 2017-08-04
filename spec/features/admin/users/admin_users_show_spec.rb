@@ -14,16 +14,16 @@ describe 'Admin show', type: :feature do
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
-      expect(app.admin_index_page).to be_displayed
+      expect(app.admin_users_index_page).to be_displayed
 
-      app.admin_index_page.show_button(user.id).click
-      expect(app.admin_show_page).to be_displayed
-      expect(app.admin_show_page.text).to include user.full_name
-      expect(app.admin_show_page.text).to include user.email
-      expect(app.admin_show_page.text).to include user.first_name
-      expect(app.admin_show_page.text).to include user.last_name
-      expect(app.admin_show_page.text).to include user.gender
-      expect(app.admin_show_page.text).to include user.age.to_s
+      app.admin_users_index_page.show_button(user.id).click
+      expect(app.admin_users_show_page).to be_displayed
+      expect(app.admin_users_show_page.text).to include user.full_name
+      expect(app.admin_users_show_page.text).to include user.email
+      expect(app.admin_users_show_page.text).to include user.first_name
+      expect(app.admin_users_show_page.text).to include user.last_name
+      expect(app.admin_users_show_page.text).to include user.gender
+      expect(app.admin_users_show_page.text).to include user.age.to_s
     end
 
     scenario "can't see users profiles outside his organization" do
@@ -35,11 +35,11 @@ describe 'Admin show', type: :feature do
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
-      expect(app.admin_index_page).to be_displayed
+      expect(app.admin_users_index_page).to be_displayed
 
       expect(page).to_not have_xpath "user_show_#{user.id}"
-      app.admin_show_page.load(id: user.id)
-      expect(app.admin_index_page).to be_displayed
+      app.admin_users_show_page.load(id: user.id)
+      expect(app.admin_users_index_page).to be_displayed
     end
   end
 
@@ -52,7 +52,7 @@ describe 'Admin show', type: :feature do
       app.login_page.login(user)
       expect(app.home_page).to be_displayed
 
-      app.admin_show_page.load(id: user.id)
+      app.admin_users_show_page.load(id: user.id)
       expect(app.home_page).to be_displayed
     end
   end

@@ -11,19 +11,19 @@ class App
     Profile::EditPage.new
   end
 
-  def admin_index_page
+  def admin_users_index_page
     Admin::Users::IndexPage.new
   end
 
-  def admin_show_page
+  def admin_users_show_page
     Admin::Users::ShowPage.new
   end
 
-  def admin_edit_page
+  def admin_users_edit_page
     Admin::Users::EditPage.new
   end
 
-  def admin_new_page
+  def admin_users_new_page
     Admin::Users::NewPage.new
   end
 
