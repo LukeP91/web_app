@@ -1,9 +1,5 @@
-module Admin
-  class EditPage < SitePrism::Page
-    section :form, Sections::UserForm, '#form'
-
-    set_url "/admin/users/{id}/edit"
-
+module Sections
+  class UserForm < SitePrism::Section
     element :email_field, '#user_email'
     element :first_name_field, '#user_first_name'
     element :last_name_field, '#user_last_name'

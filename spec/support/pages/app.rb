@@ -22,4 +22,8 @@ class App
   def admin_edit_page
     Admin::EditPage.new
   end
+
+  def admin_new_page
+    Admin::NewPage.new
+  end
 end

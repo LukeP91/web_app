@@ -1,7 +1,9 @@
 ☐ practice git commands for rebase and solving merge conflicts
 ☐ practice zsh
 ☐ refactor service objects, each of them should implement call method
-☐ https://github.com/natritmeyer/site_prism#siteprism
+✔ https://github.com/natritmeyer/site_prism#siteprism @done (8/4/2017, 12:20:13 PM)
+✔ add css selectors to buttons @done (8/4/2017, 1:25:11 PM)
+☐ fix creating new user (when creating new user with interest it returns null constraint)
 
 PageObjectMapping:
   ✔ home @done (8/3/2017, 1:14:32 PM)
@@ -25,36 +27,33 @@ Tests:
     ✔ user not logged in is redirected to login page @done (8/3/2017, 1:14:41 PM)
     ✔ user can edit his profile @done (8/3/2017, 1:54:24 PM)
   Admin:
-    ☐ can access dashboard (proper data is displayed on index page)
+    ✔ can access dashboard @done (8/4/2017, 1:09:58 PM)
     ✔ can see other users profiles @done (8/4/2017, 10:42:50 AM)
     ✔ can edit other users @done (8/4/2017, 11:26:52 AM)
-    ☐ can delete users
-    ☐ can't delete himself
+    ✔ can delete users @done (8/4/2017, 12:19:53 PM)
+    ✔ can't delete himself @done (8/4/2017, 12:19:54 PM)
     ✔ can only see users from his organization @done (8/3/2017, 3:13:22 PM)
     ✔ can't see profile of users from not his organization @done (8/4/2017, 10:42:54 AM)
     ✔ can't edit users not from his organization @done (8/4/2017, 11:26:59 AM)
-    ☐ can't delete users not from his organization
+    ✔ can't delete users not from his organization @done (8/4/2017, 12:19:58 PM)
     ☐ can send email to user
-    ☐ can search by email
-    ☐ can search by first name (it should fail for now)
-    ☐ can search by last name (it should fail for now)
-    ☐ can search by age (it should fail for now)
-    Not_admin:
-      ✔ can't access dashboard (should be redirected to his profile page) @done (8/4/2017, 10:43:02 AM)
-      ✔ can't see other users profiles (should be redirected to his profile page) @done (8/4/2017, 10:43:03 AM)
-      ✔ can't edit other users (should be redirected to his profile page) @done (8/4/2017, 11:27:02 AM)
-      ☐ can't delete users (should be redirected to his profile page)
-      ☐ can't send email to user (should be redirected to his profile page)
-      ☐ can't search by email (should be redirected to his profile page)
-      ☐ can't search by first name (should be redirected to his profile page)
-      ☐ can't search by last name (should be redirected to his profile page)
-      ☐ can't search by age (should be redirected to his profile page)
+    ✔ can search by email @done (8/4/2017, 1:10:04 PM)
+    ✔ can search by first name (it should fail for now) @done (8/4/2017, 1:10:07 PM)
+    ✔ can search by last name (it should fail for now) @done (8/4/2017, 1:10:08 PM)
+    ✔ can search by age (it should fail for now) @done (8/4/2017, 1:10:09 PM)
+    ✔ admin can add new user ( should have the same organization) @done (8/4/2017, 1:45:19 PM)
     Interest:
-      ☐ add Interest
       ☐ show Interest
-      ☐ edit interest
-      ☐ delete interest
-      ☐ not admin cant perform those actions
       ☐ can see only interests belonging to admin organization
     Category:
       ☐ can see only categories belonging to his organization
+  Not_admin:
+    ✔ can't access dashboard (should be redirected to his profile page) @done (8/4/2017, 10:43:02 AM)
+    ✔ can't see other users profiles (should be redirected to his profile page) @done (8/4/2017, 10:43:03 AM)
+    ✔ can't edit other users (should be redirected to his profile page) @done (8/4/2017, 11:27:02 AM)
+    ✔ can't delete users (should be redirected to his profile page) @done (8/4/2017, 12:20:02 PM)
+    ☐ can't send email to user (should be redirected to his profile page)
+    ✔ can't search by email (should be redirected to his profile page) @done (8/4/2017, 1:10:15 PM)
+    ✔ can't add new users @done (8/4/2017, 1:45:22 PM)
+  Unit tests:
+    ☐ add unit tests for statistics

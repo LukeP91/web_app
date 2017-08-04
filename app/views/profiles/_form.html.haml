@@ -1,4 +1,4 @@
-= simple_form_for current_user, url: profile_path, method: :patch, html: { class: 'form-horizontal' } do |f|
+= simple_form_for current_user, url: profile_path, method: :patch, html: { class: 'form-horizontal', id: 'form'} do |f|
   = f.input :email
 
   = f.error_span :email
@@ -20,7 +20,7 @@
   = f.error_span :age
 
   %h3 Interests
-  
+
   = f.association :interests, include_blank: false
 
   = f.error_span :interests

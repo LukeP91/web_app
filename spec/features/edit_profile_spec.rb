@@ -24,12 +24,12 @@ describe 'Edit profile', type: :feature do
       app.home_page.edit_button.click
       expect(app.edit_profile_page).to be_displayed
 
-      app.edit_profile_page.email_field.set modified_user[:email]
-      app.edit_profile_page.first_name_field.set modified_user[:first_name]
-      app.edit_profile_page.last_name_field.set modified_user[:last_name]
-      app.edit_profile_page.gender_field.select modified_user[:gender]
-      app.edit_profile_page.age_field.select modified_user[:age]
-      app.edit_profile_page.update_button.click
+      app.edit_profile_page.form.email_field.set modified_user[:email]
+      app.edit_profile_page.form.first_name_field.set modified_user[:first_name]
+      app.edit_profile_page.form.last_name_field.set modified_user[:last_name]
+      app.edit_profile_page.form.gender_field.select modified_user[:gender]
+      app.edit_profile_page.form.age_field.select modified_user[:age]
+      app.edit_profile_page.form.confirm_button.click
 
       expect(app.home_page).to be_displayed
       expect(app.home_page.text).to include "#{modified_user[:first_name]} #{modified_user[:last_name]}"
@@ -52,9 +52,9 @@ describe 'Edit profile', type: :feature do
       app.home_page.edit_button.click
       expect(app.edit_profile_page).to be_displayed
 
-      app.edit_profile_page.interests_field.select 'test1'
-      app.edit_profile_page.interests_field.select 'test2'
-      app.edit_profile_page.update_button.click
+      app.edit_profile_page.form.interests_field.select 'test1'
+      app.edit_profile_page.form.interests_field.select 'test2'
+      app.edit_profile_page.form.confirm_button.click
 
       expect(app.home_page).to be_displayed
       expect(app.home_page.text).to include('test1', 'test2')
