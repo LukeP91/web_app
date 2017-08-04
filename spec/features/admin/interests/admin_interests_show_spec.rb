@@ -43,7 +43,7 @@ describe 'Admin interests show', type: :feature do
   context 'User without admin privileges' do
     let(:user) { create(:user) }
 
-    scenario "can't access interests index" do
+    scenario "can't access interest show page" do
       interest = create(:interest)
 
       app = App.new

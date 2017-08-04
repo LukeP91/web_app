@@ -5,8 +5,8 @@ module Admin
 
       set_url '/admin/users{?query*}'
 
-      element :search_field, '#user_search > input[type="search"]:nth-child(2)'
-      element :search_button, '#user_search > input.btn.btn-default'
+      element :search_field, '#user_search_field'
+      element :search_button, '#user_search_button'
       element :create_user_button, '#new_user'
 
       def show_button(id)
