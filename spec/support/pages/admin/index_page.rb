@@ -11,5 +11,9 @@ module Admin
     def edit_button(id)
       find(:xpath, "//a[@href='/admin/users/#{id}/edit']")
     end
+
+    def delete_button(id)
+      find(:xpath, "//a[@href='/admin/users/#{id}' and @data-method='delete']")
+    end
   end
 end

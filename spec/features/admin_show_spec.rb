@@ -26,7 +26,7 @@ describe 'Admin show', type: :feature do
       expect(app.admin_show_page.text).to include user.age.to_s
     end
 
-    scenario "can't see users profiles from his organization" do
+    scenario "can't see users profiles outside his organization" do
       user = create(:user_with_interests, :male, :older_than_30)
 
       app = App.new

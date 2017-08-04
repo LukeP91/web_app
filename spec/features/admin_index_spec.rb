@@ -1,11 +1,11 @@
-require "rails_helper"
+require 'rails_helper'
 
-describe "Admin listing", type: :feature do
+describe 'Admin listing', type: :feature do
   context 'user with admin privileges' do
     let(:organization) { create(:organization) }
     let(:admin) { create(:admin, organization: organization) }
 
-    scenario "can access dashboard" do
+    scenario 'can access dashboard' do
       app = App.new
       app.home_page.load
       app.login_page.login(admin)

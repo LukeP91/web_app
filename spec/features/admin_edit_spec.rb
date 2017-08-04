@@ -43,7 +43,7 @@ describe 'Admin edit', type: :feature do
       expect(app.admin_show_page.text).to include 'test1'
     end
 
-    scenario "can't edit users from his organization" do
+    scenario "can't edit users outside his organization" do
       user = create(:user, :male, :older_than_30)
 
       app = App.new
