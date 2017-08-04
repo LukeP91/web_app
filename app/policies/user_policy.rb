@@ -1,6 +1,6 @@
 class UserPolicy < ApplicationPolicy
   def show?
-    user.admin?
+    user.admin? && (user.organization_id == record.organization_id)
   end
 
   def index?
@@ -16,14 +16,14 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.admin?
+    user.admin? && (user.organization_id == record.organization_id)
   end
 
   def update?
-    user.admin?
+    user.admin? && (user.organization_id == record.organization_id)
   end
 
   def destroy?
-    user.admin?
+    user.admin? && (record.id != user.id)
   end
 end

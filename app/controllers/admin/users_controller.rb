@@ -83,7 +83,7 @@ class Admin::UsersController < ApplicationController
     redirect_to admin_users_path
   end
 
-  private
+private
 
   def user_params
     if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
