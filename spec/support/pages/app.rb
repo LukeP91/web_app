@@ -30,4 +30,12 @@ class App
   def admin_categories_index_page
     Admin::Categories::IndexPage.new
   end
+
+  def admin_interests_index_page
+    Admin::Interests::IndexPage.new
+  end
+
+  def admin_interests_show_page
+    Admin::Interests::ShowPage.new
+  end
 end
