@@ -20,6 +20,10 @@ module Admin
       def delete_button(id)
         find(:css, "#user_delete_#{id}")
       end
+
+      def send_email_button(id)
+        find(:css, "#user_send_email_#{id}")
+      end
     end
   end
 end
