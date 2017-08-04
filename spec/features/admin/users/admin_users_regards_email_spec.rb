@@ -40,6 +40,7 @@ describe 'Admin send regards email', type: :feature do
 
       expect(page).to_not have_css "user_send_email_#{user.id}"
       page.driver.submit :get, "/admin/users/#{user.id}/send_email", {}
+      expect(ActionMailer::Base.deliveries.count).to eq 0
       expect(app.admin_users_index_page).to be_displayed
     end
   end
@@ -54,6 +55,7 @@ describe 'Admin send regards email', type: :feature do
       expect(app.home_page).to be_displayed
 
       page.driver.submit :get, "/admin/users/#{user.id}/send_email", {}
+      expect(ActionMailer::Base.deliveries.count).to eq 0
       expect(app.home_page).to be_displayed
     end
   end

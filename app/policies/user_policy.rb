@@ -26,4 +26,8 @@ class UserPolicy < ApplicationPolicy
   def destroy?
     user.admin? && (record.id != user.id)
   end
+
+  def send_email?
+    user.admin? && (user.organization_id == record.organization_id)
+  end
 end
