@@ -15,12 +15,12 @@ describe 'Admin search', type: :feature do
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
-      expect(app.admin_index_page).to be_displayed
-      app.admin_index_page.search_field.set @user.email
-      app.admin_index_page.search_button.click
+      expect(app.admin_users_index_page).to be_displayed
+      app.admin_users_index_page.search_field.set @user.email
+      app.admin_users_index_page.search_button.click
 
-      expect(app.admin_index_page.text).to include @user.email
-      expect(app.admin_index_page.text).to_not include @admin.email
+      expect(app.admin_users_index_page.text).to include @user.email
+      expect(app.admin_users_index_page.text).to_not include @admin.email
     end
 
     xscenario 'can search by first name' do
@@ -30,12 +30,12 @@ describe 'Admin search', type: :feature do
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
-      expect(app.admin_index_page).to be_displayed
-      app.admin_index_page.search_field.set @user.first_name
-      app.admin_index_page.search_button.click
+      expect(app.admin_users_index_page).to be_displayed
+      app.admin_users_index_page.search_field.set @user.first_name
+      app.admin_users_index_page.search_button.click
 
-      expect(app.admin_index_page.text).to include @user.email
-      expect(app.admin_index_page.text).to_not include @admin.email
+      expect(app.admin_users_index_page.text).to include @user.email
+      expect(app.admin_users_index_page.text).to_not include @admin.email
     end
 
     xscenario 'can search by last name' do
@@ -45,12 +45,12 @@ describe 'Admin search', type: :feature do
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
-      expect(app.admin_index_page).to be_displayed
-      app.admin_index_page.search_field.set @user.last_name
-      app.admin_index_page.search_button.click
+      expect(app.admin_users_index_page).to be_displayed
+      app.admin_users_index_page.search_field.set @user.last_name
+      app.admin_users_index_page.search_button.click
 
-      expect(app.admin_index_page.text).to include @user.email
-      expect(app.admin_index_page.text).to_not include @admin.email
+      expect(app.admin_users_index_page.text).to include @user.email
+      expect(app.admin_users_index_page.text).to_not include @admin.email
     end
 
     xscenario 'can search by age' do
@@ -60,12 +60,12 @@ describe 'Admin search', type: :feature do
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
-      expect(app.admin_index_page).to be_displayed
-      app.admin_index_page.search_field.set @user.age
-      app.admin_index_page.search_button.click
+      expect(app.admin_users_index_page).to be_displayed
+      app.admin_users_index_page.search_field.set @user.age
+      app.admin_users_index_page.search_button.click
 
-      expect(app.admin_index_page.text).to include @user.email
-      expect(app.admin_index_page.text).to_not include @admin.email
+      expect(app.admin_users_index_page.text).to include @user.email
+      expect(app.admin_users_index_page.text).to_not include @admin.email
     end
 
     xscenario 'can search by gender' do
@@ -75,12 +75,12 @@ describe 'Admin search', type: :feature do
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
-      expect(app.admin_index_page).to be_displayed
-      app.admin_index_page.search_field.set @user.gender
-      app.admin_index_page.search_button.click
+      expect(app.admin_users_index_page).to be_displayed
+      app.admin_users_index_page.search_field.set @user.gender
+      app.admin_users_index_page.search_button.click
 
-      expect(app.admin_index_page.text).to include @user.email
-      expect(app.admin_index_page.text).to_not include @admin.email
+      expect(app.admin_users_index_page.text).to include @user.email
+      expect(app.admin_users_index_page.text).to_not include @admin.email
     end
 
     xscenario 'search only displayes users from his organization' do
@@ -91,11 +91,11 @@ describe 'Admin search', type: :feature do
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
-      expect(app.admin_index_page).to be_displayed
-      app.admin_index_page.search_field.set user.email
-      app.admin_index_page.search_button.click
+      expect(app.admin_users_index_page).to be_displayed
+      app.admin_users_index_page.search_field.set user.email
+      app.admin_users_index_page.search_button.click
 
-      expect(app.admin_index_page.text).to_not include user.email
+      expect(app.admin_users_index_page.text).to_not include user.email
     end
   end
 
@@ -109,7 +109,7 @@ describe 'Admin search', type: :feature do
       expect(app.home_page).to be_displayed
 
       expect(app.home_page.menu).to have_no_admin_panel_link
-      app.admin_index_page.load(query: { utf8: '✓', email_cont: user.email })
+      app.admin_users_index_page.load(query: { utf8: '✓', email_cont: user.email })
       expect(app.home_page).to be_displayed
     end
   end

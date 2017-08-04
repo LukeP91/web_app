@@ -12,7 +12,7 @@ describe 'Admin listing', type: :feature do
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
-      expect(app.admin_index_page).to be_displayed
+      expect(app.admin_users_index_page).to be_displayed
     end
 
     scenario 'can see only users from his organization' do
@@ -25,10 +25,10 @@ describe 'Admin listing', type: :feature do
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
-      expect(app.admin_index_page).to be_displayed
-      expect(app.admin_index_page.text).to include admin.full_name
-      expect(app.admin_index_page.text).to include user.full_name
-      expect(app.admin_index_page.text).to_not include user_in_other_org.full_name
+      expect(app.admin_users_index_page).to be_displayed
+      expect(app.admin_users_index_page.text).to include admin.full_name
+      expect(app.admin_users_index_page.text).to include user.full_name
+      expect(app.admin_users_index_page.text).to_not include user_in_other_org.full_name
     end
   end
 
@@ -42,7 +42,7 @@ describe 'Admin listing', type: :feature do
       expect(app.home_page).to be_displayed
 
       expect(app.home_page.menu).to have_no_admin_panel_link
-      app.admin_index_page.load
+      app.admin_users_index_page.load
       expect(app.home_page).to be_displayed
     end
   end
