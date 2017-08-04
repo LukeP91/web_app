@@ -3,8 +3,8 @@
     = menu_item "Profile", root_path
     - if current_user.admin
       = drop_down "Admin" do
-        = menu_item "Admin Panel", admin_users_path
-        = menu_item "Categories", admin_categories_path
-        = menu_item "Interests", admin_interests_path
+        = menu_item "Admin Panel", admin_users_path, id: 'admin_users_index_link'
+        = menu_item "Categories", admin_categories_path, id: 'admin_categories_index_link'
+        = menu_item "Interests", admin_interests_path, id: 'admin_interests_index_link'
   = menu_group pull: :right do
     = menu_item "Log Out", destroy_user_session_path, method: :delete

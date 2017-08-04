@@ -11,8 +11,8 @@
 PageObjectMapping:
   ✔ home @done (8/3/2017, 1:14:32 PM)
   ✔ login @done (8/3/2017, 1:14:34 PM)
-  ✔ edit_profile @done (8/3/2017, 1:54:20 PM)
-  ☐ navbar_section
+  ✔ edit_profile @done (8/4/2017, 3:03:56 PM)
+  ✔ navbar_section @done (8/4/2017, 3:03:57 PM)
   Admin:
     ✔ index @done (8/4/2017, 10:42:40 AM)
     ✔ show @done (8/4/2017, 10:42:45 AM)
@@ -21,8 +21,8 @@ PageObjectMapping:
     Category:
       ✔ index @done (8/4/2017, 2:34:43 PM)
     Interest:
-      ☐ index
-      ☐ show
+      ✔ index @done (8/4/2017, 3:03:50 PM)
+      ✔ show @done (8/4/2017, 3:03:51 PM)
 
 Tests:
   Profile:
@@ -46,8 +46,8 @@ Tests:
     ✔ can search by age (it should fail for now) @done (8/4/2017, 1:10:09 PM)
     ✔ admin can add new user ( should have the same organization) @done (8/4/2017, 1:45:19 PM)
     Interest:
-      ☐ show Interest
-      ☐ can see only interests belonging to admin organization
+      ✔ show Interest @done (8/4/2017, 3:04:04 PM)
+      ✔ can see only interests belonging to admin organization @done (8/4/2017, 3:04:05 PM)
     Category:
       ✔ can see only categories belonging to his organization @done (8/4/2017, 2:34:48 PM)
   Not_admin:
