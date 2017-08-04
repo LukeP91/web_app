@@ -12,18 +12,22 @@ class App
   end
 
   def admin_index_page
-    Admin::IndexPage.new
+    Admin::Users::IndexPage.new
   end
 
   def admin_show_page
-    Admin::ShowPage.new
+    Admin::Users::ShowPage.new
   end
 
   def admin_edit_page
-    Admin::EditPage.new
+    Admin::Users::EditPage.new
   end
 
   def admin_new_page
-    Admin::NewPage.new
+    Admin::Users::NewPage.new
+  end
+
+  def admin_categories_index_page
+    Admin::Categories::IndexPage.new
   end
 end
