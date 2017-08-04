@@ -16,8 +16,8 @@
         - else
           %td
         %td
-          = link_to t('.show', default: t("helpers.links.show")), admin_interest_path(interest), class: 'btn btn-default btn-xs'
-          = link_to t('.edit', default: t("helpers.links.edit")), edit_admin_interest_path(interest), class: 'btn btn-default btn-xs'
-          = link_to t('.destroy', default: t("helpers.links.destroy")), admin_interest_path(interest), method: :delete, data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-xs btn-danger'
+          = link_to t('.show', default: t("helpers.links.show")), admin_interest_path(interest), class: 'btn btn-default btn-xs', id: "interest_show_#{interest.id}"
+          = link_to t('.edit', default: t("helpers.links.edit")), edit_admin_interest_path(interest), class: 'btn btn-default btn-xs', id: "interest_edit_#{interest.id}"
+          = link_to t('.destroy', default: t("helpers.links.destroy")), admin_interest_path(interest), method: :delete, data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-xs btn-danger', id: "interest_delete_#{interest.id}"
 
 = link_to t('.new', default: t("helpers.links.new")), new_admin_interest_path, class: 'btn btn-primary'

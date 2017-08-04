@@ -54,7 +54,7 @@ describe 'Admin edit', type: :feature do
       app.home_page.menu.admin_panel_link.click
       expect(app.admin_index_page).to be_displayed
 
-      expect(page).to_not have_xpath "//a[@href='/admin/users/#{user.id}/edit']"
+      expect(page).to_not have_css "user_edit_#{user.id}"
       app.admin_edit_page.load(id: user.id)
       expect(app.admin_index_page).to be_displayed
     end
