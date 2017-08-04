@@ -18,4 +18,8 @@ class App
   def admin_show_page
     Admin::ShowPage.new
   end
+
+  def admin_edit_page
+    Admin::EditPage.new
+  end
 end
