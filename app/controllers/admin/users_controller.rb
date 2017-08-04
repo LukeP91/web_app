@@ -77,6 +77,7 @@ class Admin::UsersController < ApplicationController
 
   def send_email
     user = User.in_organization(current_organization).find(params[:id])
+    authorize user
     SendEmail.send_to(current_user, user)
     redirect_to admin_users_path
   rescue ActiveRecord::RecordNotFound
