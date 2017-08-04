@@ -16,7 +16,8 @@ describe 'Admin show', type: :feature do
       app.home_page.menu.admin_panel_link.click
       expect(app.admin_index_page).to be_displayed
 
-      app.admin_show_page.show_button(id: user.id.to_s).click
+      app.admin_show_page.show_button(user.id).click
+
       expect(app.home_page.text).to include user.full_name
       expect(app.home_page.text).to include user.email
       expect(app.home_page.text).to include user.first_name
@@ -25,7 +26,7 @@ describe 'Admin show', type: :feature do
       expect(app.home_page.text).to include user.age.to_s
     end
 
-    scenario 'can see users profiles from his organization' do
+    scenario "can't see users profiles from his organization" do
       user = create(:user_with_interests, :male, :older_than_30)
 
       app = App.new
@@ -36,7 +37,7 @@ describe 'Admin show', type: :feature do
       app.home_page.menu.admin_panel_link.click
       expect(app.admin_index_page).to be_displayed
 
-      # page.find(:xpath, "//a[@href='/admin/users/#{user.id}']/../..").click_link('Show')
+      expect(page).to_not have_xpath "//a[@href='/admin/users/#{user.id}']/span[text()='Show']/.."
       app.admin_show_page.load(id: user.id)
       expect(app.admin_index_page).to be_displayed
     end
