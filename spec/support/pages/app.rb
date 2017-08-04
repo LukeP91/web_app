@@ -35,7 +35,7 @@ class App
     Admin::Interests::IndexPage.new
   end
 
-  def admin_interests_show_page
+  def admin_interest_show_page
     Admin::Interests::ShowPage.new
   end
 end

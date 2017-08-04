@@ -37,7 +37,7 @@ describe 'Admin show', type: :feature do
       app.home_page.menu.admin_panel_link.click
       expect(app.admin_index_page).to be_displayed
 
-      expect(page).to_not have_xpath "//a[@href='/admin/users/#{user.id}']/span[text()='Show']/.."
+      expect(page).to_not have_xpath "user_show_#{user.id}"
       app.admin_show_page.load(id: user.id)
       expect(app.admin_index_page).to be_displayed
     end

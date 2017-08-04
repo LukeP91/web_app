@@ -30,7 +30,7 @@ describe 'Admin::Users#delete', type: :feature do
       app.home_page.menu.admin_panel_link.click
       expect(app.admin_index_page).to be_displayed
 
-      expect(page).to_not have_xpath "//a[@href='/admin/users/#{user.id}' and @data-method='delete']"
+      expect(page).to_not have_css "#user_delete_#{user.id}"
       page.driver.submit :delete, "/admin/users/#{user.id}", {}
       expect(app.admin_index_page).to be_displayed
       expect(User.count).to eq 2
@@ -44,7 +44,7 @@ describe 'Admin::Users#delete', type: :feature do
 
       app.home_page.menu.admin_panel_link.click
       expect(app.admin_index_page).to be_displayed
-      expect(page).to_not have_xpath "//a[@href='/admin/users/#{admin.id}' and @data-method='delete']"
+      expect(page).to_not have_css "#user_delete_#{admin.id}"
       page.driver.submit :delete, "/admin/users/#{admin.id}", {}
       expect(app.admin_index_page).to be_displayed
       expect(User.count).to eq 1
