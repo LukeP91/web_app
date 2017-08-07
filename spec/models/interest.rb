@@ -16,7 +16,7 @@ RSpec.describe Interest, type: :model do
     end
 
     it 'counts only interests starting with cosm' do
-      without_cosm_prefix_interest = create(:interest, name: "jogging", category: health_category, organization: organization)
+      without_cosm_prefix_interest = create(:interest, name: 'jogging', category: health_category, organization: organization)
       alice.interests = [health_interest, without_cosm_prefix_interest]
 
       expect(Interest.female_interests_count(organization)).to eq 1
