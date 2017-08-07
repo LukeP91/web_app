@@ -2,15 +2,17 @@ require 'rails_helper'
 
 describe 'Admin show', type: :feature do
   context 'User with admin privileges' do
-    let(:organization) { create(:organization) }
-    let(:admin) { create(:admin, organization: organization) }
+    before do
+      @organization = create(:organization)
+      @admin = create(:admin, organization: @organization)
+    end
 
     scenario 'can see users profiles from his organization' do
-      user = create(:user_with_interests, :male, :older_than_30, organization: organization)
+      user = create(:user_with_interests, :male, :older_than_30, organization: @organization)
 
       app = App.new
       app.home_page.load
-      app.login_page.login(admin)
+      app.login_page.login(@admin)
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
@@ -31,7 +33,7 @@ describe 'Admin show', type: :feature do
 
       app = App.new
       app.home_page.load
-      app.login_page.login(admin)
+      app.login_page.login(@admin)
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_panel_link.click
@@ -44,15 +46,17 @@ describe 'Admin show', type: :feature do
   end
 
   context 'User without admin privileges' do
-    let(:user) { create(:user) }
+    before do
+      @user = create(:user)
+    end
 
     scenario "can't see other users profiles" do
       app = App.new
       app.home_page.load
-      app.login_page.login(user)
+      app.login_page.login(@user)
       expect(app.home_page).to be_displayed
 
-      app.admin_users_show_page.load(id: user.id)
+      app.admin_users_show_page.load(id: @user.id)
       expect(app.home_page).to be_displayed
     end
   end

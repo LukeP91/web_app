@@ -2,16 +2,18 @@ require 'rails_helper'
 
 describe 'Admin categories index', type: :feature do
   context 'user with admin privileges' do
-    let(:organization) { create(:organization) }
-    let(:admin) { create(:admin, organization: organization) }
+    before do
+      @organization = create(:organization)
+      @admin = create(:admin, organization: @organization)
+    end
 
     scenario 'can access categories index with only categories from his organization' do
-      category_from_organization = create(:category, name: 'health', organization: organization)
+      category_from_organization = create(:category, name: 'health', organization: @organization)
       category_outside_organization = create(:category, name: 'work')
 
       app = App.new
       app.home_page.load
-      app.login_page.login(admin)
+      app.login_page.login(@admin)
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_categories_link.click
@@ -22,12 +24,14 @@ describe 'Admin categories index', type: :feature do
   end
 
   context 'user without admin privileges' do
-    let(:user) { create(:user_with_interests, :male, :older_than_30) }
+    before do
+      @user = create(:user_with_interests, :male, :older_than_30)
+    end
 
     scenario "can't access categories index" do
       app = App.new
       app.home_page.load
-      app.login_page.login(user)
+      app.login_page.login(@user)
       expect(app.home_page).to be_displayed
 
       expect(app.home_page.menu).to have_no_admin_categories_link
