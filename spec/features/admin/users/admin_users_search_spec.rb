@@ -23,7 +23,7 @@ describe 'Admin search', type: :feature do
       expect(app.admin_users_index_page.text).to_not include @admin.email
     end
 
-    xscenario 'can search by first name' do
+    scenario 'can search by first name' do
       app = App.new
       app.home_page.load
       app.login_page.login(@admin)
@@ -38,7 +38,7 @@ describe 'Admin search', type: :feature do
       expect(app.admin_users_index_page.text).to_not include @admin.email
     end
 
-    xscenario 'can search by last name' do
+    scenario 'can search by last name' do
       app = App.new
       app.home_page.load
       app.login_page.login(@admin)
@@ -53,7 +53,7 @@ describe 'Admin search', type: :feature do
       expect(app.admin_users_index_page.text).to_not include @admin.email
     end
 
-    xscenario 'can search by age' do
+    scenario 'can search by age' do
       app = App.new
       app.home_page.load
       app.login_page.login(@admin)
@@ -68,7 +68,7 @@ describe 'Admin search', type: :feature do
       expect(app.admin_users_index_page.text).to_not include @admin.email
     end
 
-    xscenario 'can search by gender' do
+    scenario 'can search by gender' do
       app = App.new
       app.home_page.load
       app.login_page.login(@admin)
@@ -83,7 +83,7 @@ describe 'Admin search', type: :feature do
       expect(app.admin_users_index_page.text).to_not include @admin.email
     end
 
-    xscenario 'search only displayes users from his organization' do
+    scenario 'search only displayes users from his organization' do
       user = create(:user, :male, :older_than_30)
       app = App.new
       app.home_page.load
