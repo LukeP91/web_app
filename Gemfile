@@ -7,6 +7,7 @@ end
 
 gem 'rails', '~> 5.0.3'
 gem 'pg', '~> 0.18'
+gem 'pg_search', '~> 2.1'
 gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
 gem 'haml', '~> 4.0.7'
