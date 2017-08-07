@@ -52,7 +52,7 @@ class Admin::UsersController < ApplicationController
     if user.update(user_params)
       redirect_to admin_user_path(user)
     else
-      render :edit
+      render :edit, locals: { user: user }
     end
   rescue ActiveRecord::RecordNotFound
     redirect_to admin_users_path
