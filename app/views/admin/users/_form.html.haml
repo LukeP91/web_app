@@ -1,40 +1,22 @@
 = simple_form_for [:admin, user], html: { class: 'form-horizontal', id: 'form' } do |f|
   = f.input :email
 
-  = f.error_span :email
-
   = f.input :first_name
-
-  = f.error_span :first_name
 
   = f.input :last_name
 
-  = f.error_span :last_name
-
   = f.input :gender, collection: gender_list, include_blank: false
-
-  = f.error_span :gender
 
   = f.input :age, collection: 1..120
 
-  = f.error_span :age
-
   = f.input :password
-
-  = f.error_span :password
 
   = f.input :password_confirmation
 
-  = f.error_span :password_confirmation
-
   = f.input :admin, as: :boolean, checked_value: true, unchecked_value: false
-
-  = f.error_span :admin
 
   %h3 Interests
 
   = f.association :interests, include_blank: false
-
-  = f.error_span :interests
 
   = f.button :submit, class: 'btn-primary'
