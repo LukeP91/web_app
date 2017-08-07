@@ -31,6 +31,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver', '~> 3.4', '>= 3.4.4'
   gem 'site_prism', '~> 2.9'
+  gem 'email_spec', '~> 2.1'
 end
 
 group :development do

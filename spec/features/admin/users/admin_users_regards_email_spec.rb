@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe 'Admin send regards email', type: :feature do
-  include ActiveJob::TestHelper
+  include EmailSpec::Helpers
+  include EmailSpec::Matchers
 
   context 'User with admin priviliges' do
-    before { clear_enqueued_jobs }
 
     let(:organization) { create(:organization) }
     let(:admin) { create(:admin, organization: organization) }
@@ -20,11 +20,11 @@ describe 'Admin send regards email', type: :feature do
       app.home_page.menu.admin_panel_link.click
       expect(app.admin_users_index_page).to be_displayed
 
+      expect(LannisterMailer).to(receive(:regards_email).with(admin, user)).and_call_original
       app.admin_users_index_page.send_email_button(user.id).click
       mail = ActionMailer::Base.deliveries.last
-      expect(ActionMailer::Base.deliveries.count).to eq 1
-      expect(mail.to).to eq [user.email]
-      expect(mail.subject).to have_content 'admin@example.com sends his regards'
+      expect(mail).to deliver_to user.email
+      expect(mail).to have_subject 'admin@example.com sends his regards'
     end
 
     scenario "can't send regards email to users outside his organization" do
@@ -37,10 +37,8 @@ describe 'Admin send regards email', type: :feature do
 
       app.home_page.menu.admin_panel_link.click
       expect(app.admin_users_index_page).to be_displayed
-
-      expect(page).to_not have_css "user_send_email_#{user.id}"
+      expect(LannisterMailer).to_not(receive(:regards_email).with(admin, user))
       page.driver.submit :get, "/admin/users/#{user.id}/send_email", {}
-      expect(ActionMailer::Base.deliveries.count).to eq 0
       expect(app.admin_users_index_page).to be_displayed
     end
   end
@@ -53,9 +51,8 @@ describe 'Admin send regards email', type: :feature do
       app.home_page.load
       app.login_page.login(user)
       expect(app.home_page).to be_displayed
-
+      expect(LannisterMailer).to_not(receive(:regards_email).with(user, user))
       page.driver.submit :get, "/admin/users/#{user.id}/send_email", {}
-      expect(ActionMailer::Base.deliveries.count).to eq 0
       expect(app.home_page).to be_displayed
     end
   end
