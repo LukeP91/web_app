@@ -3,6 +3,6 @@
     .span12
       = simple_form_for :search, url: admin_users_path, method: :get, html: { class: 'form-search form-horizontal' } do |f|
 
-        = f.input :search, placeholder: "Search"
+        = f.input :text, placeholder: "Search"
 
         = f.submit 'Search', class: 'btn btn-default', id: 'user_search_button'

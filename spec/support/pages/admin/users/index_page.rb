@@ -5,7 +5,7 @@ module Admin
 
       set_url '/admin/users{?query*}'
 
-      element :search_field, '#search_search'
+      element :search_field, '#search_text'
       element :search_button, '#user_search_button'
       element :create_user_button, '#new_user'
 
