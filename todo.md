@@ -37,9 +37,9 @@ This is a spec for a candidate evaluation app.
 * 5 models with relations to each other
   * At least one n-n relation
 
-### Extra tasks
 * Add page object tests to project and add unit tests to statistic logic. Include test for search by first and last name. Age.
 
+### Extra tasks
 * It provide full text search (can be PostgreSQL FTS)
   * Expand search to first name, last name, age
   * Try PostgreSQL full-text search function
