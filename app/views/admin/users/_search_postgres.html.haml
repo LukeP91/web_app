@@ -1,8 +1,8 @@
 .container
   .row
     .span12
-      = simple_form_for admin_users_path, method: :get, html: { class: 'form-search form-horizontal' } do |f|
+      = simple_form_for :search, url: admin_users_path, method: :get, html: { class: 'form-search form-horizontal' } do |f|
 
-        = f.input :search, placeholder: "Search Emails"
+        = f.input :search, placeholder: "Search"
 
-        = f.submit 'Search', class: 'btn btn-default'
+        = f.submit 'Search', class: 'btn btn-default', id: 'user_search_button'

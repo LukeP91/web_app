@@ -10,8 +10,8 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    if  (params[:search])
-      users = User.in_organization(current_organization).search_by(params[:search]).order(:email)
+    if (params[:search])
+      users = User.in_organization(current_organization).search_by(params[:search][:search]).order(:email)
     else
       users = User.in_organization(current_organization).order(:email)
     end
