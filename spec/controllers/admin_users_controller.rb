@@ -10,7 +10,7 @@ RSpec.describe Admin::UsersController, :type => :controller do
       user = create(:user, first_name: 'Pablo', organization: admin.organization)
       request.env["devise.mapping"] = Devise.mappings[:admin]
       sign_in admin
-      get :index, params: { search: { search: 'Luke' } }
+      get :index, params: { search: { text: 'Luke' } }
       expect(response.body).to include 'Luke'
       expect(response.body).to_not include 'Pablo'
     end
