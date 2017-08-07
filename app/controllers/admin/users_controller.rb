@@ -10,8 +10,8 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    q = User.in_organization(current_organization).ransack(params[:q])
-    users = q.result(distinct: true).order(:email)
+    q = User.in_organization(current_organization).search_by(params[:search]).order(:email)
+    users = q
     authorize users
     render :index, locals: { q: q, users: users }
   end
