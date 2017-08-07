@@ -4,7 +4,7 @@
 ✔ https://github.com/natritmeyer/site_prism#siteprism @done (8/4/2017, 12:20:13 PM)
 ✔ add css selectors to buttons @done (8/4/2017, 1:25:11 PM)
 ☐ fix creating new user (when creating new user with interest it returns null constraint)
-☐ fix new user error when empty form
+✔ fix new user error when empty form @done (8/7/2017, 9:00:29 AM)
 ✔ fix xpath selectors @done (8/4/2017, 3:17:08 PM)
 ✔ fix method names in app to have model name in them (site prism App.rb) @done (8/4/2017, 3:22:39 PM)
 
@@ -39,7 +39,7 @@ Tests:
     ✔ can't see profile of users from not his organization @done (8/4/2017, 10:42:54 AM)
     ✔ can't edit users not from his organization @done (8/4/2017, 11:26:59 AM)
     ✔ can't delete users not from his organization @done (8/4/2017, 12:19:58 PM)
-    ☐ can send email to user
+    ✔ can send email to user @done (8/7/2017, 8:58:33 AM)
     ✔ can search by email @done (8/4/2017, 1:10:04 PM)
     ✔ can search by first name (it should fail for now) @done (8/4/2017, 1:10:07 PM)
     ✔ can search by last name (it should fail for now) @done (8/4/2017, 1:10:08 PM)
@@ -55,7 +55,7 @@ Tests:
     ✔ can't see other users profiles (should be redirected to his profile page) @done (8/4/2017, 10:43:03 AM)
     ✔ can't edit other users (should be redirected to his profile page) @done (8/4/2017, 11:27:02 AM)
     ✔ can't delete users (should be redirected to his profile page) @done (8/4/2017, 12:20:02 PM)
-    ☐ can't send email to user (should be redirected to his profile page)
+    ✔ can't send email to user (should be redirected to his profile page) @done (8/7/2017, 8:58:36 AM)
     ✔ can't search by email (should be redirected to his profile page) @done (8/4/2017, 1:10:15 PM)
     ✔ can't add new users @done (8/4/2017, 1:45:22 PM)
   Unit tests:
