@@ -4,9 +4,7 @@
     =t 'admin.interest_statistic'
     = Interest.female_interests_count(current_organization)
 
--# = render 'admin/users/search', { q: q }
-
-= render 'admin/users/search_postgres', {q: q}
+= render 'admin/users/search_postgres'
 
 %table.table.table-striped
   %thead

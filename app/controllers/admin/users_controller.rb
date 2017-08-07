@@ -10,10 +10,13 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    q = User.in_organization(current_organization).search_by(params[:search]).order(:email)
-    users = q
+    if  (params[:search])
+      users = User.in_organization(current_organization).search_by(params[:search]).order(:email)
+    else
+      users = User.in_organization(current_organization).order(:email)
+    end
     authorize users
-    render :index, locals: { q: q, users: users }
+    render :index, locals: { users: users }
   end
 
   def new

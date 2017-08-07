@@ -16,7 +16,7 @@ class User < ApplicationRecord
   scope :with_age_between, ->(age_range) { where(age: age_range) }
   scope :with_gender, ->(gender) { where(gender: gender) }
 
-  pg_search_scope :search_by, against: %i[first_name last_name email age gender]
+  pg_search_scope :search_by, against: %i[first_name last_name email age gender], using: { tsearch: { any_word: true } }
 
   def full_name
     "#{first_name} #{last_name}"

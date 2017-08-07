@@ -33,6 +33,7 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 3.4', '>= 3.4.4'
   gem 'site_prism', '~> 2.9'
   gem 'email_spec', '~> 2.1'
+  gem 'rails-controller-testing', '~> 0.0.3'
 end
 
 group :development do
