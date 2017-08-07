@@ -32,7 +32,7 @@ class Admin::UsersController < ApplicationController
     if user.save
       redirect_to admin_user_path(user)
     else
-      render :new
+      render :new, locals: { user: user }
     end
   end
 
