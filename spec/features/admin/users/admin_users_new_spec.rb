@@ -52,7 +52,8 @@ describe 'Admin new', type: :feature do
 
       app.admin_users_index_page.create_user_button.click
       app.admin_users_new_page.form.confirm_button.click
-      expect(app.admin_users_new_page).to be_displayed
+      expect(app.admin_users_index_page).to be_displayed
+      expect(app.admin_users_index_page.text).to include 'New User'
     end
   end
 
