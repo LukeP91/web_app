@@ -100,16 +100,18 @@ describe 'Admin search', type: :feature do
   end
 
   context 'user without admin privileges' do
-    let(:user) { create(:user_with_interests, :male, :older_than_30) }
+    before do
+      @user = create(:user_with_interests, :male, :older_than_30)
+    end
 
     scenario "can't search users" do
       app = App.new
       app.home_page.load
-      app.login_page.login(user)
+      app.login_page.login(@user)
       expect(app.home_page).to be_displayed
 
       expect(app.home_page.menu).to have_no_admin_panel_link
-      app.admin_users_index_page.load(query: { utf8: '✓', email_cont: user.email })
+      app.admin_users_index_page.load(query: { utf8: '✓', email_cont: @user.email })
       expect(app.home_page).to be_displayed
     end
   end

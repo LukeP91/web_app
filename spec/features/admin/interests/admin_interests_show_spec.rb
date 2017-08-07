@@ -2,15 +2,17 @@ require 'rails_helper'
 
 describe 'Admin interests show', type: :feature do
   context 'User with admin privileges' do
-    let(:organization) { create(:organization) }
-    let(:admin) { create(:admin, organization: organization) }
+    before do
+      @organization = create(:organization)
+      @admin = create(:admin, organization: @organization)
+    end
 
     scenario 'can access interests from his organization' do
-      interest = create(:interest, organization: organization)
+      interest = create(:interest, organization: @organization)
 
       app = App.new
       app.home_page.load
-      app.login_page.login(admin)
+      app.login_page.login(@admin)
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_interests_link.click
@@ -28,7 +30,7 @@ describe 'Admin interests show', type: :feature do
 
       app = App.new
       app.home_page.load
-      app.login_page.login(admin)
+      app.login_page.login(@admin)
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_interests_link.click
@@ -41,14 +43,16 @@ describe 'Admin interests show', type: :feature do
   end
 
   context 'User without admin privileges' do
-    let(:user) { create(:user) }
+    before do
+      @user = create(:user)
+    end
 
     scenario "can't access interest show page" do
       interest = create(:interest)
 
       app = App.new
       app.home_page.load
-      app.login_page.login(user)
+      app.login_page.login(@user)
       expect(app.home_page).to be_displayed
 
       app.admin_interest_show_page.load(id: interest.id)
