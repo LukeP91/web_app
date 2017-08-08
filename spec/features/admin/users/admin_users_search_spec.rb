@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin search', type: :feature do
+describe 'Admin search' do
   context 'user with admin privileges' do
     before do
       organization = create(:organization)

@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'support/pages/app'
 
-describe 'Show profile', type: :feature do
+describe 'Show profile' do
   context 'signed in user' do
     before do
       @user = create(:user)

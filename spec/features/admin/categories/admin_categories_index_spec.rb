@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin categories index', type: :feature do
+describe 'Admin categories index' do
   context 'user with admin privileges' do
     before do
       @organization = create(:organization)

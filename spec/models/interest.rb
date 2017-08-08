@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Interest.female_interests_count', type: :model do
+describe 'Interest.female_interests_count' do
   it 'counts only interests from health category' do
     organization = create(:organization)
     health_category = create(:category, name: 'health', organization: organization)
