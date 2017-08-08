@@ -96,38 +96,5 @@ describe 'Admin search' do
       expect(app.admin_users_index_page.text).to include 'email@example.com'
       expect(app.admin_users_index_page.text).to_not include 'admin@example.com'
     end
-
-    scenario 'search only displayes users from his organization' do
-      organization = create(:organization)
-      admin = create(:admin, email: 'admin@example.com', organization: organization)
-      create(:user, email: 'email@example.com')
-
-      app = App.new
-      app.home_page.load
-      app.login_page.login(admin)
-      expect(app.home_page).to be_displayed
-
-      app.home_page.menu.admin_panel_link.click
-      expect(app.admin_users_index_page).to be_displayed
-      app.admin_users_index_page.search_field.set 'email@example.com'
-      app.admin_users_index_page.search_button.click
-
-      expect(app.admin_users_index_page.text).to_not include 'email@example.com'
-    end
-  end
-
-  context 'user without admin privileges' do
-    scenario "can't search users" do
-      user = create(:user)
-
-      app = App.new
-      app.home_page.load
-      app.login_page.login(user)
-      expect(app.home_page).to be_displayed
-
-      expect(app.home_page.menu).to have_no_admin_panel_link
-      app.admin_users_index_page.load(query: { utf8: '✓', email_cont: user.email })
-      expect(app.home_page).to be_displayed
-    end
   end
 end

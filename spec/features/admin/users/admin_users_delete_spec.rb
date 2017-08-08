@@ -53,19 +53,4 @@ describe 'Admin::Users#delete' do
       expect(User.count).to eq 1
     end
   end
-
-  context 'User without admin privileges' do
-    scenario "can't delete other users" do
-      user = create(:user)
-
-      app = App.new
-      app.home_page.load
-      app.login_page.login(user)
-      expect(app.home_page).to be_displayed
-
-      page.driver.submit :delete, "/admin/users/#{user.id}", {}
-      expect(app.home_page).to be_displayed
-      expect(User.count).to eq 1
-    end
-  end
 end
