@@ -53,17 +53,4 @@ describe 'Admin edit' do
       expect(app.admin_users_index_page).to be_displayed
     end
   end
-
-  context 'User without admin privileges' do
-    scenario "can't edit other users" do
-      user = create(:user)
-      app = App.new
-      app.home_page.load
-      app.login_page.login(user)
-      expect(app.home_page).to be_displayed
-
-      app.admin_users_edit_page.load(id: user.id)
-      expect(app.home_page).to be_displayed
-    end
-  end
 end

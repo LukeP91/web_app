@@ -51,18 +51,4 @@ describe 'Admin new' do
       expect(app.admin_users_index_page.text).to include 'New User'
     end
   end
-
-  context 'User without admin privileges' do
-    scenario "can't add new users" do
-      user = create(:user)
-
-      app = App.new
-      app.home_page.load
-      app.login_page.login(user)
-      expect(app.home_page).to be_displayed
-
-      app.admin_users_new_page.load
-      expect(app.home_page).to be_displayed
-    end
-  end
 end
