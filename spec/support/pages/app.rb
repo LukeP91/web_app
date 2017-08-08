@@ -4,7 +4,7 @@ class App
   end
 
   def home_page
-    Profile::Home.new
+    Profile::HomePage.new
   end
 
   def edit_profile_page
