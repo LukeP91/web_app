@@ -7,8 +7,7 @@ describe 'Interest.female_interests_count' do
     work_category = create(:category, name: 'work', organization: organization)
     health_interest = create(:interest, category: health_category, organization: organization)
     work_interest = create(:interest, category: work_category, organization: organization)
-    alice = create(:user, :female, :between_20_and_30, organization: organization)
-    alice.interests = [health_interest, work_interest]
+    alice = create(:user, :female, :between_20_and_30, organization: organization, interests: [health_interest, work_interest])
 
     expect(Interest.female_interests_count(organization)).to eq 1
   end
@@ -18,8 +17,7 @@ describe 'Interest.female_interests_count' do
     health_category = create(:category, name: 'health', organization: organization)
     health_interest = create(:interest, category: health_category, organization: organization)
     without_cosm_prefix_interest = create(:interest, name: 'jogging', category: health_category, organization: organization)
-    alice = create(:user, :female, :between_20_and_30, organization: organization)
-    alice.interests = [health_interest, without_cosm_prefix_interest]
+    alice = create(:user, :female, :between_20_and_30, organization: organization, interests: [health_interest, without_cosm_prefix_interest])
 
     expect(Interest.female_interests_count(organization)).to eq 1
   end
@@ -28,11 +26,8 @@ describe 'Interest.female_interests_count' do
     organization = create(:organization)
     health_category = create(:category, name: 'health', organization: organization)
     health_interest = create(:interest, category: health_category, organization: organization)
-    alice = create(:user, :female, :between_20_and_30, organization: organization)
-    diane = create(:user, :female, :between_20_and_30)
-    alice.interests = [health_interest]
-    diane.interests = [health_interest]
-
+    alice = create(:user, :female, :between_20_and_30, organization: organization, interests: [health_interest])
+    diane = create(:user, :female, :between_20_and_30, interests: [health_interest])
     expect(Interest.female_interests_count(organization)).to eq 1
   end
 
@@ -40,10 +35,8 @@ describe 'Interest.female_interests_count' do
     organization = create(:organization)
     health_category = create(:category, name: 'health', organization: organization)
     health_interest = create(:interest, category: health_category, organization: organization)
-    alice = create(:user, :female, :between_20_and_30, organization: organization)
-    bob = create(:user, :male, :between_20_and_30, organization: organization)
-    alice.interests = [health_interest]
-    bob.interests = [health_interest]
+    alice = create(:user, :female, :between_20_and_30, organization: organization, interests: [health_interest])
+    bob = create(:user, :male, :between_20_and_30, organization: organization, interests: [health_interest])
 
     expect(Interest.female_interests_count(organization)).to eq 1
   end
@@ -52,14 +45,10 @@ describe 'Interest.female_interests_count' do
     organization = create(:organization)
     health_category = create(:category, name: 'health', organization: organization)
     health_interest = create(:interest, category: health_category, organization: organization)
-    alice = create(:user, :female, age: 30, organization: organization)
-    diane = create(:user, :female, age: 19, organization: organization)
-    jane = create(:user, :female, age: 20, organization: organization)
-    megan = create(:user, :female, age: 31, organization: organization)
-    diane.interests = [health_interest]
-    alice.interests = [health_interest]
-    jane.interests = [health_interest]
-    megan.interests = [health_interest]
+    alice = create(:user, :female, age: 30, organization: organization, interests: [health_interest])
+    diane = create(:user, :female, age: 19, organization: organization, interests: [health_interest])
+    jane = create(:user, :female, age: 20, organization: organization, interests: [health_interest])
+    megan = create(:user, :female, age: 31, organization: organization, interests: [health_interest])
 
     expect(Interest.female_interests_count(organization)).to eq 2
   end
