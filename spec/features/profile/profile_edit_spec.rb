@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Edit profile', type: :feature do
+describe 'Edit profile' do
   context 'signed in user' do
     before do
       @user = create(:user, :male, :older_than_30)

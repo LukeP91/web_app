@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin show', type: :feature do
+describe 'Admin show' do
   context 'User with admin privileges' do
     before do
       @organization = create(:organization)

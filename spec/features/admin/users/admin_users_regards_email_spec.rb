@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin send regards email', type: :feature do
+describe 'Admin send regards email' do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
 
