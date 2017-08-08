@@ -2,17 +2,15 @@ require 'rails_helper'
 
 describe 'Admin interests show' do
   context 'User with admin privileges' do
-    before do
-      @organization = create(:organization)
-      @admin = create(:admin, organization: @organization)
-    end
-
     scenario 'can access interests from his organization' do
-      interest = create(:interest, organization: @organization)
+      organization = create(:organization, name: 'Google')
+      admin = create(:admin, organization: organization)
+      category = create(:category, name: 'work', organization: organization)
+      interest = create(:interest, name: 'Reading', category: category, organization: organization)
 
       app = App.new
       app.home_page.load
-      app.login_page.login(@admin)
+      app.login_page.login(admin)
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_interests_link.click
@@ -20,17 +18,19 @@ describe 'Admin interests show' do
 
       app.admin_interests_index_page.show_button(interest.id).click
       expect(app.admin_interest_show_page).to be_displayed
-      expect(app.admin_interest_show_page.text).to include interest.name
-      expect(app.admin_interest_show_page.text).to include interest.organization.name
-      expect(app.admin_interest_show_page.text).to include interest.category.name
+      expect(app.admin_interest_show_page.text).to include 'Reading'
+      expect(app.admin_interest_show_page.text).to include 'Google'
+      expect(app.admin_interest_show_page.text).to include 'work'
     end
 
     scenario "can't access interests outside his organization" do
+      organization = create(:organization)
+      admin = create(:admin, organization: organization)
       interest = create(:interest)
 
       app = App.new
       app.home_page.load
-      app.login_page.login(@admin)
+      app.login_page.login(admin)
       expect(app.home_page).to be_displayed
 
       app.home_page.menu.admin_interests_link.click
@@ -43,16 +43,13 @@ describe 'Admin interests show' do
   end
 
   context 'User without admin privileges' do
-    before do
-      @user = create(:user)
-    end
-
     scenario "can't access interest show page" do
+      user = create(:user)
       interest = create(:interest)
 
       app = App.new
       app.home_page.load
-      app.login_page.login(@user)
+      app.login_page.login(user)
       expect(app.home_page).to be_displayed
 
       app.admin_interest_show_page.load(id: interest.id)
