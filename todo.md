@@ -39,11 +39,11 @@ This is a spec for a candidate evaluation app.
 
 * Add page object tests to project and add unit tests to statistic logic. Include test for search by first and last name. Age.
 
-### Extra tasks
 * It provide full text search (can be PostgreSQL FTS)
   * Expand search to first name, last name, age
   * Try PostgreSQL full-text search function
 
+### Extra tasks
 * It uses queues (e.g. Sidekiq):
   * Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table.
   * Async request for sending email.
