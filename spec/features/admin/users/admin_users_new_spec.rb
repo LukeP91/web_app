@@ -5,8 +5,7 @@ describe 'Admin new' do
     scenario 'can add new users to his organization' do
       organization = create(:organization)
       admin = create(:admin, organization: organization)
-      create(:interest, name: 'test1')
-      new_user = { first_name: 'New', last_name: 'User', email: 'new_user_email@example.com', gender: 'male', age: '15' }
+      create(:interest, name: 'Reading')
 
       app = App.new
       app.home_page.load
@@ -17,18 +16,22 @@ describe 'Admin new' do
       expect(app.admin_users_index_page).to be_displayed
 
       app.admin_users_index_page.create_user_button.click
-      app.admin_users_new_page.form.fill(new_user)
-      app.admin_users_new_page.form.interests_field.select 'test1'
+      app.admin_users_new_page.form.email_field.set 'john_doe@example.com'
+      app.admin_users_new_page.form.first_name_field.set 'John'
+      app.admin_users_new_page.form.last_name_field.set 'Doe'
+      app.admin_users_new_page.form.gender_field.select 'male'
+      app.admin_users_new_page.form.age_field.select '35'
+      app.admin_users_new_page.form.interests_field.select 'Reading'
       app.admin_users_new_page.form.confirm_button.click
 
       expect(app.admin_users_show_page).to be_displayed
-      expect(app.admin_users_show_page.text).to include "#{new_user[:first_name]} #{new_user[:last_name]}"
-      expect(app.admin_users_show_page.text).to include new_user[:email]
-      expect(app.admin_users_show_page.text).to include new_user[:first_name]
-      expect(app.admin_users_show_page.text).to include new_user[:last_name]
-      expect(app.admin_users_show_page.text).to include new_user[:gender]
-      expect(app.admin_users_show_page.text).to include new_user[:age]
-      expect(app.admin_users_show_page.text).to include 'test1'
+      expect(app.admin_users_show_page.full_name_field.text).to eq 'John Doe'
+      expect(app.admin_users_show_page.field_by_label('Email').text).to eq 'Email: john_doe@example.com'
+      expect(app.admin_users_show_page.field_by_label('First name').text).to eq 'First name: John'
+      expect(app.admin_users_show_page.field_by_label('Last name').text).to eq 'Last name: Doe'
+      expect(app.admin_users_show_page.field_by_label('Gender').text).to eq 'Gender: male'
+      expect(app.admin_users_show_page.field_by_label('Age').text).to eq 'Age: 35'
+      expect(app.admin_users_show_page.text).to include 'Reading'
     end
 
     scenario 'create empty user should rerender new page' do
