@@ -22,7 +22,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    interest_ids = params[:user].delete(:interest_ids)
     user = User.new(user_params)
     user.password = 'secret'
     user.password_confirmation = 'secret'
@@ -30,7 +29,6 @@ class Admin::UsersController < ApplicationController
     authorize user
 
     if user.save
-      user.interest_ids = interest_ids
       redirect_to admin_user_path(user)
     else
       render :new, locals: { user: user }
