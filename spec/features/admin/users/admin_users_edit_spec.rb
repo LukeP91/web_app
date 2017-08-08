@@ -5,9 +5,8 @@ describe 'Admin edit' do
     scenario 'can edit users from his organization' do
       organization = create(:organization)
       admin = create(:admin, organization: organization)
-      create(:interest, name: 'test1')
-      user = create(:user, :male, :older_than_30, organization: organization)
-      edited_user = { first_name: 'New', last_name: 'User', email: 'new_user_email@example.com', gender: 'male', age: '15'}
+      create(:interest, name: 'Reading')
+      user = create(:user, :female, :older_than_30, organization: organization)
 
       app = App.new
       app.home_page.load
@@ -18,18 +17,22 @@ describe 'Admin edit' do
       expect(app.admin_users_index_page).to be_displayed
 
       app.admin_users_index_page.edit_button(user.id).click
-      app.admin_users_edit_page.form.fill(edited_user)
-      app.admin_users_edit_page.form.interests_field.select 'test1'
+      app.admin_users_edit_page.form.email_field.set 'john_doe@example.com'
+      app.admin_users_edit_page.form.first_name_field.set 'John'
+      app.admin_users_edit_page.form.last_name_field.set 'Doe'
+      app.admin_users_edit_page.form.gender_field.select 'male'
+      app.admin_users_edit_page.form.age_field.select '35'
+      app.admin_users_edit_page.form.interests_field.select 'Reading'
       app.admin_users_edit_page.form.confirm_button.click
 
       expect(app.admin_users_show_page).to be_displayed
-      expect(app.admin_users_show_page.text).to include "#{edited_user[:first_name]} #{edited_user[:last_name]}"
-      expect(app.admin_users_show_page.text).to include edited_user[:email]
-      expect(app.admin_users_show_page.text).to include edited_user[:first_name]
-      expect(app.admin_users_show_page.text).to include edited_user[:last_name]
-      expect(app.admin_users_show_page.text).to include edited_user[:gender]
-      expect(app.admin_users_show_page.text).to include edited_user[:age]
-      expect(app.admin_users_show_page.text).to include 'test1'
+      expect(app.admin_users_show_page.full_name_field.text).to eq 'John Doe'
+      expect(app.admin_users_show_page.field_by_label('Email').text).to eq 'Email: john_doe@example.com'
+      expect(app.admin_users_show_page.field_by_label('First name').text).to eq 'First name: John'
+      expect(app.admin_users_show_page.field_by_label('Last name').text).to eq 'Last name: Doe'
+      expect(app.admin_users_show_page.field_by_label('Gender').text).to eq 'Gender: male'
+      expect(app.admin_users_show_page.field_by_label('Age').text).to eq 'Age: 35'
+      expect(app.admin_users_show_page.text).to include 'Reading'
     end
 
     scenario "can't edit users outside his organization" do

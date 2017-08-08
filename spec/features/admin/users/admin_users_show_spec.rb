@@ -17,12 +17,12 @@ describe 'Admin show' do
 
       app.admin_users_index_page.show_button(user.id).click
       expect(app.admin_users_show_page).to be_displayed
-      expect(app.admin_users_show_page.text).to include 'John Doe'
-      expect(app.admin_users_show_page.text).to include 'john.doe@example.com'
-      expect(app.admin_users_show_page.text).to include 'John'
-      expect(app.admin_users_show_page.text).to include 'Doe'
-      expect(app.admin_users_show_page.text).to include 'male'
-      expect(app.admin_users_show_page.text).to include '25'
+      expect(app.admin_users_show_page.full_name_field.text).to eq 'John Doe'
+      expect(app.admin_users_show_page.field_by_label('Email').text).to eq 'Email: john.doe@example.com'
+      expect(app.admin_users_show_page.field_by_label('First name').text).to eq 'First name: John'
+      expect(app.admin_users_show_page.field_by_label('Last name').text).to eq 'Last name: Doe'
+      expect(app.admin_users_show_page.field_by_label('Gender').text).to eq 'Gender: male'
+      expect(app.admin_users_show_page.field_by_label('Age').text).to eq 'Age: 25'
     end
 
     scenario "can't see users profiles outside his organization" do
