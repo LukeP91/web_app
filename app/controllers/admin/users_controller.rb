@@ -10,7 +10,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    users = search_users(params)
+    users = search_users
     authorize users
     render :index, locals: { users: users }
   end
@@ -99,15 +99,16 @@ private
     )
   end
 
-  helper_method def gender_list
-    %w[male female]
+  def search_params
+    params.fetch(:search, {}).fetch(:text, nil)
   end
 
-  def search_users(params)
-    if (params[:search])
-      users = User.in_organization(current_organization).search_by(params[:search][:text]).order(:email)
-    else
-      users = User.in_organization(current_organization).order(:email)
-    end
+  def search_users
+    users = User.in_organization(current_organization).order(:email)
+    search_params.present? ? users.search_by(search_params) : users
+  end
+
+  helper_method def gender_list
+    %w[male female]
   end
 end
