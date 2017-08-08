@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :interest do
-    name { "cosm#{FFaker::Lorem.word}" }
+    name { |n| "cosmetics_#{n}" }
     organization { build :organization }
     category { build :category, organization: organization }
   end

@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :organization do
-    name FFaker::Company.name
+    name { |n| "Company_#{n}" }
     subdomain { name }
   end
 end

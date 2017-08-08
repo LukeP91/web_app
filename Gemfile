@@ -27,7 +27,6 @@ group :development, :test do
   gem 'byebug', '~> 9.0.6', platform: :mri
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', '~> 4.8'
-  gem 'ffaker', '~> 2.2'
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver', '~> 3.4', '>= 3.4.4'
   gem 'site_prism', '~> 2.9'
