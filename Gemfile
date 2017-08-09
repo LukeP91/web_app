@@ -32,6 +32,7 @@ group :development, :test do
   gem 'site_prism', '~> 2.9'
   gem 'email_spec', '~> 2.1'
   gem 'rails-controller-testing', '~> 0.0.3'
+  gem 'database_cleaner', '~> 1.5', '>= 1.5.1'
 end
 
 group :development do
