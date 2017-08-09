@@ -33,22 +33,5 @@ describe 'Admin new' do
       expect(app.admin_users_show_page.field_by_label('Age').text).to eq 'Age: 35'
       expect(app.admin_users_show_page.text).to include 'Reading'
     end
-
-    scenario 'create empty user should rerender new page' do
-      admin = create(:admin)
-
-      app = App.new
-      app.home_page.load
-      app.login_page.login(admin)
-      expect(app.home_page).to be_displayed
-
-      app.home_page.menu.admin_panel_link.click
-      expect(app.admin_users_index_page).to be_displayed
-
-      app.admin_users_index_page.create_user_button.click
-      app.admin_users_new_page.form.confirm_button.click
-      expect(app.admin_users_index_page).to be_displayed
-      expect(app.admin_users_index_page.text).to include 'New User'
-    end
   end
 end

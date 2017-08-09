@@ -34,23 +34,5 @@ describe 'Admin edit' do
       expect(app.admin_users_show_page.field_by_label('Age').text).to eq 'Age: 35'
       expect(app.admin_users_show_page.text).to include 'Reading'
     end
-
-    scenario "can't edit users outside his organization" do
-      organization = create(:organization)
-      admin = create(:admin, organization: organization)
-      user = create(:user)
-
-      app = App.new
-      app.home_page.load
-      app.login_page.login(admin)
-      expect(app.home_page).to be_displayed
-
-      app.home_page.menu.admin_panel_link.click
-      expect(app.admin_users_index_page).to be_displayed
-
-      expect(page).to_not have_css "user_edit_#{user.id}"
-      app.admin_users_edit_page.load(id: user.id)
-      expect(app.admin_users_index_page).to be_displayed
-    end
   end
 end
