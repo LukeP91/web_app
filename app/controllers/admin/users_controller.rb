@@ -29,6 +29,7 @@ class Admin::UsersController < ApplicationController
     authorize user
 
     if user.save
+      flash[:notice] = t('admin.notices.user_created')
       redirect_to admin_user_path(user)
     else
       render :new, locals: { user: user }
@@ -47,6 +48,7 @@ class Admin::UsersController < ApplicationController
     user = User.in_organization(current_organization).find(params[:id])
     authorize user
     if user.update(user_params)
+      flash[:notice] = t('admin.notices.user_updated')
       redirect_to admin_user_path(user)
     else
       render :edit, locals: { user: user }
@@ -59,6 +61,7 @@ class Admin::UsersController < ApplicationController
     user = User.in_organization(current_organization).find(params[:id])
     authorize user
     user.destroy
+    flash[:notice] = t('admin.notices.user_deleted')
     redirect_to admin_users_path
   rescue ActiveRecord::RecordNotFound
     redirect_to admin_users_path
@@ -78,6 +81,7 @@ class Admin::UsersController < ApplicationController
     user = User.in_organization(current_organization).find(params[:id])
     authorize user
     SendEmail.send_to(current_user, user)
+    flash[:notice] = t('admin.notices.regards_email_send')
     redirect_to admin_users_path
   rescue ActiveRecord::RecordNotFound
     redirect_to admin_users_path
