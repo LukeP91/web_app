@@ -17,7 +17,7 @@ namespace :db do
       organization: organization
     )
 
-    5.times do
+    200.times do
       FactoryGirl.create(
         :user_with_interests,
         :male,
