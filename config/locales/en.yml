@@ -21,7 +21,15 @@
 
 en:
   hello: "Hello world"
+  notices:
+    user_updated: "You have successfully updated your profile"
+
   alerts:
     permission_denied: "You are not authorized to perform this action."
   admin:
     interest_statistic: "Number of interests starting with 'cosm' from 'health' for women age 20-30:"
+    notices:
+      user_created: "User has been successfully created"
+      user_updated: "User has been successfully updated"
+      user_deleted: "User has been removed"
+      regards_email_send: "Regards email has been send to user"
