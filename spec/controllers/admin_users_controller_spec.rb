@@ -5,13 +5,13 @@ RSpec.describe Admin::UsersController do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
   render_views
+  before { request.env['devise.mapping'] = Devise.mappings[:admin] }
 
   describe '#index' do
-    context 'admin is sign in' do
-      it 'allows to search users with postgres fts' do
+    context 'admin is signed in' do
+      it 'allows to search users' do
         admin = create(:admin, first_name: 'Luke')
         user = create(:user, first_name: 'Pablo', organization: admin.organization)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in admin
 
         get :index, params: { search: { text: admin.first_name } }
@@ -21,10 +21,9 @@ RSpec.describe Admin::UsersController do
       end
     end
 
-    context 'admin is not sign in' do
+    context 'admin is not signed in' do
       it 'redirects user without admin privileges to home page' do
         user = create(:user)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in user
 
         get :index
@@ -35,12 +34,11 @@ RSpec.describe Admin::UsersController do
   end
 
   describe '#show' do
-    context 'admin is sign in' do
+    context 'admin is signed in' do
       it 'redirects admin when accessing interest outside his organization' do
         organization = create(:organization)
         admin = create(:admin, organization: organization)
         user = create(:user)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in admin
 
         get :show, params: { id: user.id }
@@ -49,10 +47,9 @@ RSpec.describe Admin::UsersController do
       end
     end
 
-    context 'admin is not sign in' do
+    context 'admin is not signed in' do
       it 'redirects user without admin privileges to home page' do
         user = create(:user)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in user
 
         get :show, params: { id: user.id }
@@ -63,10 +60,9 @@ RSpec.describe Admin::UsersController do
   end
 
   describe '#new' do
-    context 'admin is not sign in' do
+    context 'admin is not signed in' do
       it 'redirects user without admin privileges to home page' do
         user = create(:user)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in user
 
         get :new
@@ -77,10 +73,9 @@ RSpec.describe Admin::UsersController do
   end
 
   describe '#create' do
-    context 'admin is sign in' do
+    context 'admin is signed in' do
       it 'rerender new page when empty user is provided' do
         admin = create(:admin)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in admin
 
         post :create, params: { user: { email: '', first_name: '', last_name: '', password: '', password_confirmation: '', admin: 'false' } }
@@ -89,10 +84,9 @@ RSpec.describe Admin::UsersController do
       end
     end
 
-    context 'admin is not sign in' do
+    context 'admin is not signed in' do
       it 'redirects user without admin privileges to home page' do
         user = create(:user)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in user
 
         post :create, params: { user: { email: '', first_name: '', last_name: '', password: '', password_confirmation: '', admin: 'false' } }
@@ -103,12 +97,11 @@ RSpec.describe Admin::UsersController do
   end
 
   describe '#edit' do
-    context 'admin is sign in' do
-      it "can't edit users outside his organization" do
+    context 'admin is signed in' do
+      it "does not allow to edit users outside his organization" do
         organization = create(:organization)
         admin = create(:admin, organization: organization)
         user = create(:user)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in admin
 
         get :edit, params: { id: user.id }
@@ -117,10 +110,9 @@ RSpec.describe Admin::UsersController do
       end
     end
 
-    context 'admin is not sign in' do
+    context 'admin is not signed in' do
       it 'redirects user without admin privileges to home page' do
         user = create(:user)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in user
 
         get :edit, params: { id: user.id }
@@ -131,22 +123,20 @@ RSpec.describe Admin::UsersController do
   end
 
   describe '#delete' do
-    context 'admin is sign in' do
-      it "can't delete himself" do
+    context 'admin is signed in' do
+      it "does not allow to delete himself" do
         admin = create(:admin)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in admin
 
         delete :destroy, params: { id: admin.id }
 
-        expect(response).to redirect_to(admin_users_path)
+        expect(response).to redirect_to(root_path)
         expect(User.count).to eq 1
       end
 
-      it "can't delete users outside his organization" do
+      it "does not allow to delete users outside his organization" do
         admin = create(:admin)
         user = create(:user)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in admin
 
         delete :destroy, params: { id: user.id }
@@ -156,12 +146,11 @@ RSpec.describe Admin::UsersController do
       end
     end
 
-    context 'admin is not sign in' do
+    context 'admin is not signed in' do
       it 'redirects user without admin privileges to home page' do
         organization = create(:organization)
         user = create(:user, organization: organization)
         user_to_delete = create(:user, organization: organization)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in user
 
         delete :destroy, params: { id: user_to_delete.id }
@@ -172,12 +161,11 @@ RSpec.describe Admin::UsersController do
   end
 
   describe '#send_email' do
-    context 'admin is sign in' do
-      it "can't send regards email to users outside his organization" do
+    context 'admin is signed in' do
+      it "does not allow to send regards email to users outside his organization" do
         organization = create(:organization)
         admin = create(:admin, organization: organization)
         user = create(:user)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in admin
 
         expect(LannisterMailer).to_not(receive(:regards_email).with(user, user))
@@ -187,10 +175,9 @@ RSpec.describe Admin::UsersController do
       end
     end
 
-    context 'admin is not sign in' do
+    context 'admin is not signed in' do
       it 'redirects user without admin privileges to home page' do
         user = create(:user)
-        request.env['devise.mapping'] = Devise.mappings[:admin]
         sign_in user
 
         expect(LannisterMailer).to_not(receive(:regards_email).with(user, user))
