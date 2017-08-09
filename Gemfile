@@ -34,6 +34,7 @@ group :development, :test do
   gem 'email_spec', '~> 2.1'
   gem 'rails-controller-testing', '~> 0.0.3'
   gem 'simplecov', '~> 0.14.1'
+  gem 'database_cleaner', '~> 1.5', '>= 1.5.1'
 end
 
 group :development do

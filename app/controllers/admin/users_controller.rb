@@ -82,10 +82,6 @@ class Admin::UsersController < ApplicationController
       user = User.in_organization(current_organization).find(params[:id])
       authorize user
       SendEmail.send_to(current_user, user)
-      format.html do
-        flash[:notice] = t('admin.notices.regards_email_send')
-        redirect_to admin_users_path
-      end
       format.js
     end
   rescue ActiveRecord::RecordNotFound
