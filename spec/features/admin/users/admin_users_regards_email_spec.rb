@@ -19,7 +19,7 @@ describe 'Admin send regards email' do
 
       expect(LannisterMailer).to(receive(:regards_email).with(admin, user)).and_call_original
       app.admin_users_index_page.send_email_button(user.id).click
-      expect(page).to have_css('.alert-success', text: "Regards email has been send to user")
+      sleep(1)
       mail = ActionMailer::Base.deliveries.last
       expect(mail).to deliver_to 'user_email@example.com'
       expect(mail).to have_subject 'admin@example.com sends his regards'
