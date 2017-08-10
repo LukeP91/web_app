@@ -4,6 +4,7 @@ RSpec.describe Admin::UsersController do
   include Devise::Test::ControllerHelpers
   include EmailSpec::Helpers
   include EmailSpec::Matchers
+  include ActiveJob::TestHelper
   render_views
   before { request.env['devise.mapping'] = Devise.mappings[:admin] }
 
@@ -184,6 +185,43 @@ RSpec.describe Admin::UsersController do
         get :send_email, params: { id: user.id }
 
         expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe '#welcome_email' do
+    context 'admin is signed in' do
+      it "send email to all users in organization" do
+        organization = create(:organization)
+        admin = create(:admin, email: 'admin@example.com', organization: organization)
+        joe = create(:user, email: 'joe.doe@example.com', organization: organization)
+        alice = create(:user, email: 'alice.doe@example.com')
+        sign_in admin
+
+        perform_enqueued_jobs do
+          get :welcome_email, xhr: true
+
+          mails = ActionMailer::Base.deliveries
+          expect(mails.count).to eq 2
+          expect(mails.map(&:to).flatten).to match_array ['joe.doe@example.com', 'admin@example.com']
+          expect(mails.map(&:to).flatten).to_not match_array ['alice.doe@example.com']
+          expect(mails.map(&:subject)).to contain_exactly("Welcome!", "Welcome!")
+        end
+      end
+    end
+
+    context 'admin is not signed in' do
+      it 'redirects user without admin privileges to home page' do
+        user = create(:user)
+        sign_in user
+
+        perform_enqueued_jobs do
+          get :welcome_email, xhr: true
+
+          mails = ActionMailer::Base.deliveries
+          expect(mails.count).to eq 0
+          expect(response).to redirect_to(root_path)
+        end
       end
     end
   end
