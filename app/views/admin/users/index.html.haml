@@ -6,11 +6,13 @@
 
 = render partial: 'search_postgres', locals: { users: users }
 
+= link_to ' Welcome email',
+    welcome_email_admin_users_path, remote: true, class: 'btn btn-success glyphicon glyphicon-envelope', id: "send_welcome_email"
+
 %p
   = paginate users
 %p
   = page_entries_info users
-
 %table.table.table-striped
   %thead
     %tr
