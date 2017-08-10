@@ -170,7 +170,7 @@ RSpec.describe Admin::UsersController do
         sign_in admin
 
         expect(LannisterMailer).to_not(receive(:regards_email).with(user, user))
-        get :send_email, params: { id: user.id }
+        get :send_email, params: { id: user.id }, xhr: true
 
         expect(response).to redirect_to(admin_users_path)
       end
@@ -182,7 +182,7 @@ RSpec.describe Admin::UsersController do
         sign_in user
 
         expect(LannisterMailer).to_not(receive(:regards_email).with(user, user))
-        get :send_email, params: { id: user.id }
+        get :send_email, params: { id: user.id }, xhr: true
 
         expect(response).to redirect_to(root_path)
       end
