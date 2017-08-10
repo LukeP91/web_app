@@ -30,4 +30,8 @@ class UserPolicy < ApplicationPolicy
   def send_email?
     user.admin? && (user.organization_id == record.organization_id)
   end
+
+  def welcome_email?
+    user.admin?
+  end
 end
