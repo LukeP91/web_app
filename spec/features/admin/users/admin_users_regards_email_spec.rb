@@ -19,10 +19,11 @@ describe 'Admin send regards email' do
       expect(app.admin_users_index_page).to be_displayed
 
       perform_enqueued_jobs do
-        expect(LannisterMailer).to(receive(:regards_email).with(admin, user)).and_call_original
         app.admin_users_index_page.send_email_button(user.id).click
         sleep(1)
+
         mail = ActionMailer::Base.deliveries.last
+        expect(ActionMailer::Base.deliveries.count). to eq 1
         expect(mail).to deliver_to 'user_email@example.com'
         expect(mail).to have_subject 'admin@example.com sends his regards'
       end
