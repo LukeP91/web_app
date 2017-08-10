@@ -88,6 +88,14 @@ class Admin::UsersController < ApplicationController
     redirect_to admin_users_path
   end
 
+  def welcome_email
+    respond_to do |format|
+      authorize current_user
+      SendWelcomeEmail.new(current_user).call
+      format.js
+    end
+  end
+
 private
 
   def user_params

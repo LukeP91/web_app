@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Admin send regards email' do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
+  include ActiveJob::TestHelper
 
   context 'User with admin priviliges' do
     scenario 'can send regards email to users from his organization', js: true do
@@ -17,12 +18,14 @@ describe 'Admin send regards email' do
       app.home_page.menu.admin_panel_link.click
       expect(app.admin_users_index_page).to be_displayed
 
-      expect(LannisterMailer).to(receive(:regards_email).with(admin, user)).and_call_original
-      app.admin_users_index_page.send_email_button(user.id).click
-      sleep(1)
-      mail = ActionMailer::Base.deliveries.last
-      expect(mail).to deliver_to 'user_email@example.com'
-      expect(mail).to have_subject 'admin@example.com sends his regards'
+      perform_enqueued_jobs do
+        expect(LannisterMailer).to(receive(:regards_email).with(admin, user)).and_call_original
+        app.admin_users_index_page.send_email_button(user.id).click
+        sleep(1)
+        mail = ActionMailer::Base.deliveries.last
+        expect(mail).to deliver_to 'user_email@example.com'
+        expect(mail).to have_subject 'admin@example.com sends his regards'
+      end
     end
   end
 end

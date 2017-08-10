@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :users do
       collection do
         get 'export'
+        get 'welcome_email'
       end
       member do
         get 'send_email'
