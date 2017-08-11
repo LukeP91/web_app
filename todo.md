@@ -47,10 +47,11 @@ This is a spec for a candidate evaluation app.
 ### Extra tasks
 
 * It uses queues (e.g. Sidekiq):(Done)
-  * Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table.
-  * Async request for sending email.
+  * Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table. (done)
+  * Async request for sending email. (done)
   * Invitation email
   * Change regards email to async email(Done)
+  * When job that sends email to all users break it should send only not-send email on retry
 
 * Three 3rd party integrations
   * Sending Email / SMS (Send welcome SMS)

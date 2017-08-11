@@ -112,7 +112,7 @@ RSpec.describe Admin::UsersController do
 
   describe '#edit' do
     context 'admin is signed in' do
-      it "does not allow to edit users outside his organization" do
+      it 'does not allow to edit users outside his organization' do
         organization = create(:organization)
         admin = create(:admin, organization: organization)
         user = create(:user)
@@ -138,7 +138,7 @@ RSpec.describe Admin::UsersController do
 
   describe '#delete' do
     context 'admin is signed in' do
-      it "does not allow to delete himself" do
+      it 'does not allow to delete himself' do
         admin = create(:admin)
         sign_in admin
 
@@ -148,7 +148,7 @@ RSpec.describe Admin::UsersController do
         expect(User.count).to eq 1
       end
 
-      it "does not allow to delete users outside his organization" do
+      it 'does not allow to delete users outside his organization' do
         admin = create(:admin)
         user = create(:user)
         sign_in admin
@@ -176,7 +176,7 @@ RSpec.describe Admin::UsersController do
 
   describe '#send_email' do
     context 'admin is signed in' do
-      it "does not allow to send regards email to users outside his organization" do
+      it 'does not allow to send regards email to users outside his organization' do
         organization = create(:organization)
         admin = create(:admin, organization: organization)
         user = create(:user)
@@ -204,11 +204,11 @@ RSpec.describe Admin::UsersController do
 
   describe '#welcome_email' do
     context 'admin is signed in' do
-      it "send email to all users in organization" do
+      it 'send email to all users in organization' do
         organization = create(:organization)
         admin = create(:admin, email: 'admin@example.com', organization: organization)
-        joe = create(:user, email: 'joe.doe@example.com', organization: organization)
-        alice = create(:user, email: 'alice.doe@example.com')
+        create(:user, email: 'joe.doe@example.com', organization: organization)
+        create(:user, email: 'alice.doe@example.com')
         sign_in admin
 
         perform_enqueued_jobs do
@@ -218,7 +218,7 @@ RSpec.describe Admin::UsersController do
           expect(mails.count).to eq 2
           expect(mails.map(&:to).flatten).to match_array ['joe.doe@example.com', 'admin@example.com']
           expect(mails.map(&:to).flatten).to_not match_array ['alice.doe@example.com']
-          expect(mails.map(&:subject)).to contain_exactly("Welcome!", "Welcome!")
+          expect(mails.map(&:subject)).to contain_exactly('Welcome!', 'Welcome!')
         end
       end
     end
