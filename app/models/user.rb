@@ -27,6 +27,6 @@ class User < ApplicationRecord
   end
 
   def values_to_export
-    [first_name, last_name, gender, age, interests.map(&:name)].flatten!
+    [first_name, last_name, email, gender, age, interests.map(&:name)].flatten!
   end
 end

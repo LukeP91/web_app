@@ -71,7 +71,7 @@ class Admin::UsersController < ApplicationController
     users = User.in_organization(current_organization)
     respond_to do |format|
       format.csv do
-        send_data ExportUsersAsCSV.export(users),
+        send_data ExportUsersAsCSV.new(users).call,
                   filename: "users_export-#{Date.today}.csv"
       end
     end
@@ -81,7 +81,7 @@ class Admin::UsersController < ApplicationController
     respond_to do |format|
       user = User.in_organization(current_organization).find(params[:id])
       authorize user
-      SendEmail.send_to(current_user, user)
+      SendEmail.new(current_user, user).call
       format.js
     end
   rescue ActiveRecord::RecordNotFound
