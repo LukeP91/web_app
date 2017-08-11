@@ -10,12 +10,13 @@ RSpec.describe Admin::UsersController do
   describe '#index' do
     context 'admin is signed in' do
       it 'returns paginated users' do
+        User.paginates_per 1
         admin = create(:admin, first_name: 'Luke')
         user = create(:user, first_name: 'Pablo', organization: admin.organization)
         sign_in admin
 
         get :index, params: { page: 1 }
-        binding.pry
+
         expect(response.body).to include 'Luke'
         expect(response.body).to_not include 'Pablo'
       end
