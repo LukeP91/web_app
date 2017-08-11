@@ -4,6 +4,10 @@
 # this file to always be loaded, without a need to explicitly require it in any
 # files.
 #
+require 'simplecov'
+
+SimpleCov.start 'rails'
+
 require "email_spec"
 require "email_spec/rspec"
 # Given that it is always loaded, you are encouraged to keep this file as
