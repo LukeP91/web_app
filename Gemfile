@@ -21,7 +21,7 @@ gem 'devise', '~> 4.3.0'
 gem 'twitter-bootstrap-rails', '~> 4.0.0'
 gem 'simple_form', '~> 3.5.0'
 gem 'pundit', '~> 1.1.0'
-gem 'kaminari', '~> 0.16.3'
+gem 'kaminari', '~> 1.0.1'
 
 group :development, :test do
   gem 'pry-rails', '~> 0.3.6'

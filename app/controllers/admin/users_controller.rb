@@ -10,7 +10,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    users = search_users
+    users = search_users.page params[:page]
     authorize users
     render :index, locals: { users: users }
   end
