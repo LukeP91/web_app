@@ -6,7 +6,10 @@
 
 = render partial: 'search_postgres', locals: { users: users }
 
-= paginate users
+%p
+  = paginate users
+%p
+  = page_entries_info users
 
 %table.table.table-striped
   %thead
