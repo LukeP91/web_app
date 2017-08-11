@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   include PgSearch
 
+  USERS_PER_PAGE = 30
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
@@ -18,7 +20,7 @@ class User < ApplicationRecord
 
   pg_search_scope :search_by, against: %i[first_name last_name email age gender], using: { tsearch: { any_word: true } }
 
-  paginates_per 30
+  paginates_per USERS_PER_PAGE
 
   def full_name
     "#{first_name} #{last_name}"
