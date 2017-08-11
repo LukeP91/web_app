@@ -23,13 +23,13 @@ class Admin::UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    user.password = 'secret'
-    user.password_confirmation = 'secret'
+    user.password = user.password_confirmation = Devise.friendly_token.first(8)
     user.organization = current_user.organization
     authorize user
 
     if user.save
       flash[:notice] = t('admin.notices.user_created')
+      user.send_reset_password_instructions.deliver_later
       redirect_to admin_user_path(user)
     else
       render :new, locals: { user: user }
