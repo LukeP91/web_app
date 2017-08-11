@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
   pg_search_scope :search_by, against: %i[first_name last_name email age gender], using: { tsearch: { any_word: true } }
 
-  paginates_per 50
+  paginates_per 30
 
   def full_name
     "#{first_name} #{last_name}"
