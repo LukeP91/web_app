@@ -28,6 +28,7 @@ Rails.application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
   config.action_mailer.perform_caching = true
+  config.cache_store = :memory_store, { size: 64.megabytes }
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # Tell Action Mailer not to deliver emails to the real world.
