@@ -6,17 +6,17 @@ class EmailAllUsersJob < ActiveJob::Base
     last_send = Rails.cache.fetch("last_send_email_user_id") do
       0
     end
-    user_ids = User.in_organization(sender.organization_id).where(id: last_send..recipient_ids.last).pluck()
-    recipient_ids.each do |recipient_id|
+
+    if last_send != 0
+      recipient_ids = User.in_organization(sender.organization_id).where(id: last_send..recipient_ids.last).pluck()
+    end
+
+    user_ids.each do |recipient_id|
       recipient = User.find(recipient_id)
       WelcomeMailer.welcome_email(sender, recipient).deliver_later
-      last_send = Rails.cache.fetch("last_send_email_user_id") do
-        recipient_id + 1
+      last_send = Rails.cache.set("last_send_email_user_id", recipient_id + 1 )
       end
     end
-    Rails.cache.write("last_send_email_user_id", 0)
-  rescue
 
-    EmailAllUsersJob.perform_later(user.id, user_ids)
-  end
+    Rails.cache.write("last_send_email_user_id", 0)
 end
