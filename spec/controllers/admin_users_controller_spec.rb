@@ -45,7 +45,7 @@ RSpec.describe Admin::UsersController do
         expect(response).to redirect_to(root_path)
       end
     end
-  end
+  end\
 
   describe '#show' do
     context 'admin is signed in' do
@@ -204,7 +204,7 @@ RSpec.describe Admin::UsersController do
 
   describe '#welcome_email' do
     context 'admin is signed in' do
-      it 'send email to all users in organization' do
+      it 'sends email to all users in organization' do
         organization = create(:organization)
         admin = create(:admin, email: 'admin@example.com', organization: organization)
         create(:user, email: 'joe.doe@example.com', organization: organization)
@@ -217,7 +217,7 @@ RSpec.describe Admin::UsersController do
           mails = ActionMailer::Base.deliveries
           expect(mails.count).to eq 2
           expect(mails.map(&:to).flatten).to match_array ['joe.doe@example.com', 'admin@example.com']
-          expect(mails.map(&:to).flatten).to_not match_array ['alice.doe@example.com']
+          expect(mails.map(&:to).flatten).to_not include 'alice.doe@example.com'
           expect(mails.map(&:subject)).to contain_exactly('Welcome!', 'Welcome!')
         end
       end

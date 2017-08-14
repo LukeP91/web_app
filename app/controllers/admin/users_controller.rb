@@ -78,10 +78,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def send_email
+    user = User.in_organization(current_organization).find(params[:id])
+    authorize user
+    SendEmail.new(current_user, user).call
     respond_to do |format|
-      user = User.in_organization(current_organization).find(params[:id])
-      authorize user
-      SendEmail.new(current_user, user).call
       format.js
     end
   rescue ActiveRecord::RecordNotFound
@@ -89,9 +89,9 @@ class Admin::UsersController < ApplicationController
   end
 
   def welcome_email
+    authorize current_user
+    SendWelcomeEmail.new(current_user).call
     respond_to do |format|
-      authorize current_user
-      SendWelcomeEmail.new(current_user).call
       format.js
     end
   end

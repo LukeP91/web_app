@@ -1,13 +1,12 @@
 class SendWelcomeEmail
+  attr_reader :user
+
   def initialize(user)
     @user = user
   end
 
   def call
-    EmailAllJob.perform_later(user.id, user.organization_id)
+    user_ids = User.in_organization(Organization.find(organization_id)).pluck(:id)
+    EmailAllUsersJob.perform_later(user.id, user_ids)
   end
-
-  private
-
-  attr_reader :user
 end
