@@ -11,12 +11,12 @@ class EmailAllUsersJob < ActiveJob::Base
       recipient_ids = User.in_organization(sender.organization_id).where(id: last_send..recipient_ids.last).pluck()
     end
 
-    user_ids.each do |recipient_id|
+    recipient_ids.each do |recipient_id|
       recipient = User.find(recipient_id)
       WelcomeMailer.welcome_email(sender, recipient).deliver_later
-      last_send = Rails.cache.set("last_send_email_user_id", recipient_id + 1 )
-      end
+      last_send = Rails.cache.write("last_send_email_user_id", recipient_id + 1 )
     end
 
     Rails.cache.write("last_send_email_user_id", 0)
+  end
 end
