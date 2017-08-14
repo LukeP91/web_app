@@ -11,12 +11,12 @@ RSpec.describe Admin::UsersController do
     context 'admin is signed in' do
       it 'returns paginated users' do
         admin = create(:admin, first_name: 'Luke')
-        40.times { create(:user, organization: admin.organization) }
+        create_list(:user, 40, organization: admin.organization)
         sign_in admin
 
         get :index, params: { page: 1 }
 
-        expect(response.body).to have_css('#user_row', count:30)
+        expect(response.body).to have_css('.user_row', count: 30)
       end
 
       it 'allows to search users' do

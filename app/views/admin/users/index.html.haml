@@ -29,7 +29,7 @@
       %th=t '.actions', default: t("helpers.actions")
   %tbody
     - users.each do |user|
-      %tr#user_row
+      %tr.user_row
         %td= user.email
 
         %td= user.first_name
