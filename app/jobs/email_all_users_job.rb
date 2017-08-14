@@ -1,20 +1,13 @@
 class EmailAllUsersJob < ActiveJob::Base
   queue_as :mailers
 
-  def perform(user_id, recipient_ids)
-    sender = User.find(user_id)
-    last_send = Rails.cache.fetch("last_send_email_user_id") do
-      0
-    end
+  def perform(sender_id)
+    sender = User.find(sender_id)
+    last_send_user_id = Rails.cache.fetch("last_send_email_user_id") { 0 }
 
-    if last_send != 0
-      recipient_ids = User.in_organization(sender.organization_id).where(id: last_send..recipient_ids.last).pluck()
-    end
-
-    recipient_ids.each do |recipient_id|
-      recipient = User.find(recipient_id)
+    User.in_organization(sender.organization_id).where('id > ?', last_send_user_id).each do |recipient|
       WelcomeMailer.welcome_email(sender, recipient).deliver_later
-      last_send = Rails.cache.write("last_send_email_user_id", recipient_id + 1 )
+      last_send_user_id = Rails.cache.write("last_send_email_user_id", recipient.id + 1 )
     end
 
     Rails.cache.write("last_send_email_user_id", 0)
