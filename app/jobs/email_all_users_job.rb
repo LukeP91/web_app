@@ -9,9 +9,8 @@ class EmailAllUsersJob < ActiveJob::Base
       WelcomeMailer.welcome_email(sender, recipient).deliver_later
       last_send = recipient_id
     end
-    rescue
-      user_ids = User.in_organization(sender.organization_id).where(id: last_send..recipient_ids.last)
-      EmailAllUsersJob.perform_later(user.id, user_ids)
-    end
+  rescue
+    user_ids = User.in_organization(sender.organization_id).where(id: last_send..recipient_ids.last)
+    EmailAllUsersJob.perform_later(user.id, user_ids)
   end
 end
