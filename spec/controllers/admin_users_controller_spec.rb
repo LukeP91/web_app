@@ -10,18 +10,13 @@ RSpec.describe Admin::UsersController do
   describe '#index' do
     context 'admin is signed in' do
       it 'returns paginated users' do
-        User.paginates_per 1
         admin = create(:admin, first_name: 'Luke')
-        user = create(:user, first_name: 'Pablo', organization: admin.organization)
+        40.times { create(:user, organization: admin.organization) }
         sign_in admin
 
-        allow(controller).to receive(:render)
         get :index, params: { page: 1 }
 
-        expect(controller).to have_received(:render)
-          .with(:index, locals: { users: include(have_attributes(first_name: 'Luke')) })
-        expect(controller).to_not have_received(:render)
-          .with(:index, locals: { users: include(have_attributes(first_name: 'Pablo')) })
+        expect(response.body).to have_css('#user_row', count:30)
       end
 
       it 'allows to search users' do
