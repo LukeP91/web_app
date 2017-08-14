@@ -10,7 +10,6 @@ RSpec.describe Admin::UsersController do
   describe '#index' do
     context 'admin is signed in' do
       it 'returns paginated users' do
-        # stub_const('User::USERS_PER_PAGE', 1)
         User.paginates_per 1
         admin = create(:admin, first_name: 'Luke')
         user = create(:user, first_name: 'Pablo', organization: admin.organization)
@@ -19,8 +18,10 @@ RSpec.describe Admin::UsersController do
         allow(controller).to receive(:render)
         get :index, params: { page: 1 }
 
-        expect(controller).to have_received(:render).with(:index, locals: { users: include(have_attributes(first_name: 'Luke')) })
-        expect(controller).to_not have_received(:render).with(:index, locals: { users: include(have_attributes(first_name: 'Pablo')) })
+        expect(controller).to have_received(:render)
+          .with(:index, locals: { users: include(have_attributes(first_name: 'Luke')) })
+        expect(controller).to_not have_received(:render)
+          .with(:index, locals: { users: include(have_attributes(first_name: 'Pablo')) })
       end
 
       it 'allows to search users' do
@@ -31,8 +32,10 @@ RSpec.describe Admin::UsersController do
         allow(controller).to receive(:render)
         get :index, params: { search: { text: admin.first_name } }
 
-        expect(controller).to have_received(:render).with(:index, locals: { users: include(have_attributes(first_name: 'Luke')) })
-        expect(controller).to_not have_received(:render).with(:index, locals: { users: include(have_attributes(first_name: 'Pablo')) })
+        expect(controller).to have_received(:render)
+          .with(:index, locals: { users: include(have_attributes(first_name: 'Luke')) })
+        expect(controller).to_not have_received(:render)
+          .with(:index, locals: { users: include(have_attributes(first_name: 'Pablo')) })
       end
     end
 
