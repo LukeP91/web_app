@@ -8,8 +8,6 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-
-
   root to: 'profiles#show'
   resource :profile, only: [:show, :edit, :update]
 
