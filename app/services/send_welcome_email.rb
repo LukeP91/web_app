@@ -6,7 +6,7 @@ class SendWelcomeEmail
   end
 
   def call
-    user_ids = User.in_organization(Organization.find(organization_id)).pluck(:id)
+    user_ids = User.in_organization(Organization.find(user.organization_id)).pluck(:id)
     EmailAllUsersJob.perform_later(user.id, user_ids)
   end
 end
