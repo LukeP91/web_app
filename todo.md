@@ -44,14 +44,15 @@ This is a spec for a candidate evaluation app.
   * Try PostgreSQL full-text search function
 
 * add pagination to users
-### Extra tasks
 
-* It uses queues (e.g. Sidekiq):(Done)
-  * Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table. (done)
-  * Async request for sending email. (done)
+* It uses queues (e.g. Sidekiq):
+  * Send welcome email to all. User Resque https://github.com/resque/resque. Button at the top of users table.
+  * Async request for sending email.
   * Invitation email
-  * Change regards email to async email(Done)
+  * Change regards email to async email
   * When job that sends email to all users break it should send only not-send email on retry
+
+### Extra tasks
 
 * Three 3rd party integrations
   * Sending Email / SMS (Send welcome SMS)
