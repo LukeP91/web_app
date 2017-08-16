@@ -10,6 +10,7 @@ describe Api::UsersController do
 
         get :index
 
+        expect(response).to have_http_status(:ok)
         expect(response.body).to include_json(
           [
             {email: 'joe.doe@example.com'},
@@ -37,6 +38,7 @@ describe Api::UsersController do
 
         get :show, params: { id: user.id }
 
+        expect(response).to have_http_status(:ok)
         expect(response.body).to include_json(
           first_name: 'Joe',
           last_name: 'Doe',
@@ -48,6 +50,24 @@ describe Api::UsersController do
     end
 
     context 'unauthorized user' do
+    end
+  end
+
+  describe '#create' do
+    context 'authorized user' do
+      it 'creates new user' do
+        create(:organization)
+        post :create, params: { user: { first_name: 'Joe', last_name: 'Doe', email: 'joe.doe@example.com', age: 25, gender: 'male' } }
+
+        expect(response).to have_http_status(:created)
+        expect(response.body).to include_json(
+          first_name: 'Joe',
+          last_name: 'Doe',
+          email: 'joe.doe@example.com',
+          age: 25,
+          gender: 'male'
+        )
+      end
     end
   end
 end
