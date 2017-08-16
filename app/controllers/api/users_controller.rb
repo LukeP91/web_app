@@ -1,7 +1,7 @@
 class Api::UsersController < ApplicationController
   def index
     users = User.all
-    render json: users, status: :ok
+    render json: UserSerializer.new(users, root_url).serialize, status: :ok
   end
 
   def show
