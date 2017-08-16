@@ -42,6 +42,7 @@ describe Api::UsersController do
         expect(response.body).to include_json(
           data: {
             id: user.id,
+            type: 'users',
             attributes: {
               first_name: 'Joe',
               last_name: 'Doe',
