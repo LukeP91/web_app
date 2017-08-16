@@ -24,6 +24,7 @@ gem 'pundit', '~> 1.1.0'
 gem 'kaminari', '~> 1.0.1'
 gem 'sidekiq', '~> 4.1', '>= 4.1.2'
 gem 'redis-rails', '~> 5.0', '>= 5.0.2'
+gem 'active_model_serializers', '~> 0.10.6'
 
 group :development, :test do
   gem 'pry-rails', '~> 0.3.6'
