@@ -69,7 +69,13 @@ describe Api::UsersController do
               gender: 'male'
             },
             links: {
-              'self' => "http://test.host/admin/users/#{user.id}"
+              'self' => "http://test.host/admin/users/#{user.id}",
+              related: {
+                href: "http://test.host/admin/users/#{user.id}",
+                meta: {
+                  count: 1
+                }
+              }
             }
           }
         )

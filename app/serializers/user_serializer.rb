@@ -1,4 +1,5 @@
 class UserSerializer
+  include Rails.application.routes.url_helpers
 
   def initialize(resource, root_url)
     @resource = resource
@@ -30,10 +31,22 @@ class UserSerializer
   end
 
   def links
-    { 'self' => "#{@root_url}admin/users/#{@resource.id}" }
+    {
+      'self' => link_to_self,
+      related: related
+    }
   end
 
   def link_to_self
-    binding.pry
+    "#{@root_url}admin/users/#{@resource.id}"
+  end
+
+  def related
+    {
+      href: "#{@root_url}admin/users/#{@resource.id}",
+      meta: {
+        count: @resource.interests.count
+      }
+    }
   end
 end
