@@ -26,7 +26,7 @@ describe Api::UsersController do
 
   describe '#show' do
     context 'authorized user' do
-      it 'returns user data' do
+      it 'returns user data in proper format' do
         user = create(
           :user,
           first_name: 'Joe',
@@ -40,11 +40,16 @@ describe Api::UsersController do
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include_json(
-          first_name: 'Joe',
-          last_name: 'Doe',
-          email: 'joe.doe@example.com',
-          age: 50,
-          gender: 'male'
+          data: {
+            id: user.id,
+            attributes: {
+              first_name: 'Joe',
+              last_name: 'Doe',
+              email: 'joe.doe@example.com',
+              age: 50,
+              gender: 'male'
+            }
+          }
         )
       end
     end
