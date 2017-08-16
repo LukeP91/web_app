@@ -70,4 +70,30 @@ describe Api::UsersController do
       end
     end
   end
+
+  describe '#edit' do
+    context 'authorized user' do
+      it 'updates existing user' do
+        user = create(
+          :user,
+          first_name: 'Joe',
+          last_name: 'Doe',
+          email: 'joe.doe@example.com',
+          age: 50,
+          gender: 'male'
+        )
+
+        put :edit, params: { id: user.id, user: { first_name: 'Alice', last_name: 'Kowalski', email: 'alice.kowalski@example.com', age: 30, gender: 'female' } }
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include_json(
+          first_name: 'Alice',
+          last_name: 'Kowalski',
+          email: 'alice.kowalski@example.com',
+          age: 30,
+          gender: 'female'
+        )
+      end
+    end
+  end
 end
