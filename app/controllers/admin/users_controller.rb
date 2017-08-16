@@ -29,7 +29,7 @@ class Admin::UsersController < ApplicationController
 
     if user.save
       flash[:notice] = t('admin.notices.user_created')
-      user.send_reset_password_instructions.deliver_later
+      user.send_reset_password_instructions
       redirect_to admin_user_path(user)
     else
       render :new, locals: { user: user }

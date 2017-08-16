@@ -22,7 +22,7 @@ module Admin
       end
 
       def send_email_button(id)
-        find(:css, "#user_send_email_#{id}")
+        find(:css, ".send-user-email[data-user-id='#{id}']")
       end
     end
   end
