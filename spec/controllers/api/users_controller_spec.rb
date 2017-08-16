@@ -22,4 +22,32 @@ describe Api::UsersController do
     context 'unauthorized user' do
     end
   end
+
+  describe '#show' do
+    context 'authorized user' do
+      it 'returns user data' do
+        user = create(
+          :user,
+          first_name: 'Joe',
+          last_name: 'Doe',
+          email: 'joe.doe@example.com',
+          age: 50,
+          gender: 'male'
+        )
+
+        get :show, params: { id: user.id }
+
+        expect(response.body).to include_json(
+          first_name: 'Joe',
+          last_name: 'Doe',
+          email: 'joe.doe@example.com',
+          age: 50,
+          gender: 'male'
+        )
+      end
+    end
+
+    context 'unauthorized user' do
+    end
+  end
 end
