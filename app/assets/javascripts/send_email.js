@@ -1,14 +1,13 @@
-$("[id^='user_send_email']").click(function(e) {
-    e.preventDefault();
-    mail_url = this.attributes.href;
-    $.ajax({
-        type: "GET",
-        url: mail_url,
-        success: function(result) {
+$(document).ready(() => {
+  $(".send-user-email").click((e) => {
+      e.preventDefault();
+      const userId = $(e.target).data().userId;
+      $.get(`/admin/users/${userId}/send_email`)
+        .done(() => {
           $( ".main-container" ).prepend( "<div class='alert alert-success'>Regards email has been send</div>" );
-        },
-        error: function(result) {
+        })
+        .fail(() => {
           $( ".main-container" ).prepend( "<div class='alert alert-danger'>Something went wrong.</div>" );
-        }
-    });
+        });
+  });
 });

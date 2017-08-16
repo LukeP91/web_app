@@ -58,7 +58,7 @@
                       default: 'Are you sure?')) }, class: 'btn btn-xs btn-danger glyphicon glyphicon-trash', id: "user_delete_#{user.id}"
 
           = link_to '',
-              send_email_admin_user_path(user), remote: true, class: 'btn btn-success btn-xs glyphicon glyphicon-envelope', id: "user_send_email_#{user.id}"
+              send_email_admin_user_path(user), remote: true, class: 'btn btn-success btn-xs glyphicon glyphicon-envelope send-user-email', "data-user-id": user.id
 = link_to t('.new', default: t("helpers.links.new")), new_admin_user_path,
     class: 'btn btn-primary', id: 'new_user'
 
