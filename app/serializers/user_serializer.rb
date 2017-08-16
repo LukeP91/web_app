@@ -13,10 +13,10 @@ class UserSerializer
   private
 
   def jsonapi
-    { data: resource }
+    { data: resource_data }
   end
 
-  def resource
+  def resource_data
     { id: @resource.id, type: 'users', attributes: attributes, links: links }
   end
 

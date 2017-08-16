@@ -19,7 +19,7 @@ describe Api::UsersController do
           first_name: 'Alice',
           last_name: 'Cooper',
           email: 'alice.cooper@example.com',
-          age: 50,
+          age: 60,
           gender: 'male'
         )
 
@@ -27,9 +27,43 @@ describe Api::UsersController do
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include_json(
-          [
-            {email: 'joe.doe@example.com'},
-            {email: 'alice.cooper@example.com'}
+          data: [
+            {
+              id: joe.id,
+              type: 'users',
+              attributes: {
+                first_name: 'Joe',
+                last_name: 'Doe',
+                email: 'joe.doe@example.com',
+                age: 50,
+                gender: 'male'
+              },
+              links: {
+                'self' => "http://test.host/admin/users/#{user.id}",
+                related: {
+                  href: "http://test.host/admin/users/#{user.id}",
+                  meta: { count: 1 }
+                }
+              }
+            },
+            {
+              id: alice.id,
+              type: 'users',
+              attributes: {
+                first_name: 'Alice',
+                last_name: 'Cooper',
+                email: 'alice.cooper@example.com',
+                age: 60,
+                gender: 'male'
+              },
+              links: {
+                'self' => "http://test.host/admin/users/#{user.id}",
+                related: {
+                  href: "http://test.host/admin/users/#{user.id}",
+                  meta: { count: 1 }
+                }
+              }
+            }
           ]
         )
       end
@@ -72,9 +106,7 @@ describe Api::UsersController do
               'self' => "http://test.host/admin/users/#{user.id}",
               related: {
                 href: "http://test.host/admin/users/#{user.id}",
-                meta: {
-                  count: 1
-                }
+                meta: { count: 1 }
               }
             }
           }
