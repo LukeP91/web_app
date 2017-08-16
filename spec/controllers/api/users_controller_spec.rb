@@ -5,8 +5,23 @@ describe Api::UsersController do
     context 'authorized user' do
       it 'returns all users from organization' do
         organization = create(:organization)
-        create(:user, email: 'joe.doe@example.com', organization: organization)
-        create(:user, email: 'alice.doe@example.com', organization: organization)
+        joe = create(
+          :user,
+          first_name: 'Joe',
+          last_name: 'Doe',
+          email: 'joe.doe@example.com',
+          age: 50,
+          gender: 'male'
+        )
+
+        alice = create(
+          :user,
+          first_name: 'Alice',
+          last_name: 'Cooper',
+          email: 'alice.cooper@example.com',
+          age: 50,
+          gender: 'male'
+        )
 
         get :index
 
@@ -14,7 +29,7 @@ describe Api::UsersController do
         expect(response.body).to include_json(
           [
             {email: 'joe.doe@example.com'},
-            {email: 'alice.doe@example.com'}
+            {email: 'alice.cooper@example.com'}
           ]
         )
       end
@@ -27,13 +42,16 @@ describe Api::UsersController do
   describe '#show' do
     context 'authorized user' do
       it 'returns user data in proper format' do
+        interest = create(:interest)
+
         user = create(
           :user,
           first_name: 'Joe',
           last_name: 'Doe',
           email: 'joe.doe@example.com',
           age: 50,
-          gender: 'male'
+          gender: 'male',
+          interests: [interest]
         )
 
         get :show, params: { id: user.id }
@@ -49,6 +67,9 @@ describe Api::UsersController do
               email: 'joe.doe@example.com',
               age: 50,
               gender: 'male'
+            },
+            links: {
+              'self' => "http://test.host/admin/users/#{user.id}"
             }
           }
         )

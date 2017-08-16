@@ -1,23 +1,25 @@
 class UserSerializer
-  def initialize(resource)
+
+  def initialize(resource, root_url)
     @resource = resource
+    @root_url = root_url
   end
 
   def serialize
-    JSON.generate(jsonapi_hash)
+    JSON.generate(jsonapi)
   end
 
   private
 
-  def jsonapi_hash
-    { data: resource_hash }
+  def jsonapi
+    { data: resource }
   end
 
-  def resource_hash
-    { id: @resource.id, type: 'users', attributes: attributes_hash }
+  def resource
+    { id: @resource.id, type: 'users', attributes: attributes, links: links }
   end
 
-  def attributes_hash
+  def attributes
     {
       first_name: @resource.first_name,
       last_name: @resource.last_name,
@@ -25,5 +27,13 @@ class UserSerializer
       age: @resource.age,
       gender: @resource.gender
     }
+  end
+
+  def links
+    { 'self' => "#{@root_url}admin/users/#{@resource.id}" }
+  end
+
+  def link_to_self
+    binding.pry
   end
 end
