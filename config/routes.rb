@@ -25,4 +25,8 @@ Rails.application.routes.draw do
     resources :categories
     resources :interests
   end
+
+  namespace :api do
+    resources :users
+  end
 end

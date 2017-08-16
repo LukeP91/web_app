@@ -28,7 +28,9 @@ gem 'redis-rails', '~> 5.0', '>= 5.0.2'
 group :development, :test do
   gem 'pry-rails', '~> 0.3.6'
   gem 'byebug', '~> 9.0.6', platform: :mri
+  gem 'rspec', '~> 3.4'
   gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-json_expectations', '~> 2.1'
   gem 'factory_girl_rails', '~> 4.8'
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver', '~> 3.4', '>= 3.4.4'

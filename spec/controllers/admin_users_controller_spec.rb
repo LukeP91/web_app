@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::UsersController do
+describe Admin::UsersController do
   include Devise::Test::ControllerHelpers
   include EmailSpec::Helpers
   include EmailSpec::Matchers
