@@ -1,6 +1,4 @@
 class UserSerializer
-  require 'json'
-
   def initialize(resource)
     @resource = resource
   end
@@ -16,7 +14,7 @@ class UserSerializer
   end
 
   def resource_hash
-    { id: @resource.id, attributes: attributes_hash }
+    { id: @resource.id, type: 'users', attributes: attributes_hash }
   end
 
   def attributes_hash
