@@ -33,4 +33,17 @@ class User < ApplicationRecord
   def values_to_export
     [first_name, last_name, email, gender, age, interests.map(&:name)].flatten!
   end
+
+  def self.per_page
+    20
+  end
+
+  def self.pages(per_page = self.per_page)
+    (count/per_page.to_f).ceil
+  end
+
+  def self.paginate(page: 1, per_page: self.per_page)
+    page_offset = (page.to_i - 1) * per_page.to_i
+    limit(per_page).offset(page_offset)
+  end
 end

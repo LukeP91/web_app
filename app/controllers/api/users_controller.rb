@@ -1,6 +1,6 @@
 class Api::UsersController < ApplicationController
   def index
-    users = User.all
+    users = User.order(:id).paginate(page: page, per_page: per_page)
     render json: UsersSerializer.new(users).serialize, status: :ok
   end
 
@@ -40,5 +40,13 @@ class Api::UsersController < ApplicationController
       :email, :first_name, :last_name, :age, :gender, :admin, :password,
       :password_confirmation, interest_ids: []
     )
+  end
+
+  def page
+    params[:page] || 1
+  end
+
+  def per_page
+    params[:per_page] || User.per_page
   end
 end
