@@ -83,6 +83,7 @@ describe Api::UsersController do
         get :index, params: { page: 2, per_page: 1 }
 
         expect(response).to have_http_status(:ok)
+        expect(response.header["X-Total-Count"]).to eq 2
         expect(response.body).to include_json(
           data: [
             {
