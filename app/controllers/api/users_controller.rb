@@ -79,6 +79,7 @@ class Api::UsersController < ApplicationController
   def current_page
     page.to_i
   end
+
   def total_pages
     User.pages(per_page)
   end
