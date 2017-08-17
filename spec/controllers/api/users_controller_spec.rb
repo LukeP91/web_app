@@ -206,15 +206,35 @@ describe Api::UsersController do
     context 'authorized user' do
       it 'creates new user' do
         create(:organization)
-        post :create, params: { user: { first_name: 'Joe', last_name: 'Doe', email: 'joe.doe@example.com', age: 25, gender: 'male' } }
+
+        post :create, params: {
+          data: {
+            type: 'users',
+            attributes: {
+              first_name: 'Joe',
+              last_name: 'Doe',
+              email: 'joe.doe@example.com',
+              age: 25,
+              gender: 'male'
+            }
+          }
+        }
 
         expect(response).to have_http_status(:created)
         expect(response.body).to include_json(
-          first_name: 'Joe',
-          last_name: 'Doe',
-          email: 'joe.doe@example.com',
-          age: 25,
-          gender: 'male'
+          data: {
+            type: 'users',
+            attributes: {
+              first_name: 'Joe',
+              last_name: 'Doe',
+              email: 'joe.doe@example.com',
+              age: 25,
+              gender: 'male'
+            },
+            links: {
+              self: "http://test.host/admin/users/#{User.find_by(email: 'joe.doe@example.com').id}"
+            }
+          }
         )
       end
     end
