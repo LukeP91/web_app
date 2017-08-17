@@ -11,7 +11,8 @@ describe Api::UsersController do
           last_name: 'Doe',
           email: 'joe.doe@example.com',
           age: 50,
-          gender: 'male'
+          gender: 'male',
+          organization: organization
         )
 
         alice = create(
@@ -20,7 +21,8 @@ describe Api::UsersController do
           last_name: 'Cooper',
           email: 'alice.cooper@example.com',
           age: 60,
-          gender: 'male'
+          gender: 'male',
+          organization: organization
         )
 
         get :index
@@ -62,15 +64,7 @@ describe Api::UsersController do
 
       it 'returns paginated users with proper links' do
         organization = create(:organization)
-        joe = create(
-          :user,
-          first_name: 'Joe',
-          last_name: 'Doe',
-          email: 'joe.doe@example.com',
-          age: 50,
-          gender: 'male'
-        )
-
+        create_list(:user, 2)
         alice = create(
           :user,
           first_name: 'Alice',
@@ -79,11 +73,16 @@ describe Api::UsersController do
           age: 60,
           gender: 'male'
         )
+        create_list(:user, 2)
 
-        get :index, params: { page: 2, per_page: 1 }
+        get :index, params: { page: 3, per_page: 1 }
 
         expect(response).to have_http_status(:ok)
-        expect(response.header["X-Total-Count"]).to eq 2
+        expect(response.header['X-Total-Count']).to eq 5
+        expect(response.header['Link']).to include "<http://test.host/admin/users?page=1&per_page=1>; rel=\"first\""
+        expect(response.header['Link']).to include "<http://test.host/admin/users?page=5&per_page=1>; rel=\"last\""
+        expect(response.header['Link']).to include "<http://test.host/admin/users?page=2&per_page=1>; rel=\"prev\""
+        expect(response.header['Link']).to include "<http://test.host/admin/users?page=4&per_page=1>; rel=\"next\""
         expect(response.body).to include_json(
           data: [
             {
@@ -102,6 +101,44 @@ describe Api::UsersController do
             }
           ]
         )
+      end
+
+      it "returns empty 'Link' response header when there is only one page" do
+        get :index
+
+        expect(response.header['Link']).to eq ''
+      end
+
+      it "doesn't return link to first page if already on it" do
+        create_list(:user, 2)
+
+        get :index, params: {page: 1, per_page: 1}
+
+        expect(response.header['Link']).to_not include "<http://test.host/admin/users?page=1&per_page=1>; rel=\"first\""
+      end
+
+      it "doesn't return link to last page if already on it" do
+        create_list(:user, 2)
+
+        get :index, params: {page: 2, per_page: 1}
+
+        expect(response.header['Link']).to_not include "<http://test.host/admin/users?page=2&per_page=1>; rel=\"last\""
+      end
+
+      it "doesn't return link to previous page if currently on first page" do
+        create_list(:user, 2)
+
+        get :index, params: {page: 1, per_page: 1}
+
+        expect(response.header['Link']).to_not include "<http://test.host/admin/users?page=1&per_page=1>; rel=\"prev\""
+      end
+
+      it "doesn't return link to next page if currently on last page" do
+        create_list(:user, 2)
+
+        get :index, params: {page: 2, per_page: 1}
+
+        expect(response.header['Link']).to_not include "<http://test.host/admin/users?page=2&per_page=1>; rel=\"next\""
       end
     end
 
