@@ -354,6 +354,34 @@ describe Api::UsersController do
           gender: 'male'
         )
       end
+
+      it "returns not found when user with given id doesn't exist in database" do
+        patch :update, params: {
+          id: 1,
+          data: {
+            type: 'users',
+            id: 1,
+            attributes: {
+              first_name: 'Alice',
+              last_name: 'Kowalski',
+              email: 'alice.kowalski@example.com',
+              age: 30,
+              gender: 'female'
+            }
+          }
+        }
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.body).to include_json(
+          errors: [
+            {
+              status: 404,
+              code: 'Not found',
+              title: 'User not found'
+            }
+          ]
+        )
+      end
     end
   end
 end

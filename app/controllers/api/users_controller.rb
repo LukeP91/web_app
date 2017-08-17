@@ -39,6 +39,8 @@ class Api::UsersController < ApplicationController
     end
   rescue IncorrectType
     render json: { errors: [{ status: 409, code: 'Conflict', title: 'Incorrect type' }] }, status: :conflict
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: [{ status: 404, code: 'Not found', title: 'User not found' }] }, status: :not_found
   end
 
   private
