@@ -1,20 +1,19 @@
 class UserSerializer
   include Rails.application.routes.url_helpers
 
-  def initialize(resource, root_url)
+  def initialize(resource)
     @resource = resource
-    @root_url = root_url
   end
 
-  def serialize
-    JSON.generate(jsonapi)
+  def serialize(root_key: true)
+    if root_key
+      JSON.generate(data: resource_data)
+    else
+      resource_data
+    end
   end
 
   private
-
-  def jsonapi
-    { data: resource_data }
-  end
 
   def resource_data
     { id: @resource.id, type: 'users', attributes: attributes, links: links }
@@ -32,21 +31,21 @@ class UserSerializer
 
   def links
     {
-      'self' => link_to_self,
-      related: related
+      self: link_to_self
     }
   end
 
   def link_to_self
-    "#{@root_url}admin/users/#{@resource.id}"
+    admin_user_url(id: @resource.id, host: Rails.application.secrets.app_host)
   end
 
-  def related
-    {
-      href: "#{@root_url}admin/users/#{@resource.id}",
-      meta: {
-        count: @resource.interests.count
-      }
-    }
-  end
+  #TODO waiting for the endpoint
+  # def related
+  #   {
+  #     href: "#{@root_url}admin/users/#{@resource.id}/interests",
+  #     meta: {
+  #       count: @resource.interests.count
+  #     }
+  #   }
+  # end
 end
