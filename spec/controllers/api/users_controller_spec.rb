@@ -252,15 +252,37 @@ describe Api::UsersController do
           gender: 'male'
         )
 
-        put :edit, params: { id: user.id, user: { first_name: 'Alice', last_name: 'Kowalski', email: 'alice.kowalski@example.com', age: 30, gender: 'female' } }
+        patch :update, params: {
+          id: user.id,
+          data: {
+            type: 'users',
+            id: user.id,
+            attributes: {
+              first_name: 'Alice',
+              last_name: 'Kowalski',
+              email: 'alice.kowalski@example.com',
+              age: 30,
+              gender: 'female'
+            }
+          }
+        }
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include_json(
-          first_name: 'Alice',
-          last_name: 'Kowalski',
-          email: 'alice.kowalski@example.com',
-          age: 30,
-          gender: 'female'
+          data: {
+            type: 'users',
+            id: user.id,
+            attributes: {
+              first_name: 'Alice',
+              last_name: 'Kowalski',
+              email: 'alice.kowalski@example.com',
+              age: 30,
+              gender: 'female'
+            },
+            links: {
+              self: "http://test.host/admin/users/#{user.id}"
+            }
+          }
         )
       end
     end

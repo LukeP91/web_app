@@ -22,9 +22,11 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  def edit
+  def update
     user = User.find(params[:id])
-    render json: user, status: :ok if user.update(user_params)
+    if user.update(user_params)
+      render json: UserSerializer.new(user).serialize, status: :ok
+    end
   end
 
   private
