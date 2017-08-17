@@ -236,11 +236,37 @@ describe Api::UsersController do
             }
           }
         )
+        expect(User.find_by(email: 'joe.doe@example.com')).to have_attributes(
+          first_name: 'Joe',
+          last_name: 'Doe',
+          email: 'joe.doe@example.com',
+          age: 25,
+          gender: 'male'
+        )
+      end
+
+      it 'returns conflict when type in request is incorrect' do
+        create(:organization)
+
+        post :create, params: {
+          data: {
+            type: 'invalid',
+            attributes: {
+              first_name: 'Joe',
+              last_name: 'Doe',
+              email: 'joe.doe@example.com',
+              age: 25,
+              gender: 'male'
+            }
+          }
+        }
+
+        expect(response).to have_http_status(:conflict)
       end
     end
   end
 
-  describe '#edit' do
+  describe '#update' do
     context 'authorized user' do
       it 'updates existing user' do
         user = create(
@@ -284,6 +310,41 @@ describe Api::UsersController do
             }
           }
         )
+        expect(User.find(user.id)).to have_attributes(
+          first_name: 'Alice',
+          last_name: 'Kowalski',
+          email: 'alice.kowalski@example.com',
+          age: 30,
+          gender: 'female'
+        )
+      end
+
+      it 'returns conflict when type in request is incorrect' do
+        user = create(
+          :user,
+          first_name: 'Joe',
+          last_name: 'Doe',
+          email: 'joe.doe@example.com',
+          age: 50,
+          gender: 'male'
+        )
+
+        patch :update, params: {
+          id: user.id,
+          data: {
+            type: 'incorrect',
+            id: user.id,
+            attributes: {
+              first_name: 'Alice',
+              last_name: 'Kowalski',
+              email: 'alice.kowalski@example.com',
+              age: 30,
+              gender: 'female'
+            }
+          }
+        }
+
+        expect(response).to have_http_status(:conflict)
       end
     end
   end

@@ -1,4 +1,6 @@
 class Api::UsersController < ApplicationController
+  class IncorrectType < StandardError; end
+
   def index
     users = User.order(:id).paginate(page: page, per_page: per_page)
     user_count_header
@@ -14,19 +16,29 @@ class Api::UsersController < ApplicationController
   end
 
   def create
+    if !correct_type
+      raise IncorrectType, "Incorrect type. Expected: 'users'. Found: #{params[:data][:type]}"
+    end
     user = User.new(user_params)
     user.password = user.password_confirmation = Devise.friendly_token.first(8)
     user.organization = Organization.first
     if user.save
       render json: UserSerializer.new(user).serialize, status: :created
     end
+  rescue IncorrectType
+    render json: { errors: [{ status: 409, code: 'Conflict', title: 'Incorrect type' }] }, status: :conflict
   end
 
   def update
+    if !correct_type
+      raise IncorrectType, "Incorrect type. Expected: 'users'. Found: #{params[:data][:type]}"
+    end
     user = User.find(params[:id])
     if user.update(user_params)
       render json: UserSerializer.new(user).serialize, status: :ok
     end
+  rescue IncorrectType
+    render json: { errors: [{ status: 409, code: 'Conflict', title: 'Incorrect type' }] }, status: :conflict
   end
 
   private
@@ -82,5 +94,9 @@ class Api::UsersController < ApplicationController
 
   def total_pages
     User.pages(per_page)
+  end
+
+  def correct_type
+    params[:data][:type] == 'users'
   end
 end
