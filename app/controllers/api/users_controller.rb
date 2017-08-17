@@ -17,7 +17,9 @@ class Api::UsersController < ApplicationController
     user = User.new(user_params)
     user.password = user.password_confirmation = Devise.friendly_token.first(8)
     user.organization = Organization.first
-    render json: user, status: :created if user.save
+    if user.save
+      render json: UserSerializer.new(user).serialize, status: :created
+    end
   end
 
   def edit
@@ -28,12 +30,12 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
-      params[:user].delete(:password_confirmation)
-      params[:user].delete(:password)
+    if params[:data][:attributes][:password].blank? && params[:data][:attributes][:password_confirmation].blank?
+      params[:data][:attributes].delete(:password_confirmation)
+      params[:data][:attributes].delete(:password)
     end
 
-    params.require(:user).permit(
+    params.require(:data).require(:attributes).permit(
       :email, :first_name, :last_name, :age, :gender, :admin, :password,
       :password_confirmation, interest_ids: []
     )
