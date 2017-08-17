@@ -100,6 +100,21 @@ describe Api::UsersController do
           }
         )
       end
+
+      it 'returns proper error when user is not found' do
+        get :show, params: { id: 1 }
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.body).to include_json(
+          errors: [
+            {
+              status: 404,
+              code: 'Not found',
+              title: 'User not found'
+            }
+          ]
+        )
+      end
     end
 
     context 'unauthorized user' do
