@@ -39,11 +39,7 @@ describe Api::UsersController do
                 gender: 'male'
               },
               links: {
-                'self' => "http://test.host/admin/users/#{user.id}",
-                related: {
-                  href: "http://test.host/admin/users/#{user.id}",
-                  meta: { count: 1 }
-                }
+                self: "http://test.host/admin/users/#{joe.id}"
               }
             },
             {
@@ -57,11 +53,7 @@ describe Api::UsersController do
                 gender: 'male'
               },
               links: {
-                'self' => "http://test.host/admin/users/#{user.id}",
-                related: {
-                  href: "http://test.host/admin/users/#{user.id}",
-                  meta: { count: 1 }
-                }
+                self: "http://test.host/admin/users/#{alice.id}"
               }
             }
           ]
@@ -103,11 +95,7 @@ describe Api::UsersController do
               gender: 'male'
             },
             links: {
-              'self' => "http://test.host/admin/users/#{user.id}",
-              related: {
-                href: "http://test.host/admin/users/#{user.id}",
-                meta: { count: 1 }
-              }
+              self: "http://test.host/admin/users/#{user.id}"
             }
           }
         )
