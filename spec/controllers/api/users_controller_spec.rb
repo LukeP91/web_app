@@ -59,6 +59,49 @@ describe Api::UsersController do
           ]
         )
       end
+
+      it 'returns paginated users with proper links' do
+        organization = create(:organization)
+        joe = create(
+          :user,
+          first_name: 'Joe',
+          last_name: 'Doe',
+          email: 'joe.doe@example.com',
+          age: 50,
+          gender: 'male'
+        )
+
+        alice = create(
+          :user,
+          first_name: 'Alice',
+          last_name: 'Cooper',
+          email: 'alice.cooper@example.com',
+          age: 60,
+          gender: 'male'
+        )
+
+        get :index, params: { page: 2, per_page: 1 }
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include_json(
+          data: [
+            {
+              id: alice.id,
+              type: 'users',
+              attributes: {
+                first_name: 'Alice',
+                last_name: 'Cooper',
+                email: 'alice.cooper@example.com',
+                age: 60,
+                gender: 'male'
+              },
+              links: {
+                self: "http://test.host/admin/users/#{alice.id}"
+              }
+            }
+          ]
+        )
+      end
     end
 
     context 'unauthorized user' do
@@ -101,7 +144,7 @@ describe Api::UsersController do
         )
       end
 
-      it 'returns proper error when user is not found' do
+      it 'returns not found when user with given id does not exist in the DB' do
         get :show, params: { id: 1 }
 
         expect(response).to have_http_status(:not_found)
