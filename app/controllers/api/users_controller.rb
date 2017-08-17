@@ -1,6 +1,7 @@
 class Api::UsersController < ApplicationController
   def index
     users = User.order(:id).paginate(page: page, per_page: per_page)
+    response.headers["X-Total-Count"] = User.count
     render json: UsersSerializer.new(users).serialize, status: :ok
   end
 
