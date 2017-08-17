@@ -262,6 +262,7 @@ describe Api::UsersController do
         }
 
         expect(response).to have_http_status(:conflict)
+        expect(User.count).to eq 0
       end
     end
   end
@@ -345,6 +346,13 @@ describe Api::UsersController do
         }
 
         expect(response).to have_http_status(:conflict)
+        expect(User.find(user.id)).to have_attributes(
+          first_name: 'Joe',
+          last_name: 'Doe',
+          email: 'joe.doe@example.com',
+          age: 50,
+          gender: 'male'
+        )
       end
     end
   end
