@@ -201,7 +201,52 @@ describe Api::UsersController do
       end
 
       context 'when user has some interests' do
-        xit 'returnes user with his interests'
+        it 'returnes user with his interests' do
+          category = create(:category, name: 'hobby')
+          book_reading = create(:interest, name: 'Book Reading', category: category)
+          swimming = create(:interest, name: 'Swimming', category: category)
+          user = create(
+            :user,
+            first_name: 'Joe',
+            last_name: 'Doe',
+            email: 'joe.doe@example.com',
+            age: 50,
+            gender: 'male',
+            interests: [book_reading, swimming]
+          )
+
+          get :show, params: { id: user.id }
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include_json(
+            data: {
+              id: user.id,
+              type: 'users',
+              attributes: {
+                first_name: 'Joe',
+                last_name: 'Doe',
+                email: 'joe.doe@example.com',
+                age: 50,
+                gender: 'male'
+              },
+              relationships: {
+                interests: {
+                  links:{
+                    self: "http://test.host/api/users/#{user.id}/relationships/interests",
+                    related: "http://test.host/api/users/#{user.id}/interests"
+                  },
+                  data: [
+                    { type: 'interests', id: book_reading.id, data: { name: 'Book Reading', category: 'hobby'}},
+                    { type: 'interests', id: swimming.id, data: { name: 'Swimming', category: 'hobby'}}
+                  ]
+                }
+              },
+              links: {
+                self: "http://test.host/api/users/#{user.id}"
+              }
+            }
+          )
+        end
       end
 
       context "when user with given id doesn't exist in the DB" do
