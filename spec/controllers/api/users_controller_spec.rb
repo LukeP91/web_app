@@ -120,7 +120,7 @@ describe Api::UsersController do
           it 'returns only self' do
             get :index
 
-            expect(response.body).to include_json(links: { self: 'http://test.host/admin/users' })
+            expect(json.fetch('links')).to eq('self' => 'http://test.host/admin/users')
           end
         end
 
@@ -130,7 +130,7 @@ describe Api::UsersController do
 
             get :index, params: { page: 1, per_page: 1 }
 
-            expect(response.body).to_not include_json(links: { first: 'http://test.host/admin/users?page=1&per_page=1' })
+            expect(json.fetch('links')).to_not have_key('first')
           end
 
           it "doesn't return link to previous page" do
@@ -138,25 +138,25 @@ describe Api::UsersController do
 
             get :index, params: { page: 1, per_page: 1 }
 
-            expect(response.body).to_not include_json(links: { prev: 'http://test.host/admin/users?page=1&per_page=1' })
+            expect(json.fetch('links')).to_not have_key('prev')
           end
         end
 
         context 'when currently on last page' do
-          it "doesn't return link to last page" do
-            create_list(:user, 2)
-
-            get :index, params: { page: 2, per_page: 1 }
-
-            expect(response.body).to_not include_json(links: { last: 'http://test.host/admin/users?page=2&per_page=1' })
-          end
-
           it "doesn't return link to next page" do
             create_list(:user, 2)
 
             get :index, params: { page: 2, per_page: 1 }
 
-            expect(response.body).to_not include_json(links: { next: 'http://test.host/admin/users?page=2&per_page=1' })
+            expect(json.fetch('links')).to_not have_key('next')
+          end
+
+          it "doesn't return link to last page" do
+            create_list(:user, 2)
+
+            get :index, params: { page: 2, per_page: 1 }
+
+            expect(json.fetch('links')).to_not have_key('last')
           end
         end
       end
