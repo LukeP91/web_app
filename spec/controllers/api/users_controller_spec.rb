@@ -50,7 +50,7 @@ describe Api::UsersController do
                 gender: 'male'
               },
               links: {
-                self: "http://test.host/admin/users/#{joe.id}"
+                self: "http://test.host/api/users/#{joe.id}"
               }
             },
             {
@@ -64,7 +64,7 @@ describe Api::UsersController do
                 gender: 'male'
               },
               links: {
-                self: "http://test.host/admin/users/#{alice.id}"
+                self: "http://test.host/api/users/#{alice.id}"
               }
             }
           ]
@@ -90,11 +90,11 @@ describe Api::UsersController do
         expect(response).to have_http_status(:ok)
         expect(response.body).to include_json(
           links: {
-            self: 'http://test.host/admin/users',
-            first: 'http://test.host/admin/users?page=1&per_page=1',
-            prev: 'http://test.host/admin/users?page=2&per_page=1',
-            next: 'http://test.host/admin/users?page=4&per_page=1',
-            last: 'http://test.host/admin/users?page=5&per_page=1'
+            self: 'http://test.host/api/users',
+            first: 'http://test.host/api/users?page=1&per_page=1',
+            prev: 'http://test.host/api/users?page=2&per_page=1',
+            next: 'http://test.host/api/users?page=4&per_page=1',
+            last: 'http://test.host/api/users?page=5&per_page=1'
           },
           data: [
             {
@@ -108,7 +108,7 @@ describe Api::UsersController do
                 gender: 'male'
               },
               links: {
-                self: "http://test.host/admin/users/#{alice.id}"
+                self: "http://test.host/api/users/#{alice.id}"
               }
             }
           ]
@@ -120,7 +120,7 @@ describe Api::UsersController do
           it 'returns only self' do
             get :index
 
-            expect(json.fetch('links')).to eq('self' => 'http://test.host/admin/users')
+            expect(json.fetch('links')).to eq('self' => 'http://test.host/api/users')
           end
         end
 
@@ -194,7 +194,7 @@ describe Api::UsersController do
               gender: 'male'
             },
             links: {
-              self: "http://test.host/admin/users/#{user.id}"
+              self: "http://test.host/api/users/#{user.id}"
             }
           }
         )
@@ -259,7 +259,7 @@ describe Api::UsersController do
               gender: 'male'
             },
             links: {
-              self: "http://test.host/admin/users/#{User.find_by(email: 'joe.doe@example.com').id}"
+              self: "http://test.host/api/users/#{User.find_by(email: 'joe.doe@example.com').id}"
             }
           }
         )
@@ -318,7 +318,7 @@ describe Api::UsersController do
               gender: 'female'
             },
             links: {
-              self: "http://test.host/admin/users/#{user.id}"
+              self: "http://test.host/api/users/#{user.id}"
             }
           }
         )

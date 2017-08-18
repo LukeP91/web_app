@@ -36,7 +36,7 @@ class UserSerializer
   end
 
   def link_to_self
-    admin_user_url(id: @resource.id, host: Rails.application.secrets.app_host)
+    api_user_url(id: @resource.id, host: Rails.application.secrets.app_host)
   end
 
   #TODO waiting for the endpoint
