@@ -34,7 +34,7 @@ class UsersSerializer
   end
 
   def link_to_self
-    admin_users_url(host: Rails.application.secrets.app_host)
+    api_users_url(host: Rails.application.secrets.app_host)
   end
 
   def total_pages
