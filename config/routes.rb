@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :users, only: [:show, :index, :update, :create]
+    resources :users, only: [:show, :index, :update, :create] do
+      resources :interests, only: [:index]
+    end
   end
 end

@@ -232,7 +232,7 @@ describe Api::UsersController do
               relationships: {
                 interests: {
                   links:{
-                    self: "http://test.host/api/users/#{user.id}/relationships/interests",
+                    self: "http://test.host/api/users/#{user.id}/interests",
                     related: "http://test.host/api/users/#{user.id}/interests"
                   },
                   data: [
@@ -246,6 +246,16 @@ describe Api::UsersController do
               }
             }
           )
+        end
+      end
+
+      context 'when user has no interests' do
+        it 'returns response without relationships node' do
+          user = create(:user)
+
+          get :show, params: { id: user.id }
+
+          expect(json.fetch('data')).to_not have_key('relationships')
         end
       end
 

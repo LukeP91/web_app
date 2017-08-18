@@ -16,7 +16,8 @@ class UserSerializer
   private
 
   def resource_data
-    { id: @resource.id, type: 'users', attributes: attributes, links: links }
+    data = { id: @resource.id, type: 'users', attributes: attributes, links: links }
+    data.merge(relationships_data)
   end
 
   def attributes
@@ -39,13 +40,11 @@ class UserSerializer
     api_user_url(id: @resource.id, host: Rails.application.secrets.app_host)
   end
 
-  #TODO waiting for the endpoint
-  # def related
-  #   {
-  #     href: "#{@root_url}admin/users/#{@resource.id}/interests",
-  #     meta: {
-  #       count: @resource.interests.count
-  #     }
-  #   }
-  # end
+  def relationships_data
+    if @resource.interests.any?
+      { relationships: UserInterestsSerializer.new(@resource).serialize }
+    else
+      {}
+    end
+  end
 end
