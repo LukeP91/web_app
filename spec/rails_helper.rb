@@ -12,7 +12,8 @@ require 'support/factory_girl'
 require 'site_prism'
 
 Dir['spec/support/pages/sections/**/*.rb',
-    'spec/support/pages/**/*.rb'].each { |f| require Rails.root.join(f) }
+    'spec/support/pages/**/*.rb',
+    'spec/support/**/*.rb'].each { |f| require Rails.root.join(f) }
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -55,7 +56,7 @@ RSpec.configure do |config|
       example.run
     end
   end
-
+  config.include ControllerSpecHelper, type: :controller
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
