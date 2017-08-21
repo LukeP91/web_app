@@ -303,7 +303,7 @@ describe Api::UsersController do
                 }
               }
             }
-          end.to change(User, :count).by(1)
+          end.to change { User.count }.by(1)
 
           expect(response).to have_http_status(:created)
           expect(response.body).to include_json(
@@ -381,7 +381,7 @@ describe Api::UsersController do
                 }
               }
             }
-          end.to_not change(User, :count)
+          end.to_not change { User.count }
         end
       end
     end
