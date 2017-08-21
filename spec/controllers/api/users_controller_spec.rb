@@ -557,4 +557,36 @@ describe Api::UsersController do
       xit 'returns unauthorized'
     end
   end
+
+  describe '#destroy' do
+    context 'when user is authorized' do
+      it 'destroys user' do
+        user = create(:user)
+
+        expect do
+          delete :destroy, params: { id: user.id }
+        end.to change { User.count }.by(-1)
+        expect(response).to have_http_status(:no_content)
+      end
+
+      context 'when user does not exist in DB' do
+        it 'returns not found when user does not exist id DB' do
+          delete :destroy, params: { id: 1 }
+          expect(response.body).to include_json(
+            errors: [
+              {
+                status: 404,
+                code: 'Not found',
+                title: 'User not found'
+              }
+            ]
+          )
+        end
+      end
+    end
+
+    context 'when user is not authorized' do
+      xit 'it does not allow to delete user'
+    end
+  end
 end
