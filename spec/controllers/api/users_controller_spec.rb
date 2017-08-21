@@ -407,7 +407,6 @@ describe Api::UsersController do
           id: user.id,
           data: {
             type: 'users',
-            id: user.id,
             attributes: {
               first_name: 'Alice',
               last_name: 'Kowalski',
@@ -444,7 +443,84 @@ describe Api::UsersController do
         )
       end
 
-      it 'returns validation errors when user data is invalid'
+      it 'does not allow to change password' do
+        user = create(
+          :user,
+          first_name: 'Joe',
+          last_name: 'Doe',
+          email: 'joe.doe@example.com'
+        )
+
+        expect do
+          patch :update, params: {
+            id: user.id,
+            data: {
+              type: 'users',
+              attributes: {
+                password: 'uber_password',
+                password_confirmation: 'uber_password'
+              }
+            }
+          }
+        end.to_not change { user.reload.encrypted_password }
+      end
+
+      context 'when user data is invalid' do
+        it 'returns validation errors when user data is invalid' do
+          user = create(
+            :user,
+            first_name: 'Joe',
+            last_name: 'Doe',
+            email: 'joe.doe@example.com'
+          )
+
+          patch :update, params: {
+            id: user.id,
+            data: {
+              type: 'users',
+              attributes: {
+                first_name: '',
+                last_name: 'Kowalski',
+                email: 'changed@example.com'
+              }
+            }
+          }
+
+          expect(response).to have_http_status(:bad_request)
+          expect(response.body).to include_json(
+            errors: {
+              first_name: ["can't be blank"]
+            }
+          )
+        end
+
+        it 'does not update user attirbutes' do
+          user = create(
+            :user,
+            first_name: 'Joe',
+            last_name: 'Doe',
+            email: 'joe.doe@example.com'
+          )
+
+          patch :update, params: {
+            id: user.id,
+            data: {
+              type: 'users',
+              attributes: {
+                first_name: '',
+                last_name: 'Kowalski',
+                email: 'changed@example.com'
+              }
+            }
+          }
+
+          expect(user.reload).to have_attributes(
+            first_name: 'Joe',
+            last_name: 'Doe',
+            email: 'joe.doe@example.com'
+          )
+        end
+      end
 
       context "when user with given id doesn't exist in the DB" do
         it 'returns not found ' do
