@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Api::UsersController do
+  include ActiveJob::TestHelper
+
   describe '#index' do
     context 'when user is authorized' do
       it 'returns all users from organization' do
@@ -284,11 +286,27 @@ describe Api::UsersController do
 
   describe '#create' do
     context 'when user is authorized' do
-      it 'creates new user' do
-        create(:organization)
+      context 'when user data is valid' do
+        it 'creates new user' do
+          create(:organization)
 
-        expect do
-          post :create, params: {
+          expect do
+            post :create, params: {
+              data: {
+                type: 'users',
+                attributes: {
+                  first_name: 'Joe',
+                  last_name: 'Doe',
+                  email: 'joe.doe@example.com',
+                  age: 25,
+                  gender: 'male'
+                }
+              }
+            }
+          end.to change(User, :count).by(1)
+
+          expect(response).to have_http_status(:created)
+          expect(response.body).to include_json(
             data: {
               type: 'users',
               attributes: {
@@ -297,34 +315,74 @@ describe Api::UsersController do
                 email: 'joe.doe@example.com',
                 age: 25,
                 gender: 'male'
+              },
+              links: {
+                self: "http://test.host/api/users/#{User.find_by(email: 'joe.doe@example.com').id}"
+              }
+            }
+          )
+          expect(User.find_by(email: 'joe.doe@example.com')).to have_attributes(
+            first_name: 'Joe',
+            last_name: 'Doe',
+            email: 'joe.doe@example.com',
+            age: 25,
+            gender: 'male'
+          )
+        end
+
+        it 'sends reset password email to created user' do
+          create(:organization)
+
+          expect_any_instance_of(User).to receive(:send_reset_password_instructions)
+
+          post :create, params: {
+            data: {
+              type: 'users',
+              attributes: {
+                first_name: 'Joe',
+                last_name: 'Doe',
+                email: 'joe.doe@example.com'
               }
             }
           }
-        end.to change(User, :count).by(1)
+        end
+      end
 
-        expect(response).to have_http_status(:created)
-        expect(response.body).to include_json(
-          data: {
-            type: 'users',
-            attributes: {
-              first_name: 'Joe',
-              last_name: 'Doe',
-              email: 'joe.doe@example.com',
-              age: 25,
-              gender: 'male'
-            },
-            links: {
-              self: "http://test.host/api/users/#{User.find_by(email: 'joe.doe@example.com').id}"
+      context 'when user data is invalid' do
+        it 'returns validation errors' do
+          post :create, params: {
+            data: {
+              type: 'users',
+              attributes: {
+                first_name: '',
+                last_name: 'Doe',
+                email: 'joe.doe@example.com'
+              }
             }
           }
-        )
-        expect(User.find_by(email: 'joe.doe@example.com')).to have_attributes(
-          first_name: 'Joe',
-          last_name: 'Doe',
-          email: 'joe.doe@example.com',
-          age: 25,
-          gender: 'male'
-        )
+
+          expect(response).to have_http_status(:bad_request)
+          expect(response.body).to include_json(
+            errors: {
+              first_name: ["can't be blank"]
+            }
+          )
+        end
+
+        it 'does not create new user' do
+          expect do
+            post :create, params: {
+              data: {
+                type: 'users',
+                attributes: {
+                  first_name: '',
+                  last_name: 'Doe',
+                  email: 'joe.doe@example.com'
+                }
+              }
+            }
+          end.to_not change(User, :count)
+        end
       end
     end
 
@@ -385,6 +443,8 @@ describe Api::UsersController do
           gender: 'female'
         )
       end
+
+      it 'returns validation errors when user data is invalid'
 
       context "when user with given id doesn't exist in the DB" do
         it 'returns not found ' do
