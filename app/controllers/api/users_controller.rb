@@ -15,8 +15,12 @@ class Api::UsersController < ApplicationController
     user = User.new(user_params)
     user.password = user.password_confirmation = Devise.friendly_token.first(8)
     user.organization = Organization.first
+
     if user.save
+      user.send_reset_password_instructions
       render json: UserSerializer.new(user).serialize, status: :created
+    else
+      render json: { errors: user.errors.messages }, status: :bad_request
     end
   end
 

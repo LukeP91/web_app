@@ -2,9 +2,8 @@ require 'rails_helper'
 
 describe Admin::UsersController do
   include Devise::Test::ControllerHelpers
-  include EmailSpec::Helpers
-  include EmailSpec::Matchers
   include ActiveJob::TestHelper
+
   render_views
   before { request.env['devise.mapping'] = Devise.mappings[:admin] }
 
