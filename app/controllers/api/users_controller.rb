@@ -26,22 +26,19 @@ class Api::UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
+
     if user.update(user_params)
       render json: UserSerializer.new(user).serialize, status: :ok
+    else
+      render json: { errors: user.errors.messages }, status: :bad_request
     end
   end
 
   private
 
   def user_params
-    if params[:data][:attributes][:password].blank? && params[:data][:attributes][:password_confirmation].blank?
-      params[:data][:attributes].delete(:password_confirmation)
-      params[:data][:attributes].delete(:password)
-    end
-
     params.require(:data).require(:attributes).permit(
-      :email, :first_name, :last_name, :age, :gender, :admin, :password,
-      :password_confirmation, interest_ids: []
+      :email, :first_name, :last_name, :age, :gender, :admin, interest_ids: []
     )
   end
 
