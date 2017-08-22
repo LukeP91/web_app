@@ -3,8 +3,8 @@ class UsersSerializer
 
   def initialize(resources, page = 1, per_page = User.per_page)
     @resources = resources
-    @page = page.to_i
-    @per_page = per_page.to_i
+    @page = page
+    @per_page = per_page
   end
 
   def serialize
@@ -19,14 +19,14 @@ class UsersSerializer
 
   def links
     links_members = {}
-    links_members[:self] = link_to_self.to_s
+    links_members[:self] = link_to_self
     if total_pages > 1
       unless first_page?
         links_members[:first] = "#{link_to_self}?page=1&per_page=#{@per_page}"
-        links_members[:prev] = "#{link_to_self}?page=#{prev_page}&per_page=#{@per_page}"
+        links_members[:prev] = "#{link_to_self}?page=#{@page.pred}&per_page=#{@per_page}"
       end
       unless last_page?
-        links_members[:next] = "#{link_to_self}?page=#{next_page}&per_page=#{@per_page}"
+        links_members[:next] = "#{link_to_self}?page=#{@page.next}&per_page=#{@per_page}"
         links_members[:last] = "#{link_to_self}?page=#{total_pages}&per_page=#{@per_page}"
       end
     end
@@ -39,14 +39,6 @@ class UsersSerializer
 
   def total_pages
     User.pages(@per_page)
-  end
-
-  def prev_page
-    @page - 1
-  end
-
-  def next_page
-    @page + 1
   end
 
   def first_page?

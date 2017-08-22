@@ -122,7 +122,7 @@ describe Api::UsersController do
           it 'returns only self' do
             get :index
 
-            expect(json.fetch('links')).to eq('self' => 'http://test.host/api/users')
+            expect(json_response.fetch('links')).to eq('self' => 'http://test.host/api/users')
           end
         end
 
@@ -132,7 +132,7 @@ describe Api::UsersController do
 
             get :index, params: { page: 1, per_page: 1 }
 
-            expect(json.fetch('links')).to_not have_key('first')
+            expect(json_response.fetch('links')).to_not have_key('first')
           end
 
           it "doesn't return link to previous page" do
@@ -140,7 +140,7 @@ describe Api::UsersController do
 
             get :index, params: { page: 1, per_page: 1 }
 
-            expect(json.fetch('links')).to_not have_key('prev')
+            expect(json_response.fetch('links')).to_not have_key('prev')
           end
         end
 
@@ -150,7 +150,7 @@ describe Api::UsersController do
 
             get :index, params: { page: 2, per_page: 1 }
 
-            expect(json.fetch('links')).to_not have_key('next')
+            expect(json_response.fetch('links')).to_not have_key('next')
           end
 
           it "doesn't return link to last page" do
@@ -158,7 +158,7 @@ describe Api::UsersController do
 
             get :index, params: { page: 2, per_page: 1 }
 
-            expect(json.fetch('links')).to_not have_key('last')
+            expect(json_response.fetch('links')).to_not have_key('last')
           end
         end
       end
@@ -257,7 +257,7 @@ describe Api::UsersController do
 
           get :show, params: { id: user.id }
 
-          expect(json.fetch('data')).to_not have_key('relationships')
+          expect(json_response.fetch('data')).to_not have_key('relationships')
         end
       end
 

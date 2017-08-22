@@ -11,9 +11,11 @@ require 'capybara/rails'
 require 'support/factory_girl'
 require 'site_prism'
 
-Dir['spec/support/pages/sections/**/*.rb',
-    'spec/support/pages/**/*.rb',
-    'spec/support/**/*.rb'].each { |f| require Rails.root.join(f) }
+Dir[
+  'spec/support/pages/sections/**/*.rb',
+  'spec/support/pages/**/*.rb',
+  'spec/support/**/*.rb'
+].each { |f| require Rails.root.join(f) }
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

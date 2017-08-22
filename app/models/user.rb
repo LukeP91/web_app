@@ -43,7 +43,7 @@ class User < ApplicationRecord
   end
 
   def self.paginate(page: 1, per_page: self.per_page)
-    page_offset = (page.to_i - 1) * per_page.to_i
+    page_offset = (page - 1) * per_page
     limit(per_page).offset(page_offset)
   end
 end
