@@ -7,6 +7,7 @@ describe Api::UsersController do
     context 'when user is authorized' do
       it 'returns all users from organization' do
         organization = create(:organization)
+
         joe = create(
           :user,
           first_name: 'Joe',
@@ -14,7 +15,8 @@ describe Api::UsersController do
           email: 'joe.doe@example.com',
           age: 50,
           gender: 'male',
-          organization: organization
+          organization: organization,
+          admin: true
         )
 
         alice = create(
@@ -36,6 +38,7 @@ describe Api::UsersController do
           gender: 'male'
         )
 
+        request.headers['Authorization'] = "Bearer: #{joe.json_web_token}"
         get :index
 
         expect(response).to have_http_status(:ok)
@@ -165,7 +168,13 @@ describe Api::UsersController do
     end
 
     context 'when user is unauthorized' do
-      xit 'returns unauthorized'
+      context 'when Authenticate header is not send in request' do
+        it 'returns unauthorized' do
+          get :index
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
     end
   end
 
