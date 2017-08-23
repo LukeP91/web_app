@@ -39,7 +39,7 @@ class User < ApplicationRecord
   end
 
   def self.pages(per_page = self.per_page)
-    (count/per_page.to_f).ceil
+    (count / per_page.to_f).ceil
   end
 
   def self.paginate(page: 1, per_page: self.per_page)
