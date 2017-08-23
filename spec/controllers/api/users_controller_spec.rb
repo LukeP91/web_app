@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe Api::UsersController do
   include ActiveJob::TestHelper
+  include Devise::Test::ControllerHelpers
 
   describe '#index' do
     context 'when user is authorized' do
@@ -9,14 +10,13 @@ describe Api::UsersController do
         organization = create(:organization)
 
         joe = create(
-          :user,
+          :admin,
           first_name: 'Joe',
           last_name: 'Doe',
           email: 'joe.doe@example.com',
           age: 50,
           gender: 'male',
-          organization: organization,
-          admin: true
+          organization: organization
         )
 
         alice = create(
@@ -80,7 +80,7 @@ describe Api::UsersController do
         organization = create(:organization)
         create_list(:user, 2, organization: organization)
         alice = create(
-          :user,
+          :admin,
           first_name: 'Alice',
           last_name: 'Cooper',
           email: 'alice.cooper@example.com',
@@ -90,6 +90,7 @@ describe Api::UsersController do
         )
         create_list(:user, 2, organization: organization)
 
+        request.headers['Authorization'] = "Bearer: #{alice.json_web_token}"
         get :index, params: { page: 3, per_page: 1 }
 
         expect(response).to have_http_status(:ok)
@@ -123,6 +124,9 @@ describe Api::UsersController do
       describe 'links section' do
         context 'where there is only one page' do
           it 'returns only self' do
+            admin = create(:admin)
+
+            request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
             get :index
 
             expect(json_response.fetch('links')).to eq('self' => 'http://test.host/api/users')
@@ -131,16 +135,20 @@ describe Api::UsersController do
 
         context 'when currently on first page' do
           it "doesn't return link to first page" do
+            admin = create(:admin)
             create_list(:user, 2)
 
+            request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
             get :index, params: { page: 1, per_page: 1 }
 
             expect(json_response.fetch('links')).to_not have_key('first')
           end
 
           it "doesn't return link to previous page" do
+            admin = create(:admin)
             create_list(:user, 2)
 
+            request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
             get :index, params: { page: 1, per_page: 1 }
 
             expect(json_response.fetch('links')).to_not have_key('prev')
@@ -149,31 +157,75 @@ describe Api::UsersController do
 
         context 'when currently on last page' do
           it "doesn't return link to next page" do
+            admin = create(:admin)
             create_list(:user, 2)
 
-            get :index, params: { page: 2, per_page: 1 }
+            request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
+            get :index, params: { page: 3, per_page: 1 }
 
             expect(json_response.fetch('links')).to_not have_key('next')
           end
 
           it "doesn't return link to last page" do
+            admin = create(:admin)
             create_list(:user, 2)
 
-            get :index, params: { page: 2, per_page: 1 }
+            request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
+            get :index, params: { page: 3, per_page: 1 }
 
             expect(json_response.fetch('links')).to_not have_key('last')
           end
         end
       end
+
+      context 'when authorized user is not admin' do
+        it 'should return forbidden' do
+          user = create(:user)
+
+          request.headers['Authorization'] = "Bearer: #{user.json_web_token}"
+          get :index
+
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
     end
 
     context 'when user is unauthorized' do
-      context 'when Authenticate header is not send in request' do
+      context 'when Authorization header is not send' do
         it 'returns unauthorized' do
           get :index
 
           expect(response).to have_http_status(:unauthorized)
         end
+      end
+
+      context 'when non existing user is send in jwt' do
+        it 'returns not found' do
+          token  = JsonWebToken.encode(id: 1)
+
+          request.headers['Authorization'] = "Bearer: #{token}"
+          get :index
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'when incorrect jwt is send' do
+        it 'returns unauthorized' do
+          request.headers['Authorization'] = "Bearer: incorrect_token"
+          get :index
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+    end
+
+    context 'when incorrect Authorization header is send' do
+      it 'returns invalid request' do
+        request.headers['Authorization'] = "invalid header"
+        get :index
+
+        expect(response).to have_http_status(:bad_request)
       end
     end
   end
@@ -182,7 +234,7 @@ describe Api::UsersController do
     context 'when user is authorized' do
       it 'returns user data in proper format' do
         user = create(
-          :user,
+          :admin,
           first_name: 'Joe',
           last_name: 'Doe',
           email: 'joe.doe@example.com',
@@ -190,6 +242,7 @@ describe Api::UsersController do
           gender: 'male'
         )
 
+        request.headers['Authorization'] = "Bearer: #{user.json_web_token}"
         get :show, params: { id: user.id }
 
         expect(response).to have_http_status(:ok)
@@ -212,12 +265,12 @@ describe Api::UsersController do
       end
 
       context 'when user has some interests' do
-        it 'returnes user with his interests' do
+        it 'returns user with his interests' do
           category = create(:category, name: 'hobby')
           book_reading = create(:interest, name: 'Book Reading', category: category)
           swimming = create(:interest, name: 'Swimming', category: category)
           user = create(
-            :user,
+            :admin,
             first_name: 'Joe',
             last_name: 'Doe',
             email: 'joe.doe@example.com',
@@ -226,6 +279,7 @@ describe Api::UsersController do
             interests: [book_reading, swimming]
           )
 
+          request.headers['Authorization'] = "Bearer: #{user.json_web_token}"
           get :show, params: { id: user.id }
 
           expect(response).to have_http_status(:ok)
@@ -262,8 +316,9 @@ describe Api::UsersController do
 
       context 'when user has no interests' do
         it 'returns response without relationships node' do
-          user = create(:user)
+          user = create(:admin)
 
+          request.headers['Authorization'] = "Bearer: #{user.json_web_token}"
           get :show, params: { id: user.id }
 
           expect(json_response.fetch('data')).to_not have_key('relationships')
@@ -271,8 +326,11 @@ describe Api::UsersController do
       end
 
       context "when user with given id doesn't exist in the DB" do
-        it 'returns not found when user' do
-          get :show, params: { id: 1 }
+        it 'returns not found' do
+          admin = create(:admin)
+
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
+          get :show, params: { id: 2 }
 
           expect(response).to have_http_status(:not_found)
           expect(response.body).to include_json(
@@ -286,10 +344,82 @@ describe Api::UsersController do
           )
         end
       end
+
+      context "when accessed user is not in admin's organization" do
+        it 'returns not found' do
+          user = create(:user)
+          admin = create(:admin)
+
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
+
+          get :show, params: { id: user.id }
+
+          expect(response).to have_http_status(:not_found)
+          expect(response.body).to include_json(
+            errors: [
+              {
+                status: 404,
+                code: 'Not found',
+                title: 'User not found'
+              }
+            ]
+          )
+        end
+      end
+
+      context 'when authorized user is not admin' do
+        it 'should return forbidden' do
+          user = create(:user)
+
+          request.headers['Authorization'] = "Bearer: #{user.json_web_token}"
+          get :show, params: { id: user.id }
+
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
     end
 
     context 'when user is unauthorized' do
-      xit 'returns unauthorized'
+      context 'when Authorization header is not send' do
+        it 'returns unauthorized' do
+          user = create(:user)
+
+
+          get :show, params: { id: user.id }
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+
+      context 'when non existing user is send in jwt' do
+        it 'returns not found' do
+          id = create(:user)
+          token  = JsonWebToken.encode(id: 2)
+
+          request.headers['Authorization'] = "Bearer: #{token}"
+          get :show, params: { id: 1 }
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'when incorrect jwt is send' do
+        it 'returns unauthorized' do
+          request.headers['Authorization'] = "Bearer: incorrect_token"
+          get :show, params: { id: 1 }
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+    end
+
+    context 'when incorrect Authorization header is send' do
+      it 'returns invalid request' do
+        request.headers['Authorization'] = "invalid header"
+        get :show, params: { id: 1 }
+
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 
@@ -297,8 +427,9 @@ describe Api::UsersController do
     context 'when user is authorized' do
       context 'when user data is valid' do
         it 'creates new user' do
-          create(:organization)
+          admin = create(:admin)
 
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
           expect do
             post :create, params: {
               data: {
@@ -335,15 +466,18 @@ describe Api::UsersController do
             last_name: 'Doe',
             email: 'joe.doe@example.com',
             age: 25,
-            gender: 'male'
+            gender: 'male',
+            organization: admin.organization
           )
         end
 
         it 'sends reset password email to created user' do
+          admin = create(:admin)
           create(:organization)
 
           expect_any_instance_of(User).to receive(:send_reset_password_instructions)
 
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
           post :create, params: {
             data: {
               type: 'users',
@@ -359,6 +493,9 @@ describe Api::UsersController do
 
       context 'when user data is invalid' do
         it 'returns validation errors' do
+          admin = create(:admin)
+
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
           post :create, params: {
             data: {
               type: 'users',
@@ -379,6 +516,9 @@ describe Api::UsersController do
         end
 
         it 'does not create new user' do
+          admin = create(:admin)
+
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
           expect do
             post :create, params: {
               data: {
@@ -393,25 +533,120 @@ describe Api::UsersController do
           end.to_not change { User.count }
         end
       end
+
+      context 'when authorized user is not admin' do
+        it 'should return forbidden' do
+          user = create(:user)
+
+          request.headers['Authorization'] = "Bearer: #{user.json_web_token}"
+          post :create, params: {
+            data: {
+              type: 'users',
+              attributes: {
+                first_name: 'Joe',
+                last_name: 'Doe',
+                email: 'joe.doe@example.com'
+              }
+            }
+          }
+
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
     end
 
     context 'when user is unauthorized' do
-      xit 'returns unauthorized'
+      context 'when Authorization header is not send' do
+        it 'returns unauthorized' do
+          post :create, params: {
+            data: {
+              type: 'users',
+              attributes: {
+                first_name: '',
+                last_name: 'Doe',
+                email: 'joe.doe@example.com'
+              }
+            }
+          }
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+
+      context 'when non existing user is send in jwt' do
+        it 'returns not found' do
+          token  = JsonWebToken.encode(id: 1)
+
+          request.headers['Authorization'] = "Bearer: #{token}"
+          post :create, params: {
+            data: {
+              type: 'users',
+              attributes: {
+                first_name: '',
+                last_name: 'Doe',
+                email: 'joe.doe@example.com'
+              }
+            }
+          }
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'when incorrect jwt is send' do
+        it 'returns unauthorized' do
+          request.headers['Authorization'] = "Bearer: incorrect_token"
+          post :create, params: {
+            data: {
+              type: 'users',
+              attributes: {
+                first_name: '',
+                last_name: 'Doe',
+                email: 'joe.doe@example.com'
+              }
+            }
+          }
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+    end
+
+    context 'when incorrect Authorization header is send' do
+      it 'returns invalid request' do
+        request.headers['Authorization'] = "invalid header"
+        post :create, params: {
+            data: {
+              type: 'users',
+              attributes: {
+                first_name: '',
+                last_name: 'Doe',
+                email: 'joe.doe@example.com'
+              }
+            }
+          }
+
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 
   describe '#update' do
     context 'when user is authorized' do
       it 'updates existing user' do
+        admin = create(:admin)
+
         user = create(
           :user,
           first_name: 'Joe',
           last_name: 'Doe',
           email: 'joe.doe@example.com',
           age: 50,
-          gender: 'male'
+          gender: 'male',
+          organization: admin.organization
         )
 
+        request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
         patch :update, params: {
           id: user.id,
           data: {
@@ -425,6 +660,7 @@ describe Api::UsersController do
             }
           }
         }
+
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include_json(
@@ -453,13 +689,16 @@ describe Api::UsersController do
       end
 
       it 'does not allow to change password' do
+        admin = create(:admin)
         user = create(
           :user,
           first_name: 'Joe',
           last_name: 'Doe',
-          email: 'joe.doe@example.com'
+          email: 'joe.doe@example.com',
+          organization: admin.organization
         )
 
+        request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
         expect do
           patch :update, params: {
             id: user.id,
@@ -476,13 +715,16 @@ describe Api::UsersController do
 
       context 'when user data is invalid' do
         it 'returns validation errors when user data is invalid' do
+          admin = create(:admin)
           user = create(
             :user,
             first_name: 'Joe',
             last_name: 'Doe',
-            email: 'joe.doe@example.com'
+            email: 'joe.doe@example.com',
+            organization: admin.organization
           )
 
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
           patch :update, params: {
             id: user.id,
             data: {
@@ -504,13 +746,16 @@ describe Api::UsersController do
         end
 
         it 'does not update user attirbutes' do
+          admin = create(:admin)
           user = create(
             :user,
             first_name: 'Joe',
             last_name: 'Doe',
-            email: 'joe.doe@example.com'
+            email: 'joe.doe@example.com',
+            organization: admin.organization
           )
 
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
           patch :update, params: {
             id: user.id,
             data: {
@@ -533,8 +778,11 @@ describe Api::UsersController do
 
       context "when user with given id doesn't exist in the DB" do
         it 'returns not found ' do
+          admin = create(:admin)
+
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
           patch :update, params: {
-            id: 1,
+            id: 2,
             data: {
               type: 'users',
               id: 1,
@@ -560,27 +808,29 @@ describe Api::UsersController do
           )
         end
       end
-    end
 
-    context 'when user is unauthorized' do
-      xit 'returns unauthorized'
-    end
-  end
+      context "when updated user is not in admin's organization" do
+        it 'returns not found' do
+          admin = create(:admin)
+          user = create(:user)
 
-  describe '#destroy' do
-    context 'when user is authorized' do
-      it 'destroys user' do
-        user = create(:user)
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
+          patch :update, params: {
+            id: user.id,
+            data: {
+              type: 'users',
+              id: 1,
+              attributes: {
+                first_name: 'Alice',
+                last_name: 'Kowalski',
+                email: 'alice.kowalski@example.com',
+                age: 30,
+                gender: 'female'
+              }
+            }
+          }
 
-        expect do
-          delete :destroy, params: { id: user.id }
-        end.to change { User.count }.by(-1)
-        expect(response).to have_http_status(:no_content)
-      end
-
-      context 'when user does not exist in DB' do
-        it 'returns not found when user does not exist id DB' do
-          delete :destroy, params: { id: 1 }
+          expect(response).to have_http_status(:not_found)
           expect(response.body).to include_json(
             errors: [
               {
@@ -592,10 +842,218 @@ describe Api::UsersController do
           )
         end
       end
+
+      context 'when authorized user is not admin' do
+        it 'should return forbidden' do
+          user = create(:user)
+
+          request.headers['Authorization'] = "Bearer: #{user.json_web_token}"
+          patch :update, params: {
+            id: user.id,
+            data: {
+              type: 'users',
+              id: 1,
+              attributes: {
+                first_name: 'Alice',
+                last_name: 'Kowalski',
+                email: 'alice.kowalski@example.com',
+                age: 30,
+                gender: 'female'
+              }
+            }
+          }
+
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
     end
 
-    context 'when user is not authorized' do
-      xit 'it does not allow to delete user'
+    context 'when user is unauthorized' do
+      context 'when Authorization header is not send' do
+        it 'returns unauthorized' do
+          patch :update, params: {
+            id: 2,
+            data: {
+              type: 'users',
+              id: 1,
+              attributes: {
+                first_name: 'Alice',
+                last_name: 'Kowalski',
+                email: 'alice.kowalski@example.com',
+                age: 30,
+                gender: 'female'
+              }
+            }
+          }
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+
+      context 'when non existing user is send in jwt' do
+        it 'returns not found' do
+          token  = JsonWebToken.encode(id: 1)
+
+          request.headers['Authorization'] = "Bearer: #{token}"
+          patch :update, params: {
+            id: 2,
+            data: {
+              type: 'users',
+              id: 1,
+              attributes: {
+                first_name: 'Alice',
+                last_name: 'Kowalski',
+                email: 'alice.kowalski@example.com',
+                age: 30,
+                gender: 'female'
+              }
+            }
+          }
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'when incorrect jwt is send' do
+        it 'returns unauthorized' do
+          request.headers['Authorization'] = "Bearer: incorrect_token"
+          patch :update, params: {
+            id: 2,
+            data: {
+              type: 'users',
+              id: 1,
+              attributes: {
+                first_name: 'Alice',
+                last_name: 'Kowalski',
+                email: 'alice.kowalski@example.com',
+                age: 30,
+                gender: 'female'
+              }
+            }
+          }
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+    end
+
+    context 'when incorrect Authorization header is send' do
+      it 'returns invalid request' do
+        request.headers['Authorization'] = "invalid header"
+        patch :update, params: {
+            id: 2,
+            data: {
+              type: 'users',
+              id: 1,
+              attributes: {
+                first_name: 'Alice',
+                last_name: 'Kowalski',
+                email: 'alice.kowalski@example.com',
+                age: 30,
+                gender: 'female'
+              }
+            }
+          }
+
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+  end
+
+  describe '#destroy' do
+    context 'when user is authorized' do
+      it 'destroys user' do
+        admin = create(:admin)
+        user = create(:user, organization: admin.organization)
+
+        request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
+        expect do
+          delete :destroy, params: { id: user.id }
+        end.to change { User.count }.by(-1)
+        expect(response).to have_http_status(:no_content)
+      end
+
+      context 'when user does not exist in DB' do
+        it 'returns not found when user does not exist id DB' do
+          admin = create(:admin)
+
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
+          delete :destroy, params: { id: 2 }
+          expect(response.body).to include_json(
+            errors: [
+              {
+                status: 404,
+                code: 'Not found',
+                title: 'User not found'
+              }
+            ]
+          )
+        end
+      end
+
+      context 'when authorized user is not admin' do
+        it 'should return forbidden' do
+          user = create(:user)
+
+          request.headers['Authorization'] = "Bearer: #{user.json_web_token}"
+          expect do
+            delete :destroy, params: { id: user.id }
+          end.not_to change { User.count }
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+
+      context "when user is not in admin's organization" do
+        it 'returns not found' do
+          admin = create(:admin)
+          user = create(:user)
+
+          request.headers['Authorization'] = "Bearer: #{admin.json_web_token}"
+          expect do
+            delete :destroy, params: { id: user.id }
+          end.not_to change { User.count }
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+    end
+
+    context 'when user is unauthorized' do
+      context 'when Authorization header is not send' do
+        it 'returns unauthorized' do
+          delete :destroy, params: { id: 1}
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+
+      context 'when non existing user is send in jwt' do
+        it 'returns not found' do
+          token  = JsonWebToken.encode(id: 1)
+
+          request.headers['Authorization'] = "Bearer: #{token}"
+          delete :destroy, params: { id: 1 }
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context 'when incorrect jwt is send' do
+        it 'returns unauthorized' do
+          request.headers['Authorization'] = "Bearer: incorrect_token"
+          delete :destroy, params: { id: 1 }
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+    end
+
+    context 'when incorrect Authorization header is send' do
+      it 'returns invalid request' do
+        request.headers['Authorization'] = "invalid header"
+        get :destroy, params: { id: 1 }
+
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 end
