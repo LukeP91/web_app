@@ -1,8 +1,14 @@
 class Api::UsersController < ApplicationController
+  class AuthorizationTokenMissing < StandardError; end
+
   rescue_from ActiveRecord::RecordNotFound, with: :user_not_found
+  rescue_from AuthorizationTokenMissing, with: :unauthenticated_user
+
+  before_action :authenticate_user_token!, only: [:index]
+
 
   def index
-    users = User.order(:id).paginate(page: page, per_page: per_page)
+    users = User.in_organization(@user.organization).order(:id).paginate(page: page, per_page: per_page)
     render json: UsersSerializer.new(users, page, per_page).serialize, status: :ok
   end
 
@@ -61,4 +67,24 @@ class Api::UsersController < ApplicationController
   def user_not_found
     render json: { errors: [{ status: 404, code: 'Not found', title: 'User not found' }] }, status: :not_found
   end
+
+  def authenticate_user_token!
+    payload = JsonWebToken.decode(authentication_token)
+    @user = User.find(payload[:id])
+  end
+
+  def authentication_token
+    token = request.headers['Authorization']
+
+    if token.nil?
+      raise AuthorizationTokenMissing
+    end
+
+    token.gsub('Bearer: ', '')
+  end
+
+  def unauthenticated_user
+    render json: { errors: [{ status: 401, code: 'Unauthorized', title: 'Unauthorized' }] }, status: :unauthorized
+  end
 end
+

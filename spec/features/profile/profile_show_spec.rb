@@ -17,6 +17,16 @@ describe 'Show profile' do
       expect(app.home_page.field_by_label('Gender').text).to eq 'Gender: male'
       expect(app.home_page.field_by_label('Age').text).to eq 'Age: 25'
     end
+
+    scenario 'it shows jwt for admin user' do
+      user = create(:user, email: 'joe.doe@example.com', first_name: 'Joe', last_name: 'Doe', admin: true)
+      app = App.new
+      app.home_page.load
+      app.login_page.login(user)
+      expect(app.home_page).to be_displayed
+
+      expect(app.home_page.field_by_label('Json Web Token').text).to eq "Json Web Token: #{user.json_web_token}"
+    end
   end
 
   context 'not signed in user' do

@@ -28,6 +28,11 @@
     %br
     = current_user.age
 
+- if current_user.admin?
+  %p
+    %strong Json Web Token:
+    = current_user.json_web_token
+
 - if current_user.interests.any?
   %h4 Interests:
 

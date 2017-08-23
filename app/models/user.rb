@@ -22,6 +22,19 @@ class User < ApplicationRecord
 
   paginates_per USERS_PER_PAGE
 
+  def self.per_page
+    20
+  end
+
+  def self.pages(per_page = self.per_page)
+    (count / per_page.to_f).ceil
+  end
+
+  def self.paginate(page: 1, per_page: self.per_page)
+    page_offset = (page - 1) * per_page
+    limit(per_page).offset(page_offset)
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end
@@ -34,16 +47,7 @@ class User < ApplicationRecord
     [first_name, last_name, email, gender, age, interests.map(&:name)].flatten!
   end
 
-  def self.per_page
-    20
-  end
-
-  def self.pages(per_page = self.per_page)
-    (count / per_page.to_f).ceil
-  end
-
-  def self.paginate(page: 1, per_page: self.per_page)
-    page_offset = (page - 1) * per_page
-    limit(per_page).offset(page_offset)
+  def json_web_token
+    ::JsonWebToken.encode(id: id)
   end
 end
