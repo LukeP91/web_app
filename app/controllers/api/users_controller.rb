@@ -51,13 +51,11 @@ class Api::UsersController < ApplicationController
   end
 
   def page
-    page = params[:page] || 1
-    page.to_i
+    params.fetch(:page, 1).to_i
   end
 
   def per_page
-    per_page = params[:per_page] || User.per_page
-    per_page.to_i
+    params.fetch(:per_page, User.per_page).to_i
   end
 
   def user_not_found
