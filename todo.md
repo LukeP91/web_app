@@ -52,15 +52,15 @@ This is a spec for a candidate evaluation app.
   * Change regards email to async email
   * When job that sends email to all users break it should send only not-send email on retry
 
+* It serves json api (in jsonapi or graphql standard) ( Add endpoint for users) [http://jsonapi.org/]
+* Authentication & Authorization (session and token based) (Together with jsonapi)
+
 ### Extra tasks
 
 * Three 3rd party integrations
   * Sending Email / SMS (Send welcome SMS)
   * Synchronization of Data between APIs (Every 6 hours synchronize data with Facebook events. Every 6 hours update statistics about fetched events)
   * One without ready to use wrapper (HTTParty only) ( Search for open JSON API without rails-ready wrapper)
-
-* It serves json api (in jsonapi or graphql standard) ( Add endpoint for users) [http://jsonapi.org/]
-* Authentication & Authorization (session and token based) (Together with jsonapi)
 
 * add readme to project
 
