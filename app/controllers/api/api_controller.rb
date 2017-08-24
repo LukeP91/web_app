@@ -1,4 +1,6 @@
 class Api::ApiController < ApplicationController
+  respond_to :json
+
   class AuthorizationTokenMissing < StandardError; end
   class InvalidHeader < StandardError; end
   class InvalidToken < StandardError; end
@@ -8,6 +10,7 @@ class Api::ApiController < ApplicationController
   rescue_from InvalidHeader, with: :bad_request
   rescue_from InvalidToken, with: :unauthorized_user
 
+  skip_before_action :verify_authenticity_token
   before_action :authenticate_user_by_jwt_token!
 
   private
