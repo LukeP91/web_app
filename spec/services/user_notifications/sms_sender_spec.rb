@@ -7,20 +7,25 @@ describe UserNotifications::SmsSender do
         :user,
         first_name: 'Joe',
         last_name: 'Doe',
-        phone_number: '+015252525252'
+        mobile_phone: '+015252525252'
       )
       client = double("Twillio Client")
-      messages = double("Messages Double")
-      allow(Twillio::REST::Client).to receive(:new) { client }
+      messages = double("Messages Double", create:
+        {
+          from: '+015151515151',
+          to: '+015252525252',
+          body: 'Welcome Joe Doe!'
+        }
+      )
+      allow(Twilio::REST::Client).to receive(:new) { client }
       allow(client).to receive_message_chain("api.account.messages") { messages }
-      allow(messages).to receive(:create)
 
       UserNotifications::SmsSender.call(user)
 
       expect(messages).to have_received(:create).with(
         from: '+015151515151',
         to: '+015252525252',
-        body: 'Welcome Joe Doe!!'
+        body: 'Welcome Joe Doe!'
       )
     end
   end
