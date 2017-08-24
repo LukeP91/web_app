@@ -18,7 +18,7 @@ describe 'Show profile' do
       expect(app.home_page.field_by_label('Age').text).to eq 'Age: 25'
     end
 
-    scenario 'it shows jwt for admin user' do
+    scenario 'presenting JWT only for admin users' do
       user = create(:user, email: 'joe.doe@example.com', first_name: 'Joe', last_name: 'Doe', admin: true)
       app = App.new
       app.home_page.load

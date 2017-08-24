@@ -4,7 +4,7 @@ class Api::UsersController < Api::ApiController
 
     authorize users
 
-    render json: UsersSerializer.new(users, page, per_page).serialize, status: :ok
+    render json: UsersSerializer.new(users, page, per_page).serialize
   end
 
   def show
@@ -12,7 +12,7 @@ class Api::UsersController < Api::ApiController
 
     authorize user
 
-    render json: UserSerializer.new(user).serialize, status: :ok
+    render json: UserSerializer.new(user).serialize
   end
 
   def create
@@ -36,7 +36,7 @@ class Api::UsersController < Api::ApiController
     authorize user
 
     if user.update(user_params)
-      render json: UserSerializer.new(user).serialize, status: :ok
+      render json: UserSerializer.new(user).serialize
     else
       render json: { errors: user.errors.messages }, status: :bad_request
     end
