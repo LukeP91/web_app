@@ -28,11 +28,11 @@
     %br
     = current_user.age
 
-- if user.mobile_phone
+- if current_user.mobile_phone
   %p
     %strong #{ User.human_attribute_name(:mobile_phone) }:
     %br
-    = user.mobile_phone
+    = current_user.mobile_phone
 
 - if current_user.admin?
   %p
