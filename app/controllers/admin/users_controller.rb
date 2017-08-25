@@ -96,6 +96,15 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def send_welcome_sms
+    user = User.in_organization(current_organization).find(params[:id])
+    authorize user
+    UserNotifications::SmsSender.call(user)
+    respond_to do |format|
+      format.js
+    end
+  end
+
 private
 
   def user_params
@@ -105,7 +114,7 @@ private
     end
 
     params.require(:user).permit(
-      :email, :first_name, :last_name, :age, :gender, :admin, :password,
+      :email, :first_name, :last_name, :age, :gender, :mobile_phone, :admin, :password,
       :password_confirmation, interest_ids: []
     )
   end
