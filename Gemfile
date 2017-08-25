@@ -28,19 +28,21 @@ gem 'twitter-bootstrap-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
-  gem 'pry-rails', '~> 0.3.6'
   gem 'byebug', '~> 9.0.6', platform: :mri
-  gem 'rspec', '~> 3.4'
-  gem 'rspec-rails', '~> 3.5'
-  gem 'rspec-json_expectations', '~> 2.1'
-  gem 'factory_girl_rails', '~> 4.8'
   gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver', '~> 3.4', '>= 3.4.4'
-  gem 'site_prism', '~> 2.9'
-  gem 'email_spec', '~> 2.1'
-  gem 'rails-controller-testing', '~> 0.0.3'
-  gem 'simplecov', '~> 0.14.1'
   gem 'database_cleaner', '~> 1.5', '>= 1.5.1'
+  gem 'email_spec', '~> 2.1'
+  gem 'factory_girl_rails', '~> 4.8'
+  gem 'guard', '~> 2.14', '>= 2.14.1'
+  gem 'guard-rspec', '~> 4.7', '>= 4.7.3'
+  gem 'pry-rails', '~> 0.3.6'
+  gem 'rails-controller-testing', '~> 0.0.3'
+  gem 'rspec-json_expectations', '~> 2.1'
+  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec', '~> 3.4'
+  gem 'selenium-webdriver', '~> 3.4', '>= 3.4.4'
+  gem 'simplecov', '~> 0.14.1'
+  gem 'site_prism', '~> 2.9'
 end
 
 group :development do

@@ -53,9 +53,10 @@ class User < ApplicationRecord
   end
 
   def validate_phone_number
-    twilio_client = Twilio::REST::Client.new
-    twilio_client.lookups.v1.phone_numbers(mobile_phone).fetch('carriers')
-  rescue Twilio::REST::RestError
-    errors.add(:mobile_phone, "Given mobile phone is invalid")
+    if mobile_phone.present?
+      unless TwilioWrapper.new.valid_phone_number?(mobile_phone)
+        errors.add(:mobile_phone, "Given mobile phone is invalid")
+      end
+    end
   end
 end

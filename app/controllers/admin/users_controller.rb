@@ -99,7 +99,7 @@ class Admin::UsersController < ApplicationController
   def send_welcome_sms
     user = User.in_organization(current_organization).find(params[:id])
     authorize user
-    UserNotifications::SmsSender.call(user)
+    UserNotifications::SmsSender.call(to: user.mobile_phone, message: "Welcome #{user.full_name}!")
     respond_to do |format|
       format.js
     end
