@@ -13,6 +13,7 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true
+  validate :validate_phone_number
 
   scope :in_organization, ->(organization) { where(organization: organization) }
   scope :with_age_between, ->(age_range) { where(age: age_range) }
@@ -49,5 +50,12 @@ class User < ApplicationRecord
 
   def json_web_token
     ::JsonWebToken.encode(id: id)
+  end
+
+  def validate_phone_number
+    twilio_client = Twilio::REST::Client.new
+    twilio_client.lookups.v1.phone_numbers(mobile_phone).fetch('carriers')
+  rescue Twilio::REST::RestError
+    errors.add(:mobile_phone, "Given mobile phone is invalid")
   end
 end
