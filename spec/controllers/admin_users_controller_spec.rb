@@ -237,4 +237,18 @@ describe Admin::UsersController do
       end
     end
   end
+
+  describe '#send_welcome_sms' do
+    it 'call service to send welcome sms' do
+      allow_any_instance_of(TwilioWrapper).to receive_messages(valid_phone_number?: true)
+      admin = create(:admin)
+      user = create(:user, first_name: 'Joe', last_name: 'Doe', mobile_phone: '+01555555555', organization: admin.organization)
+      allow(UserNotifications::SmsSender).to receive(:call)
+      sign_in admin
+
+      post :send_welcome_sms, params: { id: user.id }, xhr: true
+
+      expect(UserNotifications::SmsSender).to have_received(:call).with(to: '+01555555555', message: 'Welcome Joe Doe!')
+    end
+  end
 end
