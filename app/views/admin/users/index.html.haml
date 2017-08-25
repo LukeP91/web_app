@@ -22,6 +22,8 @@
 
       %th= User.human_attribute_name(:last_name)
 
+      %th= User.human_attribute_name(:mobile_phone)
+
       %th= User.human_attribute_name(:gender)
 
       %th= User.human_attribute_name(:age)
@@ -37,6 +39,8 @@
         %td= user.first_name
 
         %td= user.last_name
+
+        %td= user.mobile_phone
 
         %td= user.gender
 
@@ -58,7 +62,10 @@
                       default: 'Are you sure?')) }, class: 'btn btn-xs btn-danger glyphicon glyphicon-trash', id: "user_delete_#{user.id}"
 
           = link_to '',
-              send_email_admin_user_path(user), remote: true, class: 'btn btn-success btn-xs glyphicon glyphicon-envelope send-user-email', "data-user-id": user.id
+            send_email_admin_user_path(user), remote: true, class: 'btn btn-success btn-xs glyphicon glyphicon-envelope send-user-email', "data-user-id": user.id
+
+          = link_to '',
+            send_welcome_sms_admin_user_path(user), remote: true, class: 'btn btn-success btn-xs glyphicon glyphicon-phone send-user-sms', "data-user-id": user.id
 = link_to t('.new', default: t("helpers.links.new")), new_admin_user_path,
     class: 'btn btn-primary', id: 'new_user'
 

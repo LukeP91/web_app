@@ -34,4 +34,8 @@ class UserPolicy < ApplicationPolicy
   def welcome_email?
     user.admin?
   end
+
+  def send_welcome_sms?
+    user.admin? && (user.organization_id == record.organization_id)
+  end
 end

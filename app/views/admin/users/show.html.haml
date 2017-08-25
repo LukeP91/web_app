@@ -28,6 +28,12 @@
     %br
     = user.age
 
+- if user.mobile_phone
+  %p
+    %strong #{ User.human_attribute_name(:mobile_phone) }:
+    %br
+    = user.mobile_phone
+
 - if user.interests.any?
   %h4 Interests:
 
