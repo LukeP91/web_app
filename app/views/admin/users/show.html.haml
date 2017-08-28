@@ -2,35 +2,35 @@
   %h1=t '.title', default: user.full_name
 
 %p
-  %strong #{ User.human_attribute_name(:email) }:
+  %strong #{User.human_attribute_name(:email)}:
   %br
   = user.email
 
 %p
-  %strong #{ User.human_attribute_name(:first_name) }:
+  %strong #{User.human_attribute_name(:first_name)}:
   %br
   = user.first_name
 
 %p
-  %strong #{ User.human_attribute_name(:last_name) }:
+  %strong #{User.human_attribute_name(:last_name)}:
   %br
   = user.last_name
 
 - if user.gender
   %p
-    %strong #{ User.human_attribute_name(:gender) }:
+    %strong #{User.human_attribute_name(:gender)}:
     %br
     = user.gender
 
 - if user.age
   %p
-    %strong #{ User.human_attribute_name(:age) }:
+    %strong #{User.human_attribute_name(:age)}:
     %br
     = user.age
 
 - if user.mobile_phone
   %p
-    %strong #{ User.human_attribute_name(:mobile_phone) }:
+    %strong #{User.human_attribute_name(:mobile_phone)}:
     %br
     = user.mobile_phone
 
