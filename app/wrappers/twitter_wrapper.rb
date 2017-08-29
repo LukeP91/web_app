@@ -6,18 +6,13 @@ class TwitterWrapper
       config.access_token        = Rails.application.secrets.access_token
       config.access_token_secret = Rails.application.secrets.access_token_secret
     end
+    @tweet_count = 20
   end
 
-  def fetch(hashtags, batch_size)
-    search_query = hashtags.join(' ') + ' -rt'
-    @client.search(search_query).map do |tweet|
-      { user_name: tweet.user.name, message: tweet.full_text, hashtags: tweet_hashtags(tweet), tweet_id: tweet.id }
+  def fetch(hashtags, last_tweet_id)
+    search_query = hashtags.join(' OR ') + ' -rt'
+    @client.search(search_query, count: @tweet_count, since_id: last_tweet_id, result_type: 'recent').map do |tweet|
+      { user_name: tweet.user.name, message: tweet.full_text, hashtags: tweet.hashtags.map(&:text), tweet_id: tweet.id }
     end
-  end
-
-  private
-
-  def tweet_hashtags(tweet)
-    tweet.full_text.scan(/#\w*/)
   end
 end
