@@ -58,6 +58,7 @@ This is a spec for a candidate evaluation app.
 * Three 3rd party integrations
   * Sending Email / SMS (Send welcome SMS)
   * Synchronization of Data between APIs (Every 6 hours synchronize data with Facebook events. Every 6 hours update statistics about fetched events)
+    https://github.com/sferik/twitter
 
 ### Extra tasks
 
