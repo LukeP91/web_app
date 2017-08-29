@@ -63,8 +63,8 @@ Tests:
 
   Twitter integration:
     ☐ twitter client wrapper
-    ☐ database table with tweets (user_name, message, hashtag_ids)
-      hashtag table(id, hashtag
+    ✔ database table with tweets (user_name, message, hashtag_ids) @done (8/29/2017, 11:07:16 AM)
+    ✔ hashtag table(id, hashtag @done (8/29/2017, 11:07:29 AM)
     ☐ view with statistics ( tweets per hashtag, most common words)
     ☐ list of tweets for given hashtag
     ☐ list of tweets for given word

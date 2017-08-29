@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170824131902) do
+ActiveRecord::Schema.define(version: 20170829083329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,10 @@ ActiveRecord::Schema.define(version: 20170824131902) do
     t.string  "name",            null: false
     t.integer "organization_id", null: false
     t.index ["name"], name: "index_categories_on_name", using: :btree
+  end
+
+  create_table "hash_tags", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "interests", force: :cascade do |t|
@@ -35,6 +39,18 @@ ActiveRecord::Schema.define(version: 20170824131902) do
     t.string "subdomain", null: false
     t.index ["name"], name: "index_organizations_on_name", using: :btree
     t.index ["subdomain"], name: "index_organizations_on_subdomain", using: :btree
+  end
+
+  create_table "tweets", force: :cascade do |t|
+    t.string "user_name"
+    t.string "message"
+  end
+
+  create_table "tweets_hash_tags", force: :cascade do |t|
+    t.integer "tweet_id",    null: false
+    t.integer "hash_tag_id", null: false
+    t.index ["hash_tag_id"], name: "index_tweets_hash_tags_on_hash_tag_id", using: :btree
+    t.index ["tweet_id"], name: "index_tweets_hash_tags_on_tweet_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
