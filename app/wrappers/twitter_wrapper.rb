@@ -11,7 +11,7 @@ class TwitterWrapper
   def fetch(hashtags, batch_size)
     search_query = hashtags.join(' ') + ' -rt'
     @client.search(search_query).map do |tweet|
-      { user_name: tweet.user.name, message: tweet.full_text, hashtags: tweet_hashtags(tweet) }
+      { user_name: tweet.user.name, message: tweet.full_text, hashtags: tweet_hashtags(tweet), tweet_id: tweet.id }
     end
   end
 

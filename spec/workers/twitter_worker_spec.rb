@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe TwitterWorker do
   it 'saves tweets to DB' do
-    tweet = { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails] }
+    tweet = { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
     twitter_wrapper = instance_double('TwitterWrapper')
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
     allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 20).and_return([tweet])
@@ -13,7 +13,8 @@ describe TwitterWorker do
 
     expect(Tweet.first).to have_attributes(
       user_name: 'luke_pawlik',
-      message: 'New blog post is up. #Ruby #Rails'
+      message: 'New blog post is up. #Ruby #Rails',
+      tweet_id: 1
     )
   end
 
