@@ -24,6 +24,7 @@ gem 'sidekiq', '~> 4.1', '>= 4.1.2'
 gem 'simple_form', '~> 3.5.0'
 gem 'turbolinks', '~> 5'
 gem 'twilio-ruby', '~> 5.1', '>= 5.1.2'
+gem 'twitter', '~> 6.1'
 gem 'twitter-bootstrap-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 
