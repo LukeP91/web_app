@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe TwitterWrapper do
-  describe '#fetch?' do
+  describe '#fetch' do
     it 'returns array of tweets' do
       Hashtag = Struct.new(:text)
       client = double('TwitterClient')
