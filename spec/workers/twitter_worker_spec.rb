@@ -3,10 +3,13 @@ require 'rails_helper'
 describe TwitterWorker do
   it 'saves tweets to DB' do
     last_tweet = double("LastTweet")
-    tweet = { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
     twitter_wrapper = instance_double('TwitterWrapper')
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return([tweet])
+    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return(
+      [
+        { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
+      ]
+    )
     allow(Tweet).to receive(:last).and_return(last_tweet)
     allow(last_tweet).to receive(:tweet_id).and_return(1)
 
@@ -23,10 +26,13 @@ describe TwitterWorker do
 
   it 'saves hashtags to DB' do
     last_tweet = double("LastTweet")
-    tweet = { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
     twitter_wrapper = instance_double('TwitterWrapper')
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return([tweet])
+    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return(
+      [
+        { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
+      ]
+    )
     allow(Tweet).to receive(:last).and_return(last_tweet)
     allow(last_tweet).to receive(:tweet_id).and_return(1)
 
@@ -39,10 +45,13 @@ describe TwitterWorker do
 
   it 'associate hashtags with tweet' do
     last_tweet = double("LastTweet")
-    tweet = { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
     twitter_wrapper = instance_double('TwitterWrapper')
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return([tweet])
+    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return(
+      [
+        { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
+      ]
+    )
     allow(Tweet).to receive(:last).and_return(last_tweet)
     allow(last_tweet).to receive(:tweet_id).and_return(1)
 
@@ -54,10 +63,13 @@ describe TwitterWorker do
   it 'reuses existing hashtags' do
     create(:hash_tag, name: 'Ruby')
     last_tweet = double("LastTweet")
-    tweet = { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
     twitter_wrapper = instance_double('TwitterWrapper')
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return([tweet])
+    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return(
+      [
+        { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
+      ]
+    )
     allow(Tweet).to receive(:last).and_return(last_tweet)
     allow(last_tweet).to receive(:tweet_id).and_return(1)
 
