@@ -1,6 +1,4 @@
 twitter_loader:
-  cron: "*/2 * * * *"
-  class: "TwitterWorker"
+  cron: "*/10 * * * *"
+  class: "TwitterSpawnerWorker"
   queue: default
-  args:
-    hashtags: [Ruby, Rails]
