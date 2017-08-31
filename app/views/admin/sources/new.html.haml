@@ -1,0 +1,8 @@
+- model_class = Source
+
+.page-header
+  %h1=t '.title', deault:[:'helpers.titles.new', 'New %{model}'], model: model_class.model_name.human.titleize
+
+= render partial: "form", locals: { source: source }
+
+= link_to t('.cancel', default: t("helpers.links.cancel")), admin_sources_path, class: 'btn btn-default'

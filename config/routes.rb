@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
     resources :categories
     resources :interests
+    resources :sources, only: [:index, :new, :create, :destroy]
   end
 
   namespace :api do
