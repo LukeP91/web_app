@@ -62,11 +62,11 @@ Tests:
     ✔ add unit tests for statistics @done (8/7/2017, 9:58:34 AM)
 
   Twitter integration:
-    ☐ twitter client wrapper
+    ✔ twitter client wrapper @done (8/31/2017, 3:36:08 PM)
     ✔ database table with tweets (user_name, message, hashtag_ids) @done (8/29/2017, 11:07:16 AM)
     ✔ hashtag table(id, hashtag @done (8/29/2017, 11:07:29 AM)
     ☐ view with statistics ( tweets per hashtag, most common words)
     ☐ list of tweets for given hashtag
     ☐ list of tweets for given word
     ☐ unify most common words *
-    ☐ Source configuration (hashtag)
+    ✔ Source configuration (hashtag) @done (8/31/2017, 3:35:56 PM)
