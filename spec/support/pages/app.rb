@@ -38,4 +38,12 @@ class App
   def admin_interest_show_page
     Admin::Interests::ShowPage.new
   end
+
+  def admin_sources_index_page
+    Admin::Twitter::Sources::IndexPage.new
+  end
+
+  def admin_sources_new_page
+    Admin::Twitter::Sources::CreatePage.new
+  end
 end

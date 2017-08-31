@@ -69,3 +69,4 @@ Tests:
     ☐ list of tweets for given hashtag
     ☐ list of tweets for given word
     ☐ unify most common words *
+    ☐ Source configuration (hashtag)
