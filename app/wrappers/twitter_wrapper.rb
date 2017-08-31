@@ -11,13 +11,23 @@ class TwitterWrapper
 
   def fetch(hashtags, last_tweet_id)
     search_query = "#{hashtags.join(' OR ')} -rt"
-    @client.search(search_query, count: @tweet_count, since_id: last_tweet_id, result_type: 'recent').map do |tweet|
-      {
-        user_name: tweet.user.name,
-        message: tweet.full_text,
-        hashtags: tweet.hashtags.map(&:text),
-        tweet_id: tweet.id
-      }
+    @client.search(search_query, count: @tweet_count, since_id: last_tweet_id, result_type: 'recent').attrs[:statuses].map do |tweet|
+      tweet_data(tweet)
     end
+  end
+
+  private
+
+  def tweet_data(tweet)
+    {
+      user_name: tweet[:user][:name],
+      message: tweet[:text],
+      hashtags: hashtags(tweet),
+      tweet_id: tweet[:id]
+    }
+  end
+
+  def hashtags(tweet)
+    tweet[:entities][:hashtags].map { |hashtag| hashtag[:text] }
   end
 end

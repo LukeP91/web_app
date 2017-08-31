@@ -46,6 +46,8 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 3.4', '>= 3.4.4'
   gem 'simplecov', '~> 0.14.1'
   gem 'site_prism', '~> 2.9'
+  gem 'vcr', '~> 3.0', '>= 3.0.3'
+  gem 'webmock', '~> 3.0', '>= 3.0.1'
 end
 
 group :development do
