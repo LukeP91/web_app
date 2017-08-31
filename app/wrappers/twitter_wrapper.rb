@@ -23,7 +23,7 @@ class TwitterWrapper
       user_name: tweet[:user][:name],
       message: tweet[:text],
       hashtags: hashtags(tweet),
-      tweet_id: tweet[:id]
+      tweet_id: tweet[:id].to_s
     }
   end
 

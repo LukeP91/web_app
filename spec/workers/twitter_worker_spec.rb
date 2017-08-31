@@ -2,81 +2,97 @@ require 'rails_helper'
 
 describe TwitterWorker do
   it 'saves tweets to DB' do
-    last_tweet = double("LastTweet")
-    twitter_wrapper = instance_double('TwitterWrapper')
-    allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return(
+    source = create(:source, name: '#Rails')
+    last_tweet = double('LastTweet', tweet_id: 1)
+    allow(Tweet).to receive(:last).and_return(last_tweet)
+    twitter_wrapper = double('TwitterWrapper', fetch:
       [
-        { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
+        {
+          user_name: 'luke_pawlik',
+          message: 'New blog post is up #rails #ruby',
+          hashtags: %w[rails ruby],
+          tweet_id: '1'
+        }
       ]
     )
-    allow(Tweet).to receive(:last).and_return(last_tweet)
-    allow(last_tweet).to receive(:tweet_id).and_return(1)
+    allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
 
-    expect{
-      TwitterWorker.new.perform(['Ruby'])
-    }.to change { Tweet.count }.by(1)
+    expect do
+      TwitterWorker.new.perform(source)
+    end.to change { Tweet.count }.by(1)
 
     expect(Tweet.first).to have_attributes(
       user_name: 'luke_pawlik',
-      message: 'New blog post is up. #Ruby #Rails',
-      tweet_id: 1
+      message: 'New blog post is up #rails #ruby',
+      tweet_id: '1'
     )
+
+    expect(Tweet.first.hash_tags.pluck(:name)).to match_array %w[ruby rails]
   end
 
   it 'saves hashtags to DB' do
-    last_tweet = double("LastTweet")
-    twitter_wrapper = instance_double('TwitterWrapper')
-    allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return(
+    source = create(:source, name: 'Source')
+    last_tweet = double('LastTweet', tweet_id: 1)
+    allow(Tweet).to receive(:last).and_return(last_tweet)
+    twitter_wrapper = double('TwitterWrapper', fetch:
       [
-        { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
+        {
+          user_name: 'luke_pawlik',
+          message: 'New blog post is up #rails #ruby',
+          hashtags: %w[rails ruby],
+          tweet_id: '1'
+        }
       ]
     )
-    allow(Tweet).to receive(:last).and_return(last_tweet)
-    allow(last_tweet).to receive(:tweet_id).and_return(1)
+    allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
 
-    expect{
-      TwitterWorker.new.perform(['Ruby'])
-    }.to change { HashTag.count }.by(2)
+    expect do
+      TwitterWorker.new.perform(source)
+    end.to change { HashTag.count }.by(2)
 
-    expect(HashTag.pluck(:name)).to match_array %w[Ruby Rails]
+    expect(HashTag.pluck(:name)).to match_array %w[ruby rails]
   end
 
-  it 'associate hashtags with tweet' do
-    last_tweet = double("LastTweet")
-    twitter_wrapper = instance_double('TwitterWrapper')
-    allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return(
+  it 'associate source with tweet' do
+    source = create(:source, name: '#Rails')
+    last_tweet = double('LastTweet', tweet_id: 1)
+    allow(Tweet).to receive(:last).and_return(last_tweet)
+    twitter_wrapper = double('TwitterWrapper', fetch:
       [
-        { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
+        {
+          user_name: 'luke_pawlik',
+          message: 'New blog post is up #rails #ruby',
+          hashtags: %w[rails ruby],
+          tweet_id: '1'
+        }
       ]
     )
-    allow(Tweet).to receive(:last).and_return(last_tweet)
-    allow(last_tweet).to receive(:tweet_id).and_return(1)
+    allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
 
-    TwitterWorker.new.perform(['Ruby'])
+    TwitterWorker.new.perform(source)
 
-    expect(Tweet.first.hash_tags.pluck(:name)).to match_array ['Ruby', 'Rails']
+    expect(Tweet.first.sources).to include source
   end
 
   it 'reuses existing hashtags' do
-    create(:hash_tag, name: 'Ruby')
-    last_tweet = double("LastTweet")
-    twitter_wrapper = instance_double('TwitterWrapper')
-    allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-    allow(twitter_wrapper).to receive(:fetch).with(['Ruby'], 1).and_return(
+    source = create(:source, name: '#Rails')
+    create(:hash_tag, name: "ruby")
+    last_tweet = double('LastTweet', tweet_id: 1)
+    allow(Tweet).to receive(:last).and_return(last_tweet)
+    twitter_wrapper = double('TwitterWrapper', fetch:
       [
-        { user_name: 'luke_pawlik', message: 'New blog post is up. #Ruby #Rails', hashtags: %w[Ruby Rails], tweet_id: 1 }
+        {
+          user_name: 'luke_pawlik',
+          message: 'New blog post is up #rails #ruby',
+          hashtags: %w[rails ruby],
+          tweet_id: '1'
+        }
       ]
     )
-    allow(Tweet).to receive(:last).and_return(last_tweet)
-    allow(last_tweet).to receive(:tweet_id).and_return(1)
+    allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
 
-    expect{
-      TwitterWorker.new.perform(['Ruby'])
-    }.to change { HashTag.count }.by(1)
-
-    expect(HashTag.pluck(:name)).to match_array %w[Ruby Rails]
+    expect do
+      TwitterWorker.new.perform(source)
+    end.to change { HashTag.count }.by(1)
   end
 end
