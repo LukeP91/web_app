@@ -9,9 +9,13 @@ class TwitterWrapper
     @tweet_count = 20
   end
 
-  def fetch(hashtags, last_tweet_id)
-    search_query = "#{hashtags.join(' OR ')} -rt"
-    @client.search(search_query, count: @tweet_count, since_id: last_tweet_id, result_type: 'recent').attrs[:statuses].map do |tweet|
+  def fetch(hashtag, last_tweet_id)
+    @client.search(
+      "#{hashtag} -rt",
+      count: @tweet_count,
+      since_id: last_tweet_id,
+      result_type: 'recent'
+    ).attrs[:statuses].map do |tweet|
       tweet_data(tweet)
     end
   end

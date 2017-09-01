@@ -5,7 +5,8 @@ describe TwitterWorker do
     source = create(:source, name: '#Rails')
     last_tweet = double('LastTweet', tweet_id: 1)
     allow(Tweet).to receive(:last).and_return(last_tweet)
-    twitter_wrapper = double('TwitterWrapper', fetch:
+    twitter_wrapper = double('TwitterWrapper')
+    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
       [
         {
           user_name: 'luke_pawlik',
@@ -31,10 +32,11 @@ describe TwitterWorker do
   end
 
   it 'saves hashtags to DB' do
-    source = create(:source, name: 'Source')
+    source = create(:source, name: '#Rails')
     last_tweet = double('LastTweet', tweet_id: 1)
     allow(Tweet).to receive(:last).and_return(last_tweet)
-    twitter_wrapper = double('TwitterWrapper', fetch:
+    twitter_wrapper = double('TwitterWrapper')
+    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
       [
         {
           user_name: 'luke_pawlik',
@@ -57,7 +59,8 @@ describe TwitterWorker do
     source = create(:source, name: '#Rails')
     last_tweet = double('LastTweet', tweet_id: 1)
     allow(Tweet).to receive(:last).and_return(last_tweet)
-    twitter_wrapper = double('TwitterWrapper', fetch:
+    twitter_wrapper = double('TwitterWrapper')
+    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
       [
         {
           user_name: 'luke_pawlik',
@@ -79,7 +82,8 @@ describe TwitterWorker do
     create(:hash_tag, name: "ruby")
     last_tweet = double('LastTweet', tweet_id: 1)
     allow(Tweet).to receive(:last).and_return(last_tweet)
-    twitter_wrapper = double('TwitterWrapper', fetch:
+    twitter_wrapper = double('TwitterWrapper')
+    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
       [
         {
           user_name: 'luke_pawlik',

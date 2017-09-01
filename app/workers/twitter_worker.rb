@@ -4,7 +4,7 @@ class TwitterWorker
   def perform(source)
     @source = source
     last_tweet_id = Tweet.last.tweet_id || 0
-    tweets = TwitterWrapper.new.fetch([@source.name], last_tweet_id).each { |tweet| save(tweet) }
+    tweets = TwitterWrapper.new.fetch(@source.name, last_tweet_id).each { |tweet| save(tweet) }
   end
 
   private
