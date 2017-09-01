@@ -9,21 +9,25 @@ class Tweet < ApplicationRecord
   scope :in_organization, ->(organization) { joins(:sources).where(sources: { organization_id: organization.id }) }
 
   def self.most_common_words(organization)
-    Tweet.in_organization(organization)
-      .map(&:message)
-      .map { |message| message_words_count(message) }
-      .inject({}) do |count, message_count|
-        count.merge(message_count) { |_key, count_value, message_count_value| count_value + message_count_value }
-      end
+    messages_words_count(organization)
       .sort_by { |word, count| count }
       .reverse
   end
 
   private
 
+  def self.messages_words_count(organization)
+    Tweet.in_organization(organization)
+      .map { |tweet| message_words_count(tweet.message) }
+      .inject({}) do |count, message_count|
+        count.merge(message_count) { |key, count_value, message_count_value| count_value + message_count_value }
+      end
+  end
+
   def self.message_words_count(message)
     words_count = {}
     message.split(' ').each do |word|
+      word = unify(word)
       if words_count[word].present?
         words_count[word] += 1
       else
@@ -31,5 +35,9 @@ class Tweet < ApplicationRecord
       end
     end
     words_count
+  end
+
+  def self.unify(word)
+    word.gsub(/[`, ']/, '').scan(/\w+/).first.downcase.singularize
   end
 end
