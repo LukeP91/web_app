@@ -3,10 +3,10 @@ require 'rails_helper'
 describe TweetsCountPerHashtag do
   describe '.result_for' do
     it 'returns hash with tweets count for each hashtag within organization' do
-      rails = create(:hash_tag, name: 'rails')
-      rails_outside_organization = create(:hash_tag, name: 'rails')
-      ruby = create(:hash_tag, name: 'ruby')
       organization = create(:organization)
+      rails = create(:hash_tag, name: 'rails', organization: organization)
+      rails_outside_organization = create(:hash_tag, name: 'rails')
+      ruby = create(:hash_tag, name: 'ruby', organization: organization)
       source = create(:source, organization: organization)
       create(:tweet, user_name: 'lp', message: 'first tweet #Ruby', hash_tags: [ruby], tweet_id: '1', sources: [source])
       create(:tweet, user_name: 'lp', message: 'third tweet #Ruby', hash_tags: [ruby], tweet_id: '3', sources: [source])
@@ -18,9 +18,9 @@ describe TweetsCountPerHashtag do
 
     context 'when tweet has multiple hashtags' do
       it 'counts for both of hashtags' do
-        rails = create(:hash_tag, name: 'Rails')
-        ruby = create(:hash_tag, name: 'Ruby')
         organization = create(:organization)
+        rails = create(:hash_tag, name: 'Rails', organization: organization)
+        ruby = create(:hash_tag, name: 'Ruby', organization: organization)
         source = create(:source, organization: organization)
         create(:tweet, user_name: 'lp', message: 'second tweet #Ruby #Rails', hash_tags: [ruby, rails], tweet_id: '2', sources: [source])
 

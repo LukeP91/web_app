@@ -75,8 +75,9 @@ describe TwitterWorker do
   end
 
   it 'reuses existing hashtags' do
-    source = create(:source, name: '#Rails')
-    create(:hash_tag, name: "ruby")
+    organization = create(:organization, name: 'test_org')
+    source = create(:source, name: '#Rails', organization: organization)
+    create(:hash_tag, name: "ruby", organization: organization)
     create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source])
     twitter_wrapper = double('TwitterWrapper')
     allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
@@ -94,6 +95,29 @@ describe TwitterWorker do
     expect do
       TwitterWorker.new.perform(source)
     end.to change { HashTag.count }.by(1)
+  end
+
+  it 'does not use hashtags from other organization' do
+    organization = create(:organization)
+    source = create(:source, name: '#Rails', organization: organization)
+    create(:hash_tag, name: "rails")
+    create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source])
+    twitter_wrapper = double('TwitterWrapper')
+    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
+      [
+        {
+          user_name: 'luke_pawlik',
+          message: 'New blog post is up #rails',
+          hashtags: %w[rails],
+          tweet_id: '1'
+        }
+      ]
+    )
+    allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
+
+    expect do
+      TwitterWorker.new.perform(source)
+    end.to change { HashTag.in_organization(organization).count }.by(1)
   end
 
   it 'returns tweets in batches' do
