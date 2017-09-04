@@ -20,6 +20,6 @@ class SourcePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.admin? && (record.id != user.id)
+    user.admin? && (user.organization_id == record.organization_id)
   end
 end
