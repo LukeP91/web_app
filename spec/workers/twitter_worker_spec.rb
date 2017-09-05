@@ -18,7 +18,7 @@ describe TwitterWorker do
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
 
     expect do
-      TwitterWorker.new.perform(source)
+      TwitterWorker.new.perform(source.id)
     end.to change { Tweet.count }.by(1)
 
     expect(Tweet.last).to have_attributes(
@@ -47,13 +47,13 @@ describe TwitterWorker do
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
 
     expect do
-      TwitterWorker.new.perform(source)
+      TwitterWorker.new.perform(source.id)
     end.to change { HashTag.count }.by(2)
 
     expect(HashTag.pluck(:name)).to include('ruby', 'rails')
   end
 
-  it 'associate source with tweet' do
+  it 'associates source with tweet' do
     source = create(:source, name: '#Rails')
     create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source])
     twitter_wrapper = double('TwitterWrapper')
@@ -69,7 +69,7 @@ describe TwitterWorker do
     )
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
 
-    TwitterWorker.new.perform(source)
+    TwitterWorker.new.perform(source.id)
 
     expect(Tweet.last.sources).to include source
   end
@@ -93,7 +93,7 @@ describe TwitterWorker do
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
 
     expect do
-      TwitterWorker.new.perform(source)
+      TwitterWorker.new.perform(source.id)
     end.to change { HashTag.count }.by(1)
   end
 
@@ -116,7 +116,7 @@ describe TwitterWorker do
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
 
     expect do
-      TwitterWorker.new.perform(source)
+      TwitterWorker.new.perform(source.id)
     end.to change { HashTag.in_organization(organization).count }.by(1)
   end
 
@@ -124,12 +124,12 @@ describe TwitterWorker do
     source = create(:source, name: '#GameOfThrones')
 
     VCR.use_cassette 'twitter_first_batch' do
-      TwitterWorker.new.perform(source)
+      TwitterWorker.new.perform(source.id)
       expect(Tweet.order(tweet_id: :desc).first.tweet_id).to eq "904672973105373185"
     end
 
     VCR.use_cassette 'twitter_second_batch' do
-      TwitterWorker.new.perform(source)
+      TwitterWorker.new.perform(source.id)
       expect(Tweet.order(tweet_id: :desc).first.tweet_id).to eq "904678875912962049"
     end
 

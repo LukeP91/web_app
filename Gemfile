@@ -9,6 +9,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'devise', '~> 4.3.0'
 gem 'haml-rails', "~> 0.9"
 gem 'haml', '~> 4.0.7'
+gem 'highcharts-rails', '~> 5.0', '>= 5.0.7'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails', '~> 4.3.1'
 gem 'jwt', '~> 1.5', '>= 1.5.6'

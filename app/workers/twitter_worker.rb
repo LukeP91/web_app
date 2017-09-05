@@ -1,8 +1,8 @@
 class TwitterWorker
   include Sidekiq::Worker
 
-  def perform(source)
-    @source = source
+  def perform(source_id)
+    @source = Source.find(source_id)
     tweets = TwitterWrapper.new.fetch(@source.name, last_tweet_id).each { |tweet| save(tweet) }
   end
 

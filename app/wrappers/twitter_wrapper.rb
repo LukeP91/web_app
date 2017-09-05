@@ -9,6 +9,7 @@ class TwitterWrapper
     @tweet_count = 20
   end
 
+
   def fetch(hashtag, last_tweet_id)
     @client.search(
       "#{hashtag} -rt",
