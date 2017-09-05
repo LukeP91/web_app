@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require turbolinks
+//= require highcharts
+//= require highcharts/modules/exporting
 //= require_tree .

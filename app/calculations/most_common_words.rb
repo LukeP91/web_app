@@ -2,37 +2,45 @@ class MostCommonWords < Patterns::Calculation
   private
 
   def result
-    sorted_words_occurrences
+    sorted_words_occurrences.take(limit)
   end
 
   def organization
     options.fetch(:organization)
   end
 
+  def limit
+    options.fetch(:limit)
+  end
+
   def sorted_words_occurrences
     words_occurrences
-      .sort do |a, b|
-        comp = b[1] <=> a[1]
-        comp.zero? ? a[0] <=> b[0] : comp
+      .sort do |current_word_stats, next_word_stats|
+        comparison = next_word_stats[1] <=> current_word_stats[1]
+        comparison.zero? ? current_word_stats[0] <=> next_word_stats[0] : comparison
       end
   end
 
   def words_occurrences
-    tweets_messages
-      .map { |word| unify(word) }
-      .group_by { |word| word }
-      .map { |word| [word[0], word[1].size] }
+    unified_words
+      .group_by(&:itself)
+      .map { |word, occurrences| [word, occurrences.size] }
   end
 
   def tweets_messages
-    Tweet.in_organization(organization).map(&:message).map(&:split).flatten
+    Tweet.in_organization(organization)
+      .map(&:message)
+      .map(&:split)
+      .flatten
+  end
+
+  def unified_words
+    tweets_messages
+      .map { |word| unify(word) }
+      .keep_if { |word| word.length >= 3 }
   end
 
   def unify(word)
-    word.gsub(/[`'][sS]\Z/, '')
-      .gsub(/[`']/, '')
-      .scan(/\w+/)
-      .first
-      .downcase
+    word.gsub(/(['`][sS][\W]*\Z|[\W])/, '').downcase
   end
 end
