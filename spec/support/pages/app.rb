@@ -46,4 +46,8 @@ class App
   def admin_sources_new_page
     Admin::Twitter::Sources::CreatePage.new
   end
+
+  def admin_statistics_show_page
+    Admin::Twitter::Statistics::ShowPage.new
+  end
 end
