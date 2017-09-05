@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       end
     end
 
+    get 'statistics', to: 'statistics#show'
     resources :categories
     resources :interests
     resources :sources, only: [:index, :new, :create, :destroy]
