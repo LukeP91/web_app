@@ -33,6 +33,6 @@ class TwitterWrapper
   end
 
   def hashtags(tweet)
-    tweet[:entities][:hashtags].map { |hashtag| hashtag[:text] }
+    tweet[:entities][:hashtags].map { |hashtag| "##{hashtag[:text]}" }
   end
 end
