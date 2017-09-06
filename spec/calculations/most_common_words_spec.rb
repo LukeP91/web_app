@@ -52,5 +52,29 @@ describe MostCommonWords do
         ]
       )
     end
+
+    context 'when hashtags parameter is provided' do
+      it 'returns words count only for those hashtags' do
+        organization = create(:organization)
+        source = create(:source, organization: organization)
+        ruby = create(:hash_tag, name: '#ruby', organization: organization)
+        rails = create(:hash_tag, name: '#rails', organization: organization)
+        create(:tweet, user_name: 'lp', message: 'first tweet #Ruby', tweet_id: '1', sources: [source], hash_tags: [ruby, rails])
+        create(:tweet, user_name: 'lp', message: "O'Reilly Tweet #Ruby #Rails", tweet_id: '3', sources: [source], hash_tags: [ruby])
+        create(:tweet, user_name: 'lp', message: "fourth's! tweet's #Rails", tweet_id: '4', sources: [source], hash_tags: [rails])
+
+        tweets = HashTag.find(ruby.id).tweets
+
+        expect(MostCommonWords.result_for(tweets: tweets, organization: organization, limit: 10)).to eq(
+        [
+          ['ruby', 2],
+          ['tweet', 2],
+          ['first', 1],
+          ['oreilly', 1],
+          ['rails', 1]
+        ]
+      )
+      end
+    end
   end
 end
