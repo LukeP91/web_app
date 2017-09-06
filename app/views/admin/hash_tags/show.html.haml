@@ -1,6 +1,9 @@
 - model_class = Tweet
 .page-header
   %h1=t '.title', default: hash_tag.name
+
+%h4 Number of tweets with "#{hash_tag.name}": #{hash_tag.tweets_count}
+
 %table.table.table-striped
   %thead
     %tr
