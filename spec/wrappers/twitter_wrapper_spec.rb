@@ -7,7 +7,7 @@ describe TwitterWrapper do
         expect(TwitterWrapper.new.fetch('#Rails', 1)).to include(
           user_name: 'Rails Links',
           message: 'Announcing the Modularized AWS SDK for Ruby (Version 3) | Amazon Web Services #ruby #rails https://t.co/M9qoPT0sxd',
-          hashtags: %w[ruby rails],
+          hashtags: %w[#ruby #rails],
           tweet_id: "903150378962825216"
         )
       end
