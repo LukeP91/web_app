@@ -19,4 +19,4 @@
         %td= tweet.user_name
         %td= tweet.tweet_id
         %td= tweet.message
-        %td= tweet.tweet_created_at
+        %td= tweet.tweet_created_at.strftime("%T %d-%m-%Y")

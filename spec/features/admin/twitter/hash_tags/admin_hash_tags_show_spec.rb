@@ -31,7 +31,7 @@ describe 'Admin hash tags show' do
       expect(app.admin_hash_tag_show_page.text).to include 'luke_pawlik'
       expect(app.admin_hash_tag_show_page.text).to include '1232132'
       expect(app.admin_hash_tag_show_page.text).to include 'test message #ruby'
-      expect(app.admin_hash_tag_show_page.text).to include '2017-08-31 07:00:04 UTC'
+      expect(app.admin_hash_tag_show_page.text).to include '07:00:04 31-08-2017'
     end
   end
 end
