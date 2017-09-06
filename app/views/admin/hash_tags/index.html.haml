@@ -1,0 +1,14 @@
+- model_class = HashTag
+.page-header
+  %h1=t '.title', default: model_class.model_name.human.pluralize.titleize
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:name)
+      %th=t '.actions', default: t("helpers.actions")
+  %tbody
+    - hash_tags.each do |hash_tag|
+      %tr
+        %td= hash_tag.name
+        %td
+          = link_to t('.show', default: t("helpers.links.show")), admin_hash_tag_path(hash_tag), class: 'btn btn-default btn-xs', id: "hash_tag_show_#{hash_tag.id}"

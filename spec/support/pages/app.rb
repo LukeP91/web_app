@@ -50,4 +50,12 @@ class App
   def admin_statistics_show_page
     Admin::Twitter::Statistics::ShowPage.new
   end
+
+  def admin_hash_tags_index_page
+    Admin::Twitter::HashTags::IndexPage.new
+  end
+
+  def admin_hash_tag_show_page
+    Admin::Twitter::HashTags::ShowPage.new
+  end
 end
