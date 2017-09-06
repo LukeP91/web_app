@@ -9,9 +9,10 @@ describe 'Admin hash tags show' do
       hashtag = create(:hash_tag, name: '#ruby', organization: organization)
       create(
         :tweet,
-        user_name: "luke_pawlik",
+        user_name: 'luke_pawlik',
         message: 'test message #ruby',
         tweet_id: '1232132',
+        tweet_created_at: DateTime.new(2017, 8, 31, 7, 0, 4),
         sources: [source],
         hash_tags: [hashtag]
       )
@@ -27,10 +28,10 @@ describe 'Admin hash tags show' do
 
       app.admin_hash_tags_index_page.show_button(hashtag.id).click
       expect(app.admin_hash_tag_show_page).to be_displayed
-      expect(app.admin_hash_tag_show_page.text).to include '1'
       expect(app.admin_hash_tag_show_page.text).to include 'luke_pawlik'
       expect(app.admin_hash_tag_show_page.text).to include '1232132'
       expect(app.admin_hash_tag_show_page.text).to include 'test message #ruby'
+      expect(app.admin_hash_tag_show_page.text).to include '2017-08-31 07:00:04 UTC'
     end
   end
 end

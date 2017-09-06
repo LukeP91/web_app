@@ -3,18 +3,20 @@
   %h1=t '.title', default: hash_tag.name
 
 %h4 Number of tweets with "#{hash_tag.name}": #{hash_tag.tweets_count}
+#most_common_words{"data-words-stats" => "#{top_most_common_words}"}
 
+%h2 Latests tweets:
 %table.table.table-striped
   %thead
     %tr
-      %th= model_class.human_attribute_name(:id)
       %th= model_class.human_attribute_name(:user_name)
       %th= model_class.human_attribute_name(:tweet_id)
       %th= model_class.human_attribute_name(:message)
+      %th= model_class.human_attribute_name(:tweet_created_at)
   %tbody
     - tweets.each do |tweet|
       %tr
-        %td= tweet.id
         %td= tweet.user_name
         %td= tweet.tweet_id
         %td= tweet.message
+        %td= tweet.tweet_created_at
