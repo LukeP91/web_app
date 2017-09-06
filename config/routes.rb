@@ -1,8 +1,8 @@
-require "sidekiq/web"
+require 'sidekiq/web'
 require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
-  authenticate :user, lambda { |u| u.admin? } do
+  authenticate :user, ->(u) { u.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   }
 
   root to: 'profiles#show'
-  resource :profile, only: [:show, :edit, :update]
+  resource :profile, only: %i[show edit update]
 
   namespace :admin do
     resources :users do
@@ -25,14 +25,15 @@ Rails.application.routes.draw do
       end
     end
 
-    get 'statistics', to: 'statistics#show'
+    resource :statistics, only: :show
+    resources :hash_tags, only: %i[index show]
     resources :categories
     resources :interests
-    resources :sources, only: [:index, :new, :create, :destroy]
+    resources :sources, only: %i[index new create destroy]
   end
 
   namespace :api do
-    resources :users, only: [:show, :index, :create, :update, :destroy] do
+    resources :users, only: %i[show index create update destroy] do
       resources :interests, only: [:index]
     end
   end
