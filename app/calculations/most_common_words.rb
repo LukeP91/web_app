@@ -13,6 +13,11 @@ class MostCommonWords < Patterns::Calculation
     options.fetch(:limit)
   end
 
+  def tweets
+    options.fetch(:tweets, Tweet.in_organization(organization))
+  end
+
+
   def sorted_words_occurrences
     words_occurrences
       .sort do |current_word_stats, next_word_stats|
@@ -28,7 +33,7 @@ class MostCommonWords < Patterns::Calculation
   end
 
   def tweets_messages
-    Tweet.in_organization(organization)
+    tweets
       .map(&:message)
       .map(&:split)
       .flatten
