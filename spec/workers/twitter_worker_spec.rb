@@ -11,7 +11,8 @@ describe TwitterWorker do
           user_name: 'luke_pawlik',
           message: 'New blog post is up #rails #ruby',
           hashtags: %w[rails ruby],
-          tweet_id: '1'
+          tweet_id: '1',
+          tweet_created_at: 'Thu Aug 31 07:00:04 +0000 2017'
         }
       ]
     )
@@ -24,7 +25,8 @@ describe TwitterWorker do
     expect(Tweet.last).to have_attributes(
       user_name: 'luke_pawlik',
       message: 'New blog post is up #rails #ruby',
-      tweet_id: '1'
+      tweet_id: '1',
+      tweet_created_at: DateTime.new(2017, 8, 31, 7, 0, 4)
     )
 
     expect(Tweet.last.hash_tags.pluck(:name)).to match_array %w[ruby rails]
@@ -77,7 +79,7 @@ describe TwitterWorker do
   it 'reuses existing hashtags' do
     organization = create(:organization, name: 'test_org')
     source = create(:source, name: '#Rails', organization: organization)
-    create(:hash_tag, name: "ruby", organization: organization)
+    create(:hash_tag, name: 'ruby', organization: organization)
     create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source])
     twitter_wrapper = double('TwitterWrapper')
     allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
@@ -100,7 +102,7 @@ describe TwitterWorker do
   it 'does not use hashtags from other organization' do
     organization = create(:organization)
     source = create(:source, name: '#Rails', organization: organization)
-    create(:hash_tag, name: "rails")
+    create(:hash_tag, name: 'rails')
     create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source])
     twitter_wrapper = double('TwitterWrapper')
     allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
@@ -125,12 +127,12 @@ describe TwitterWorker do
 
     VCR.use_cassette 'twitter_first_batch' do
       TwitterWorker.new.perform(source.id)
-      expect(Tweet.order(tweet_id: :desc).first.tweet_id).to eq "904672973105373185"
+      expect(Tweet.order(tweet_id: :desc).first.tweet_id).to eq '904672973105373185'
     end
 
     VCR.use_cassette 'twitter_second_batch' do
       TwitterWorker.new.perform(source.id)
-      expect(Tweet.order(tweet_id: :desc).first.tweet_id).to eq "904678875912962049"
+      expect(Tweet.order(tweet_id: :desc).first.tweet_id).to eq '904678875912962049'
     end
 
     expect(Tweet.all.count).to eq 40

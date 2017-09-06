@@ -9,7 +9,13 @@ class TwitterWorker
   private
 
   def save(tweet)
-    saved_tweet = @source.tweets.create(user_name: tweet[:user_name], message: tweet[:message], tweet_id: tweet[:tweet_id])
+    saved_tweet = @source.tweets.create(
+      user_name: tweet[:user_name],
+      message: tweet[:message],
+      tweet_id: tweet[:tweet_id],
+      tweet_created_at: tweet[:tweet_created_at]
+    )
+
     tweet[:hashtags].each do |hashtag|
       hash_tag = @source.organization.hash_tags.find_or_create_by(name: hashtag)
       saved_tweet.hash_tags << hash_tag

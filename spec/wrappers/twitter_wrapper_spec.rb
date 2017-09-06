@@ -8,7 +8,8 @@ describe TwitterWrapper do
           user_name: 'Rails Links',
           message: 'Announcing the Modularized AWS SDK for Ruby (Version 3) | Amazon Web Services #ruby #rails https://t.co/M9qoPT0sxd',
           hashtags: %w[#ruby #rails],
-          tweet_id: "903150378962825216"
+          tweet_id: '903150378962825216',
+          tweet_created_at: 'Thu Aug 31 07:00:04 +0000 2017'
         )
       end
     end
