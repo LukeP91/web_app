@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170906120942) do
+ActiveRecord::Schema.define(version: 20170907081415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 20170906120942) do
     t.string   "message"
     t.string   "tweet_id",         null: false
     t.datetime "tweet_created_at"
+    t.integer  "organization_id"
+    t.index ["organization_id", "tweet_id"], name: "index_tweets_on_organization_id_and_tweet_id", unique: true, using: :btree
   end
 
   create_table "tweets_hash_tags", force: :cascade do |t|

@@ -13,12 +13,15 @@ class TwitterWorker
       user_name: tweet[:user_name],
       message: tweet[:message],
       tweet_id: tweet[:tweet_id],
-      tweet_created_at: tweet[:tweet_created_at]
+      tweet_created_at: tweet[:tweet_created_at],
+      organization: @source.organization
     )
 
-    tweet[:hashtags].each do |hashtag|
-      hash_tag = @source.organization.hash_tags.find_or_create_by(name: hashtag)
-      saved_tweet.hash_tags << hash_tag
+    if saved_tweet.valid?
+      tweet[:hashtags].each do |hashtag|
+        hash_tag = @source.organization.hash_tags.find_or_create_by(name: hashtag)
+        saved_tweet.hash_tags << hash_tag
+      end
     end
   end
 
