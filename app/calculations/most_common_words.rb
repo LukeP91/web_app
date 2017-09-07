@@ -17,19 +17,18 @@ class MostCommonWords < Patterns::Calculation
     options.fetch(:tweets, Tweet.in_organization(organization))
   end
 
-
   def sorted_words_occurrences
     words_occurrences
       .sort do |current_word_stats, next_word_stats|
-        comparison = next_word_stats[1] <=> current_word_stats[1]
-        comparison.zero? ? current_word_stats[0] <=> next_word_stats[0] : comparison
+        comparison = next_word_stats[:count] <=> current_word_stats[:count]
+        comparison.zero? ? current_word_stats[:word] <=> next_word_stats[:word] : comparison
       end
   end
 
   def words_occurrences
     unified_words
       .group_by(&:itself)
-      .map { |word, occurrences| [word, occurrences.size] }
+      .map { |word, occurrences| { word: word, count: occurrences.size } }
   end
 
   def tweets_messages

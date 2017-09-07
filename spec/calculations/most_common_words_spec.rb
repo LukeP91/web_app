@@ -12,13 +12,13 @@ describe MostCommonWords do
 
       expect(MostCommonWords.result_for(organization: organization, limit: 10)).to eq(
         [
-          ['rails', 3],
-          ['tweet', 3],
-          ['fourth', 2],
-          ['ruby', 2],
-          ['first', 1],
-          ['oreilly', 1],
-          ['tweets', 1]
+          { word: 'rails', count: 3 },
+          { word: 'tweet', count: 3 },
+          { word: 'fourth', count: 2 },
+          { word: 'ruby', count: 2 },
+          { word: 'first', count: 1 },
+          { word: 'oreilly', count: 1 },
+          { word: 'tweets', count: 1 }
         ]
       )
     end
@@ -30,8 +30,8 @@ describe MostCommonWords do
 
       expect(MostCommonWords.result_for(organization: organization, limit: 10)).to eq(
         [
-          ['and', 1],
-          ['that', 1]
+          { word: 'and', count: 1 },
+          { word: 'that', count: 1 }
         ]
       )
     end
@@ -46,9 +46,9 @@ describe MostCommonWords do
 
       expect(MostCommonWords.result_for(organization: organization, limit: 3)).to eq(
         [
-          ['rails', 3],
-          ['tweet', 3],
-          ['fourth', 2]
+          { word: 'rails', count: 3 },
+          { word: 'tweet', count: 3 },
+          { word: 'fourth', count: 2 }
         ]
       )
     end
@@ -67,11 +67,11 @@ describe MostCommonWords do
 
         expect(MostCommonWords.result_for(tweets: tweets, organization: organization, limit: 10)).to eq(
         [
-          ['ruby', 2],
-          ['tweet', 2],
-          ['first', 1],
-          ['oreilly', 1],
-          ['rails', 1]
+          { word: 'ruby', count: 2 },
+          { word: 'tweet', count: 2 },
+          { word: 'first', count: 1 },
+          { word: 'oreilly', count: 1 },
+          { word: 'rails', count: 1 }
         ]
       )
       end
