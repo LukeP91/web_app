@@ -3,7 +3,7 @@ require 'rails_helper'
 describe TwitterWorker do
   it 'saves tweets to DB' do
     source = create(:source, name: '#Rails')
-    create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source])
+    create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source], organization: source.organization)
     twitter_wrapper = double('TwitterWrapper')
     allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
       [
@@ -11,7 +11,7 @@ describe TwitterWorker do
           user_name: 'luke_pawlik',
           message: 'New blog post is up #rails #ruby',
           hashtags: %w[rails ruby],
-          tweet_id: '1',
+          tweet_id: '2',
           tweet_created_at: 'Thu Aug 31 07:00:04 +0000 2017'
         }
       ]
@@ -25,7 +25,7 @@ describe TwitterWorker do
     expect(Tweet.last).to have_attributes(
       user_name: 'luke_pawlik',
       message: 'New blog post is up #rails #ruby',
-      tweet_id: '1',
+      tweet_id: '2',
       tweet_created_at: DateTime.new(2017, 8, 31, 7, 0, 4)
     )
 
@@ -34,7 +34,7 @@ describe TwitterWorker do
 
   it 'saves hashtags to DB' do
     source = create(:source, name: '#Rails')
-    create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source])
+    create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source], organization: source.organization)
     twitter_wrapper = double('TwitterWrapper')
     allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
       [
@@ -42,7 +42,7 @@ describe TwitterWorker do
           user_name: 'luke_pawlik',
           message: 'New blog post is up #rails #ruby',
           hashtags: %w[rails ruby],
-          tweet_id: '1'
+          tweet_id: '2'
         }
       ]
     )
@@ -57,9 +57,8 @@ describe TwitterWorker do
 
   it 'associates source with tweet' do
     source = create(:source, name: '#Rails')
-    create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source])
     twitter_wrapper = double('TwitterWrapper')
-    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
+    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 0).and_return(
       [
         {
           user_name: 'luke_pawlik',
@@ -80,7 +79,7 @@ describe TwitterWorker do
     organization = create(:organization, name: 'test_org')
     source = create(:source, name: '#Rails', organization: organization)
     create(:hash_tag, name: 'ruby', organization: organization)
-    create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source])
+    create(:tweet, user_name: 'lp', message: 'message', tweet_id: '1', sources: [source], organization: organization)
     twitter_wrapper = double('TwitterWrapper')
     allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
       [
@@ -88,7 +87,7 @@ describe TwitterWorker do
           user_name: 'luke_pawlik',
           message: 'New blog post is up #rails #ruby',
           hashtags: %w[rails ruby],
-          tweet_id: '1'
+          tweet_id: '2'
         }
       ]
     )
@@ -103,7 +102,7 @@ describe TwitterWorker do
     organization = create(:organization)
     source = create(:source, name: '#Rails', organization: organization)
     create(:hash_tag, name: 'rails')
-    create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source])
+    create(:tweet, user_name: 'lp', message: 'message', tweet_id: '1', sources: [source])
     twitter_wrapper = double('TwitterWrapper')
     allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
       [
