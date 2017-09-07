@@ -1,4 +1,6 @@
 class MostCommonWords < Patterns::Calculation
+  WORD_UNIFIER = /(['`][sS][\W]*\Z|[\W])/.freeze
+
   private
 
   def result
@@ -33,7 +35,7 @@ class MostCommonWords < Patterns::Calculation
 
   def tweets_messages
     tweets
-      .map(&:message)
+      .pluck(:message)
       .map(&:split)
       .flatten
   end
@@ -45,6 +47,6 @@ class MostCommonWords < Patterns::Calculation
   end
 
   def unify(word)
-    word.gsub(/(['`][sS][\W]*\Z|[\W])/, '').downcase
+    word.gsub(WORD_UNIFIER, '').downcase
   end
 end

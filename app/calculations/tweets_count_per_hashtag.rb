@@ -14,8 +14,8 @@ class TweetsCountPerHashtag < Patterns::Calculation
   end
 
   def tweets_count
-    HashTag.in_organization(organization).inject([]) do |stat, tag|
-      stat << { name: tag.name, count: tag.tweets_count }
+    HashTag.in_organization(organization).inject([]) do |hashtags_stats, tag|
+      hashtags_stats << { name: tag.name, count: tag.tweets_count }
     end
   end
 
