@@ -13,7 +13,12 @@ describe TweetsCountPerHashtag do
       create(:tweet, user_name: 'lp', message: 'fourth tweet #Rails', hash_tags: [rails], tweet_id: '4', sources: [source])
       create(:tweet, user_name: 'lp', message: 'fourth tweet #Rails', hash_tags: [rails_outside_organization], tweet_id: '5')
 
-      expect(TweetsCountPerHashtag.result_for(organization: organization, limit: 3)).to eq([['#ruby', 2], ['#rails', 1]])
+      expect(TweetsCountPerHashtag.result_for(organization: organization, limit: 3)).to eq(
+        [
+          { name: '#ruby', count: 2 },
+          { name: '#rails', count: 1 }
+        ]
+      )
     end
 
     it 'limits amount of hashtags to specified limit' do
@@ -27,7 +32,12 @@ describe TweetsCountPerHashtag do
       create(:tweet, user_name: 'lp', message: 'fourth tweet #Rails', hash_tags: [rails], tweet_id: '4', sources: [source])
       create(:tweet, user_name: 'lp', message: 'fourth tweet #Rails', hash_tags: [rails], tweet_id: '5')
 
-      expect(TweetsCountPerHashtag.result_for(organization: organization, limit: 2)).to eq [['#rails', 3], ['#ruby', 2]]
+      expect(TweetsCountPerHashtag.result_for(organization: organization, limit: 2)).to eq(
+        [
+          { name: '#rails', count: 3},
+          { name: '#ruby', count: 2}
+        ]
+      )
     end
 
     context 'when tweet has multiple hashtags' do
@@ -38,7 +48,12 @@ describe TweetsCountPerHashtag do
         source = create(:source, organization: organization)
         create(:tweet, user_name: 'lp', message: 'second tweet #Ruby #Rails', hash_tags: [ruby, rails], tweet_id: '2', sources: [source])
 
-        expect(TweetsCountPerHashtag.result_for(organization: organization, limit: 2)).to eq([['#rails', 1], ['#ruby', 1]])
+        expect(TweetsCountPerHashtag.result_for(organization: organization, limit: 2)).to eq(
+          [
+            { name: '#rails', count: 1 },
+            { name: '#ruby', count: 1 }
+          ]
+        )
       end
     end
   end

@@ -1,7 +1,7 @@
 $(document).ready(() => {
   const $container = $('<div>').appendTo($('#tweets_per_hashtag'));
-  const hashtags = $('#tweets_per_hashtag').data('tweetsStats').map((tweetStats) => tweetStats[0]);
-  const tweetsCount = $('#tweets_per_hashtag').data('tweetsStats').map((tweetStats) => tweetStats[1]);
+  const hashtags = $('#tweets_per_hashtag').data('tweetsStats').map((tweetStats) => tweetStats.name);
+  const tweetsCount = $('#tweets_per_hashtag').data('tweetsStats').map((tweetStats) => tweetStats.count);
 
   window.chart = new Highcharts.Chart({
     chart: {
