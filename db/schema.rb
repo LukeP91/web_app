@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908094749) do
+ActiveRecord::Schema.define(version: 20170911111555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,9 +37,10 @@ ActiveRecord::Schema.define(version: 20170908094749) do
   end
 
   create_table "organizations", force: :cascade do |t|
-    t.string "name",                  null: false
-    t.string "subdomain",             null: false
-    t.string "facebook_access_token"
+    t.string  "name",                                          null: false
+    t.string  "subdomain",                                     null: false
+    t.string  "facebook_access_token"
+    t.boolean "facebook_access_token_expired", default: false
     t.index ["name"], name: "index_organizations_on_name", using: :btree
     t.index ["subdomain"], name: "index_organizations_on_subdomain", using: :btree
   end

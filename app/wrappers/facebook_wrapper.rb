@@ -6,7 +6,7 @@ class FacebookWrapper
   end
 
   def post_on_wall(message)
-    response = self.class.post('/v2.10/feed', query: { message: message, access_token: @access_token })
+    response = self.class.post('https://graph.facebook.com/v2.10/feed', query: { message: message, access_token: @access_token })
     response.ok? ? :ok : :expired_token
   end
 end
