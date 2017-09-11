@@ -33,3 +33,4 @@ en:
       user_updated: "User has been successfully updated"
       user_deleted: "User has been removed"
       regards_email_send: "Regards email has been send to user"
+      facebook_key_loaded: "Facebook auth token has been refreshed"

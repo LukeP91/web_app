@@ -15,4 +15,4 @@
           = link_to t('.destroy', default: t("helpers.links.destroy")), admin_source_path(source), method: :delete, data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-xs btn-danger', id: "source_delete_#{source.id}"
 
 = link_to t('.new', default: t("helpers.links.new")), new_admin_source_path, class: 'btn btn-primary', id: 'new_source'
-= link_to 'test', admin_auth_facebook_path, class: 'btn btn-primary'
+= link_to 'test', auth_facebook_path, class: 'btn btn-primary'

@@ -22,6 +22,8 @@ class TwitterWorker
         hash_tag = @source.organization.hash_tags.find_or_create_by(name: hashtag)
         saved_tweet.hash_tags << hash_tag
       end
+
+      FacebookWrapper.new(@source.organization).post_on_wall(saved_tweet.message)
     end
   end
 
