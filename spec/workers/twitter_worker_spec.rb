@@ -160,4 +160,56 @@ describe TwitterWorker do
 
     expect(facebook_wrapper).to have_received(:post_on_wall)
   end
+
+  context 'when facebook response is not ok' do
+    it 'sets facebook_access_token as expired' do
+      organization = create(:organization, name: 'test', facebook_access_token: 'test1234')
+      source = create(:source, name: '#Rails', organization: organization)
+      twitter_wrapper = double('TwitterWrapper')
+      allow(twitter_wrapper).to receive(:fetch).with('#Rails', 0).and_return(
+        [
+          {
+            user_name: 'luke_pawlik',
+            message: 'New blog post is up #rails #ruby',
+            hashtags: %w[rails ruby],
+            tweet_id: '1'
+          }
+        ]
+      )
+      allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
+      facebook_wrapper = double('FacebookWrapper')
+      allow(FacebookWrapper).to receive(:new).with(organization).and_return(facebook_wrapper)
+      allow(facebook_wrapper).to receive(:post_on_wall).with('New blog post is up #rails #ruby').and_return(:expired_token)
+
+      TwitterWorker.new.perform(source.id)
+
+      expect(organization.reload.facebook_access_token_expired).to eq true
+    end
+  end
+
+  context 'when facebook_access_token is expired' do
+    it 'does not try to post on facebook wall' do
+      organization = create(:organization, name: 'test', facebook_access_token: 'test1234', facebook_access_token_expired: true)
+      source = create(:source, name: '#Rails', organization: organization)
+      twitter_wrapper = double('TwitterWrapper')
+      allow(twitter_wrapper).to receive(:fetch).with('#Rails', 0).and_return(
+        [
+          {
+            user_name: 'luke_pawlik',
+            message: 'New blog post is up #rails #ruby',
+            hashtags: %w[rails ruby],
+            tweet_id: '1'
+          }
+        ]
+      )
+      allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
+      facebook_wrapper = double('FacebookWrapper')
+      allow(FacebookWrapper).to receive(:new).with(organization).and_return(facebook_wrapper)
+      allow(facebook_wrapper).to receive(:post_on_wall).with('New blog post is up #rails #ruby').and_return(:expired_token)
+
+      TwitterWorker.new.perform(source.id)
+
+      expect(facebook_wrapper).to_not have_received(:post_on_wall)
+    end
+  end
 end

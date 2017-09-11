@@ -23,7 +23,7 @@ class TwitterWorker
         saved_tweet.hash_tags << hash_tag
       end
 
-      FacebookWrapper.new(@source.organization).post_on_wall(saved_tweet.message)
+      post_on_facebook(saved_tweet.message)
     end
   end
 
@@ -32,6 +32,13 @@ class TwitterWorker
       @source.tweets.order(tweet_id: :desc).first.tweet_id.to_i
     else
       0
+    end
+  end
+
+  def post_on_facebook(message)
+    unless @source.organization.facebook_access_token_expired
+      response = FacebookWrapper.new(@source.organization).post_on_wall(message)
+      @source.organization.update_attributes(facebook_access_token_expired: true) if response == :expired_token
     end
   end
 end
