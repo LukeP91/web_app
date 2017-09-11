@@ -10,6 +10,9 @@
     - if current_user
       = render 'layouts/navbar'
     .container.main-container
+      - if current_user.admin? && current_user.organization.facebook_access_token_expired
+        .alert.alert-warning
+          %p Please refresh Facebook Access Token.
       - if flash[:notice]
         .alert.alert-success
           = flash[:notice]
