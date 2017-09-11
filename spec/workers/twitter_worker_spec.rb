@@ -136,4 +136,28 @@ describe TwitterWorker do
 
     expect(Tweet.all.count).to eq 40
   end
+
+  it 'post fetched tweet to facebook' do
+    organization = create(:organization, name: 'test', facebook_access_token: 'test1234')
+    source = create(:source, name: '#Rails', organization: organization)
+    twitter_wrapper = double('TwitterWrapper')
+    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 0).and_return(
+      [
+        {
+          user_name: 'luke_pawlik',
+          message: 'New blog post is up #rails #ruby',
+          hashtags: %w[rails ruby],
+          tweet_id: '1'
+        }
+      ]
+    )
+    allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
+    facebook_wrapper = double('FacebookWrapper')
+    allow(FacebookWrapper).to receive(:new).with(organization).and_return(facebook_wrapper)
+    allow(facebook_wrapper).to receive(:post_on_wall).with('New blog post is up #rails #ruby')
+
+    TwitterWorker.new.perform(source.id)
+
+    expect(facebook_wrapper).to have_received(:post_on_wall)
+  end
 end
