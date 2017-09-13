@@ -1,7 +1,7 @@
 $(document).ready(() => {
   const $container = $('<div>').appendTo($('#most_common_words'));
   const totalWords = $('#most_common_words').data('wordsStats').map((wordStats) => wordStats.count)
-    .reduce((accu, current) => accu + current);
+    .reduce((totalCount, current) => totalCount + current);
   const wordsStats = $('#most_common_words').data('wordsStats')
     .map((wordStats) => ({ name: wordStats.word, y: +(wordStats.count * 100 / totalWords).toFixed(2) }));
 

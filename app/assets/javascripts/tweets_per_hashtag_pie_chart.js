@@ -1,7 +1,7 @@
 $(document).ready(() => {
   const $container = $('<div>').appendTo($('#tweets_per_hashtag'));
   const totalHashTags = $('#tweets_per_hashtag').data('tweetsStats').map((tweetStats) => tweetStats.count)
-    .reduce((accu, current) => accu + current);
+    .reduce((totalCount, current) => totalCount + current);
   const hashTagsStats = $('#tweets_per_hashtag').data('tweetsStats')
     .map((tweetStats) => ({ name: tweetStats.name, y: +(tweetStats.count * 100 / totalHashTags).toFixed(2) }));
 
