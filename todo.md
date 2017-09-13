@@ -60,12 +60,12 @@ This is a spec for a candidate evaluation app.
   * Synchronization of Data between APIs (Every 6 hours synchronize data with Facebook events. Every 6 hours update statistics about fetched events)
     https://github.com/sferik/twitter
 
+* add readme to project
 ### Extra tasks
 
 * Three 3rd party integrations
   * One without ready to use wrapper (HTTParty only) ( Search for open JSON API without rails-ready wrapper)
 
-* add readme to project
 
 ## How to get started aka the workflow requirements
 1. Download the repo and upload it as your own. Do not fork it.

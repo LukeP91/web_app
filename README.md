@@ -1,27 +1,39 @@
 # Web app
 
-* *Short description what project is all about*
+* Practice project that was supposed to teach me how to solve most common tasks in Rails application. Most of work done in that project is described in todo.md.
 
 ## Prerequisites
 
 #### Environment
 
-* *Ruby version, additional libraries (i.e. wkhtmltopdf, rmagick etc.), links to installation how-tos if necessary*
+* Ruby version: 2.4.0
+* Rails 5.0.5
+* PostgreSQL
+* Sidekiq
+* Redis
+* Template Engine: Haml
+* Testing Framework: RSpec, Factory Girl
+* Authentication: Devise
+* Authorization: Pundit
 
 #### Database setup
 
-* *Steps to prepare development (and test) databases. Most likely just instructions to migrate and seed database*
+* TODO
 
 #### Mailer setup
 
-* *If some special information about setting up mailer are necessary, these should be placed in this section. Otherwise section can be removed*
+* TODO
 
 ## Testing
 
 #### Running tests
 
-* *How to run whole tests suite and other important information necessary to start testing on this particular project*
+* run `rspec`
+
+#### Twillio testing
+
+* Full testing of Twillio requires manual test that sends message to phone number of given user.
 
 #### Test accounts
 
-* *What are the test accounts provided by seed file (login/password)*
+* Tests accounts are created during application setup with data provided by user.
