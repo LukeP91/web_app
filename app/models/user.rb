@@ -19,6 +19,8 @@ class User < ApplicationRecord
   scope :with_age_between, ->(age_range) { where(age: age_range) }
   scope :with_gender, ->(gender) { where(gender: gender) }
 
+  delegate :facebook_auth_expired?, to: :organization
+
   pg_search_scope :search_by, against: %i[first_name last_name email age gender], using: { tsearch: { any_word: true } }
 
   paginates_per USERS_PER_PAGE

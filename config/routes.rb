@@ -30,11 +30,17 @@ Rails.application.routes.draw do
     resources :categories
     resources :interests
     resources :sources, only: %i[index new create destroy]
-
   end
 
-  get '/auth/facebook'
-  get '/auth/facebook/callback', to: 'authorize_facebook#update'
+  namespace :auth do
+    resource :facebook, only: :show do
+      member do
+        get :callback
+      end
+    end
+  end
+  # get '/auth/facebook'
+  # get '/auth/facebook/callback', to: 'authorize_facebook#update'
 
   namespace :api do
     resources :users, only: %i[show index create update destroy] do
