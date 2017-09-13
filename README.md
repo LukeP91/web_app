@@ -1,6 +1,6 @@
 # Web app
 
-* Practice project that was supposed to teach me how to solve most common tasks in Rails application. Most of work done in that project is described in todo.md.
+* Practice project that was supposed to teach me how to solve most common tasks in Rails application. Most of work done in that project is described [here](todo.md).
 
 ## Prerequisites
 
