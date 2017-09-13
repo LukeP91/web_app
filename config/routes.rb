@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   end
 
   get '/auth/facebook'
-  get '/auth/facebook/callback', to: 'authorize_facebook#create'
+  get '/auth/facebook/callback', to: 'authorize_facebook#update'
 
   namespace :api do
     resources :users, only: %i[show index create update destroy] do

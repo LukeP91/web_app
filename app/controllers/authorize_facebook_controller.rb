@@ -1,5 +1,5 @@
 class AuthorizeFacebookController < ApplicationController
-  def create
+  def update
     auth = request.env['omniauth.auth']
     if current_user.admin?
       current_user.organization.update_attributes(

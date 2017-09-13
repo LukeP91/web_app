@@ -137,7 +137,7 @@ describe TwitterWorker do
     expect(Tweet.all.count).to eq 40
   end
 
-  it 'post fetched tweet to facebook' do
+  it 'posts fetched tweet to facebook' do
     organization = create(:organization, name: 'test', facebook_access_token: 'test1234')
     source = create(:source, name: '#Rails', organization: organization)
     twitter_wrapper = double('TwitterWrapper')
