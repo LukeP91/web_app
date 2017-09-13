@@ -18,11 +18,8 @@
 
 #### Database setup
 
-* TODO
-
-#### Mailer setup
-
-* TODO
+* run `db:create db:migrate`
+* to set seeds run `rails "db:populate [organization_name, organization_subdomain, admin_email, admin_password]"`
 
 ## Testing
 
