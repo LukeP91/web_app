@@ -38,7 +38,9 @@ class TwitterWorker
   def post_on_facebook(message)
     unless @source.organization.facebook_access_token_expired
       response = FacebookWrapper.new(@source.organization).post_on_wall(message)
-      @source.organization.update_attributes(facebook_access_token_expired: true) if response == :expired_token
+      if response == :expired_token
+        @source.organization.update_attributes(facebook_access_token_expired: true)
+      end
     end
   end
 end

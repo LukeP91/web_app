@@ -123,6 +123,9 @@ describe TwitterWorker do
 
   it 'returns tweets in batches' do
     source = create(:source, name: '#GameOfThrones')
+    facebook_wrapper = double('FacebookWrapper')
+    allow(FacebookWrapper).to receive(:new).with(source.organization).and_return(facebook_wrapper)
+    allow(facebook_wrapper).to receive(:post_on_wall)
 
     VCR.use_cassette 'twitter_first_batch' do
       TwitterWorker.new.perform(source.id)
@@ -154,11 +157,11 @@ describe TwitterWorker do
     allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
     facebook_wrapper = double('FacebookWrapper')
     allow(FacebookWrapper).to receive(:new).with(organization).and_return(facebook_wrapper)
-    allow(facebook_wrapper).to receive(:post_on_wall).with('New blog post is up #rails #ruby')
+    allow(facebook_wrapper).to receive(:post_on_wall)
 
     TwitterWorker.new.perform(source.id)
 
-    expect(facebook_wrapper).to have_received(:post_on_wall)
+    expect(facebook_wrapper).to have_received(:post_on_wall).with('New blog post is up #rails #ruby')
   end
 
   context 'when facebook response is not ok' do
@@ -177,9 +180,8 @@ describe TwitterWorker do
         ]
       )
       allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-      facebook_wrapper = double('FacebookWrapper')
+      facebook_wrapper = double('FacebookWrapper', post_on_wall: :expired_token)
       allow(FacebookWrapper).to receive(:new).with(organization).and_return(facebook_wrapper)
-      allow(facebook_wrapper).to receive(:post_on_wall).with('New blog post is up #rails #ruby').and_return(:expired_token)
 
       TwitterWorker.new.perform(source.id)
 
@@ -203,9 +205,8 @@ describe TwitterWorker do
         ]
       )
       allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-      facebook_wrapper = double('FacebookWrapper')
+      facebook_wrapper = double('FacebookWrapper', post_on_wall: :expired_token)
       allow(FacebookWrapper).to receive(:new).with(organization).and_return(facebook_wrapper)
-      allow(facebook_wrapper).to receive(:post_on_wall).with('New blog post is up #rails #ruby').and_return(:expired_token)
 
       TwitterWorker.new.perform(source.id)
 

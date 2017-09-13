@@ -1,5 +1,5 @@
-class AuthorizeFacebookController < ApplicationController
-  def update
+class Auth::FacebooksController < ApplicationController
+  def callback
     auth = request.env['omniauth.auth']
     if current_user.admin?
       current_user.organization.update_attributes(
