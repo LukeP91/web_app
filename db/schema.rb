@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170911111555) do
+ActiveRecord::Schema.define(version: 20170914072146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,9 +53,10 @@ ActiveRecord::Schema.define(version: 20170911111555) do
   create_table "tweets", force: :cascade do |t|
     t.string   "user_name"
     t.string   "message"
-    t.string   "tweet_id",         null: false
+    t.string   "tweet_id",                        null: false
     t.datetime "tweet_created_at"
     t.integer  "organization_id"
+    t.boolean  "send_to_fb",       default: true
     t.index ["organization_id", "tweet_id"], name: "index_tweets_on_organization_id_and_tweet_id", unique: true, using: :btree
   end
 

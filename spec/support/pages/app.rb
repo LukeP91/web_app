@@ -58,4 +58,8 @@ class App
   def admin_hash_tag_show_page
     Admin::Twitter::HashTags::ShowPage.new
   end
+
+  def admin_facebook_posts_index_page
+    Admin::Twitter::FacebookPosts::IndexPage.new
+  end
 end
