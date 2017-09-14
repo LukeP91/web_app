@@ -7,5 +7,6 @@ module Sections
     element :admin_sources_link, '#admin_sources_index_link'
     element :admin_statistics_link, '#admin_statistics_show_link'
     element :admin_hash_tags_link, '#admin_hash_tags_index_link'
+    element :admin_facebook_posts_link, '#admin_facebook_posts_link'
   end
 end

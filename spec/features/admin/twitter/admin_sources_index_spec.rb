@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin Twitter source new' do
+describe 'Admin Twitter source index' do
   context 'user with admin privileges' do
     scenario 'can see sources from his organization' do
       organization = create(:organization)
