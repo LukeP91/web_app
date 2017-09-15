@@ -164,33 +164,8 @@ describe TwitterWorker do
     expect(facebook_wrapper).to have_received(:post_on_wall).with('New blog post is up #rails #ruby')
   end
 
-  context 'when facebook response is not ok' do
-    it 'sets facebook_access_token as expired' do
-      organization = create(:organization, name: 'test', facebook_access_token: 'test1234')
-      source = create(:source, name: '#Rails', organization: organization)
-      twitter_wrapper = double('TwitterWrapper')
-      allow(twitter_wrapper).to receive(:fetch).with('#Rails', 0).and_return(
-        [
-          {
-            user_name: 'luke_pawlik',
-            message: 'New blog post is up #rails #ruby',
-            hashtags: %w[rails ruby],
-            tweet_id: '1'
-          }
-        ]
-      )
-      allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
-      facebook_wrapper = double('FacebookWrapper', post_on_wall: :expired_token)
-      allow(FacebookWrapper).to receive(:new).with(organization).and_return(facebook_wrapper)
-
-      TwitterWorker.new.perform(source.id)
-
-      expect(organization.reload.facebook_access_token_expired).to eq true
-    end
-  end
-
   context 'when facebook_access_token is expired' do
-    it 'does not try to post on facebook wall' do
+    it 'sets tweet as not send' do
       organization = create(:organization, name: 'test', facebook_access_token: 'test1234', facebook_access_token_expired: true)
       source = create(:source, name: '#Rails', organization: organization)
       twitter_wrapper = double('TwitterWrapper')
@@ -210,7 +185,7 @@ describe TwitterWorker do
 
       TwitterWorker.new.perform(source.id)
 
-      expect(facebook_wrapper).to_not have_received(:post_on_wall)
+      expect(Tweet.first.send_to_fb).to eq false
     end
   end
 end

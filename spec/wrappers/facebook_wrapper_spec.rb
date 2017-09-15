@@ -31,6 +31,24 @@ describe FacebookWrapper do
 
         expect(FacebookWrapper.new(organization).post_on_wall('message')).to eq :expired_token
       end
+
+      it 'sets Facebook access token as expired' do
+        organization = create(:organization, facebook_access_token: 'test', facebook_access_token_expired: false)
+        response = double('RequestResponse', ok?: false)
+        allow(FacebookWrapper).to receive(:post).and_return(response)
+
+        FacebookWrapper.new(organization).post_on_wall('message')
+
+        expect(organization.reload.facebook_access_token_expired).to eq true
+      end
+    end
+
+    context 'when access token is expired' do
+      it 'returns :expired_token' do
+        organization = create(:organization, facebook_access_token: 'test', facebook_access_token_expired: false)
+
+        expect(FacebookWrapper.new(organization).post_on_wall('message')).to eq :expired_token
+      end
     end
   end
 end
