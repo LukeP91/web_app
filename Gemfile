@@ -7,7 +7,7 @@ end
 
 gem 'coffee-rails', '~> 4.2'
 gem 'devise', '~> 4.3.0'
-gem 'dotenv', '~> 2.2', '>= 2.2.1'
+gem 'dotenv-rails', '~> 2.2', '>= 2.2.1'
 gem 'haml-rails', "~> 0.9"
 gem 'haml', '~> 4.0.7'
 gem 'highcharts-rails', '~> 5.0', '>= 5.0.7'

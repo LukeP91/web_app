@@ -17,4 +17,4 @@
 .byebug_history
 
 coverage
-config.env
+.env
