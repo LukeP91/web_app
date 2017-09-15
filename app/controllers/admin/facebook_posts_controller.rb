@@ -8,10 +8,7 @@ class Admin::FacebookPostsController < ApplicationController
   def send_to_facebook
     tweet = Tweet.in_organization(current_organization).find(params[:id])
     authorize tweet
-    response = FacebookWrapper.new(current_organization).post_on_wall(tweet.message)
-    if response == :ok
-      tweet.update_attributes(send_to_fb: true)
-    end
+    SendTweetToFacebook.call(tweet: tweet, organization: current_organization)
     respond_to do |format|
       format.js
     end
