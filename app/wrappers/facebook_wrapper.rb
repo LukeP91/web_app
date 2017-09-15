@@ -1,6 +1,8 @@
 class FacebookWrapper
   include HTTParty
 
+  FEED_URL = 'https://graph.facebook.com/v2.10/feed'.freeze
+
   def initialize(organization)
     @organization = organization
     @access_token = organization.facebook_access_token
@@ -10,7 +12,7 @@ class FacebookWrapper
     return :expired_token if organization.facebook_access_token_expired
 
     response = self.class.post(
-      'https://graph.facebook.com/v2.10/feed',
+      FEED_URL,
       query: { message: message, access_token: access_token }
     )
     if response.ok?
