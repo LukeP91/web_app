@@ -6,9 +6,7 @@ class Admin::FacebookPostsController < ApplicationController
   end
 
   def send_to_facebook
-    tweet = Tweet.in_organization(current_organization).find(params[:id])
-    authorize tweet
-    SendTweetToFacebook.call(tweet: tweet, organization: current_organization)
+    SendTweetToFacebook.call(user: current_user, tweet_id: params[:id], organization: current_organization)
     respond_to do |format|
       format.js
     end

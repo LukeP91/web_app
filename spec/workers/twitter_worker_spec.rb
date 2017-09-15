@@ -5,7 +5,7 @@ describe TwitterWorker do
     source = create(:source, name: '#Rails')
     create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source], organization: source.organization)
     twitter_wrapper = double('TwitterWrapper')
-    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
+    allow(twitter_wrapper).to receive(:fetch).and_return(
       [
         {
           user_name: 'luke_pawlik',
@@ -36,7 +36,7 @@ describe TwitterWorker do
     source = create(:source, name: '#Rails')
     create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source], organization: source.organization)
     twitter_wrapper = double('TwitterWrapper')
-    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
+    allow(twitter_wrapper).to receive(:fetch).and_return(
       [
         {
           user_name: 'luke_pawlik',
@@ -58,7 +58,7 @@ describe TwitterWorker do
   it 'associates source with tweet' do
     source = create(:source, name: '#Rails')
     twitter_wrapper = double('TwitterWrapper')
-    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 0).and_return(
+    allow(twitter_wrapper).to receive(:fetch).and_return(
       [
         {
           user_name: 'luke_pawlik',
@@ -81,7 +81,7 @@ describe TwitterWorker do
     create(:hash_tag, name: 'ruby', organization: organization)
     create(:tweet, user_name: 'lp', message: 'message', tweet_id: '1', sources: [source], organization: organization)
     twitter_wrapper = double('TwitterWrapper')
-    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
+    allow(twitter_wrapper).to receive(:fetch).and_return(
       [
         {
           user_name: 'luke_pawlik',
@@ -104,7 +104,7 @@ describe TwitterWorker do
     create(:hash_tag, name: 'rails')
     create(:tweet, user_name: 'lp', message: 'message', tweet_id: '1', sources: [source])
     twitter_wrapper = double('TwitterWrapper')
-    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 1).and_return(
+    allow(twitter_wrapper).to receive(:fetch).and_return(
       [
         {
           user_name: 'luke_pawlik',
@@ -144,7 +144,7 @@ describe TwitterWorker do
     organization = create(:organization, name: 'test', facebook_access_token: 'test1234')
     source = create(:source, name: '#Rails', organization: organization)
     twitter_wrapper = double('TwitterWrapper')
-    allow(twitter_wrapper).to receive(:fetch).with('#Rails', 0).and_return(
+    allow(twitter_wrapper).to receive(:fetch).and_return(
       [
         {
           user_name: 'luke_pawlik',
@@ -165,11 +165,11 @@ describe TwitterWorker do
   end
 
   context 'when facebook_access_token is expired' do
-    it 'sets tweet as not send' do
+    it 'sets tweet as not sent' do
       organization = create(:organization, name: 'test', facebook_access_token: 'test1234', facebook_access_token_expired: true)
       source = create(:source, name: '#Rails', organization: organization)
       twitter_wrapper = double('TwitterWrapper')
-      allow(twitter_wrapper).to receive(:fetch).with('#Rails', 0).and_return(
+      allow(twitter_wrapper).to receive(:fetch).and_return(
         [
           {
             user_name: 'luke_pawlik',
