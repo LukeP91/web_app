@@ -5,8 +5,7 @@ class SendTweetToFacebook < Pattern::ServicePattern
   end
 
   def call
-    response = FacebookWrapper.new(organization).post_on_wall(tweet.message)
-    if response == :ok
+    if FacebookWrapper.new(organization).post_on_wall(tweet.message) == :ok
       tweet.update_attributes(send_to_fb: true)
     end
   end
