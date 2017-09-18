@@ -185,7 +185,7 @@ describe TwitterWorker do
 
       TwitterWorker.new.perform(source.id)
 
-      expect(Tweet.first.send_to_fb).to eq false
+      expect(Tweet.first.sent_to_fb).to eq false
     end
   end
 end

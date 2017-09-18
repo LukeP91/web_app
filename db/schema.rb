@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170914072146) do
     t.string   "tweet_id",                        null: false
     t.datetime "tweet_created_at"
     t.integer  "organization_id"
-    t.boolean  "send_to_fb",       default: true
+    t.boolean  "sent_to_fb",       default: true
     t.index ["organization_id", "tweet_id"], name: "index_tweets_on_organization_id_and_tweet_id", unique: true, using: :btree
   end
 

@@ -14,7 +14,7 @@ describe 'Admin Facebook posts index' do
         message: 'Send message from organization',
         tweet_id: '1',
         sources: [ruby],
-        send_to_fb: true
+        sent_to_fb: true
       )
 
       create(
@@ -23,7 +23,7 @@ describe 'Admin Facebook posts index' do
         message: 'Unsend message from organization',
         tweet_id: '2',
         sources: [ruby],
-        send_to_fb: false
+        sent_to_fb: false
       )
 
       create(
@@ -32,7 +32,7 @@ describe 'Admin Facebook posts index' do
         message: 'Send messege from other organization',
         tweet_id: '3',
         sources: [js],
-        send_to_fb: true
+        sent_to_fb: true
       )
 
       app = App.new
@@ -62,7 +62,7 @@ describe 'Admin Facebook posts index' do
         tweet_id: '1',
         sources: [ruby],
         organization: organization,
-        send_to_fb: false
+        sent_to_fb: false
       )
 
       app = App.new
@@ -78,5 +78,3 @@ describe 'Admin Facebook posts index' do
     end
   end
 end
-
-

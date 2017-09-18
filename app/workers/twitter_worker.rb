@@ -8,40 +8,22 @@ class TwitterWorker
 
   private
 
-  attr_reader :source
+  attr_reader :source, :tweet
 
-  def save(tweet)
-    saved_tweet = source.tweets.create(
-      user_name: tweet[:user_name],
-      message: tweet[:message],
-      tweet_id: tweet[:tweet_id],
-      tweet_created_at: tweet[:tweet_created_at],
-      organization: source.organization
-    )
+  def save(tweet_params)
+    @tweet = Tweet.new
+    tweet_form = TweetForm.new(tweet, tweet_params).as(source)
+    tweet_form.save
 
-    if saved_tweet.valid?
-      tweet[:hashtags].each do |hashtag|
-        hash_tag = source.organization.hash_tags.find_or_create_by(name: hashtag)
-        saved_tweet.hash_tags << hash_tag
-      end
-
-      post_on_facebook(saved_tweet)
-    end
+    post_on_facebook! if tweet_form.persisted?
   end
 
   def last_tweet_id
-    if source.tweets.any?
-      source.tweets.order(tweet_id: :desc).first.tweet_id.to_i
-    else
-      0
-    end
+    source.tweets.order(tweet_id: :desc).first&.tweet_id.to_i
   end
 
-  def post_on_facebook(tweet)
-    if FacebookWrapper.new(source.organization).post_on_wall(tweet.message) == :ok
-      tweet.update_attributes(send_to_fb: true)
-    else
-      tweet.update_attributes(send_to_fb: false)
-    end
+  def post_on_facebook!
+    post_response = FacebookWrapper.new(source.organization).post_on_wall(tweet.message)
+    tweet.update_attributes(sent_to_fb: post_response == :ok)
   end
 end
