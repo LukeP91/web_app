@@ -1,6 +1,6 @@
 class Admin::FacebookPostsController < ApplicationController
   def index
-    tweets = Tweet.in_organization(current_organization).not_send_to_facebook
+    tweets = Tweet.in_organization(current_organization).not_sent_to_facebook
     authorize tweets
     render :index, locals: { tweets: tweets }
   end
