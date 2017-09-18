@@ -6,13 +6,16 @@ class TweetsCollection < Patterns::Collection
   end
 
   def group_by_weeks
-    weeks = subject.order(:tweet_created_at).map do |tweet|
-      tweet.tweet_created_at.beginning_of_week..tweet.tweet_created_at.end_of_week
-    end.uniq
     weeks.map do |week|
       tweets = subject.where(tweet_created_at: week)
       week = Week.new(week, tweets)
     end
+  end
+
+  def weeks
+    subject.order(:tweet_created_at).map do |tweet|
+      tweet.tweet_created_at.beginning_of_week..tweet.tweet_created_at.end_of_week
+    end.uniq
   end
 
   class Week
@@ -35,11 +38,14 @@ class TweetsCollection < Patterns::Collection
     attr_reader :date_range, :tweets
 
     def group_by_days
-      days = tweets.order(:tweet_created_at).map(&:tweet_created_at).uniq
       days.map do |day|
         tweets = @tweets.where(tweet_created_at: day)
         day = Day.new(day, tweets)
       end
+    end
+
+    def days
+      days = tweets.order(:tweet_created_at).map(&:tweet_created_at).uniq
     end
   end
 
