@@ -9,7 +9,7 @@ class SendTweetToFacebook < Pattern::ServicePattern
     tweet = Tweet.in_organization(organization).find(tweet_id)
     raise Pundit::NotAuthorizedError if !Pundit.policy(user, tweet).send_to_facebook?
     if FacebookWrapper.new(organization).post_on_wall(tweet.message) == :ok
-      tweet.update_attributes(send_to_fb: true)
+      tweet.update_attributes(sent_to_fb: true)
     end
   end
 

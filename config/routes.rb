@@ -16,12 +16,12 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users do
       collection do
-        get 'export'
-        get 'welcome_email'
+        get :export
+        get :welcome_email
       end
       member do
-        get 'send_email'
-        post 'send_welcome_sms'
+        get :send_email
+        post :send_welcome_sms
       end
     end
 
@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     resources :sources, only: %i[index new create destroy]
     resources :facebook_posts, only: :index do
       member do
-        post 'send_to_facebook'
+        post :send_to_facebook
       end
     end
   end

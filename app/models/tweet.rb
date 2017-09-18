@@ -9,5 +9,5 @@ class Tweet < ApplicationRecord
   validates_uniqueness_of :tweet_id, scope: :organization
 
   scope :in_organization, ->(organization) { joins(:sources).where(sources: { organization_id: organization.id }) }
-  scope :not_send_to_facebook, -> { where(send_to_fb: false) }
+  scope :not_sent_to_facebook, -> { where(sent_to_fb: false) }
 end
