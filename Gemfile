@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'coffee-rails', '~> 4.2'
+gem 'datafix', '~> 0.0.2'
 gem 'devise', '~> 4.3.0'
 gem 'dotenv-rails', '~> 2.2', '>= 2.2.1'
 gem 'haml-rails', "~> 0.9"
