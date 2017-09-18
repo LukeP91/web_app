@@ -11,4 +11,3 @@ class CreateDatafixLog < ActiveRecord::Migration
     drop_table :datafix_log
   end
 end
-
