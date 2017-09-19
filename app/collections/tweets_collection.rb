@@ -1,23 +1,4 @@
 class TweetsCollection < Patterns::Collection
-  private
-
-  def collection
-    group_by_weeks
-  end
-
-  def group_by_weeks
-    weeks.map do |week|
-      tweets = subject.where(tweet_created_at: week)
-      week = Week.new(week, tweets)
-    end
-  end
-
-  def weeks
-    subject.order(:tweet_created_at).map do |tweet|
-      tweet.tweet_created_at.beginning_of_week..tweet.tweet_created_at.end_of_week
-    end.uniq
-  end
-
   class Week
     def initialize(date_range, tweets)
       @date_range = date_range
@@ -29,23 +10,22 @@ class TweetsCollection < Patterns::Collection
     end
 
     def each(&block)
-      @days ||= group_by_days
-      @days.each(&block)
+      days_with_tweets.each(&block)
     end
 
     private
 
     attr_reader :date_range, :tweets
 
-    def group_by_days
-      days.map do |day|
+    def days_with_tweets
+      @days_with_tweets ||= days.map do |day|
         tweets = @tweets.where(tweet_created_at: day)
-        day = Day.new(day, tweets)
+        Day.new(day, tweets)
       end
     end
 
     def days
-      days = tweets.order(:tweet_created_at).map(&:tweet_created_at).uniq
+      tweets.order(:tweet_created_at).map(&:tweet_created_at).uniq
     end
   end
 
@@ -68,7 +48,32 @@ class TweetsCollection < Patterns::Collection
     private
 
     def tweets
-      @tweets.map { |tweet| Tweet.new(tweet.tweet_id, tweet.tweet_created_at.strftime('%d.%m.%Y'), tweet.sent_to_fb) }
+      @tweets.map do |tweet|
+        Tweet.new(
+          tweet.tweet_id,
+          tweet.tweet_created_at.strftime('%d.%m.%Y'),
+          tweet.sent_to_fb
+        )
+      end
     end
+  end
+
+  private
+
+  def collection
+    group_by_weeks
+  end
+
+  def group_by_weeks
+    weeks.map do |week|
+      tweets = subject.where(tweet_created_at: week)
+      Week.new(week, tweets)
+    end
+  end
+
+  def weeks
+    subject.order(:tweet_created_at).map do |tweet|
+      tweet.tweet_created_at.beginning_of_week..tweet.tweet_created_at.end_of_week
+    end.uniq
   end
 end

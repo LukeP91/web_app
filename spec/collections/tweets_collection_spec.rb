@@ -6,8 +6,6 @@ describe TweetsCollection do
     source = create(:source, name: '#test', organization: organization)
     create(
       :tweet,
-      user_name: 'lp',
-      message: 'first tweet #test',
       tweet_id: '1',
       tweet_created_at: DateTime.new(2017, 8, 31, 7, 0, 4),
       sent_to_fb: true,
@@ -16,8 +14,6 @@ describe TweetsCollection do
     )
     create(
       :tweet,
-      user_name: 'lp',
-      message: 'second tweet #test',
       tweet_id: '2',
       tweet_created_at: DateTime.new(2017, 7, 31, 7, 0, 4),
       sent_to_fb: true,
@@ -26,8 +22,6 @@ describe TweetsCollection do
     )
     create(
       :tweet,
-      user_name: 'lp',
-      message: 'thrid tweet #test',
       tweet_id: '3',
       tweet_created_at: DateTime.new(2017, 8, 24, 7, 0, 4),
       sent_to_fb: true,
@@ -36,8 +30,6 @@ describe TweetsCollection do
     )
     create(
       :tweet,
-      user_name: 'lp',
-      message: 'fourth tweet #test',
       tweet_id: '4',
       tweet_created_at: DateTime.new(2017, 8, 25, 7, 0, 4),
       sent_to_fb: false,
@@ -46,8 +38,6 @@ describe TweetsCollection do
     )
     create(
       :tweet,
-      user_name: 'lp',
-      message: 'fifth tweet #test',
       tweet_id: '5',
       tweet_created_at: DateTime.new(2017, 8, 25, 7, 0, 4),
       sent_to_fb: true,
