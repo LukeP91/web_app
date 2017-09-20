@@ -16,5 +16,6 @@ module WebApp
     # -- all .rb files in that directory are automatically loaded.
     config.action_controller.perform_caching = true
     config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
+    config.action_cable.mount_path = '/websocket'
   end
 end
