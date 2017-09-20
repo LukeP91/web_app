@@ -15,4 +15,5 @@
 //= require twitter/bootstrap
 //= require highcharts
 //= require highcharts/modules/exporting
+//= require_tree ./channels
 //= require_tree .
