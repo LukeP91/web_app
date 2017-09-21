@@ -8,14 +8,17 @@ class TweetsByWeekCollection < Patterns::Collection
   def group_by_weeks
     weeks.map do |week|
       tweets = subject.where(tweet_created_at: week)
-      week = Tweets::Week.new(week, tweets)
-      [week.title, week]
-    end
+      unless tweets.empty?
+        week = Tweets::Week.new(week, tweets)
+        [week.title, week]
+      end
+    end.compact
   end
 
   def weeks
-    subject.order(:tweet_created_at).map do |tweet|
-      tweet.tweet_created_at.beginning_of_week..tweet.tweet_created_at.end_of_week
+    day_within_month = subject.first.tweet_created_at.to_datetime
+    (day_within_month.beginning_of_month..day_within_month.end_of_month).map do |day|
+      day.beginning_of_week..day.end_of_week
     end.uniq
   end
 end
