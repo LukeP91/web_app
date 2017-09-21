@@ -1,13 +1,15 @@
 class Tweets::Week
   include Enumerable
 
+  DATE_FORMAT = '%d.%m.%Y'.freeze
+
   def initialize(date_range, tweets)
     @date_range = date_range
     @tweets = tweets
   end
 
   def title
-    "#{date_range.first.strftime('%d.%m.%Y')} - #{date_range.last.strftime('%d.%m.%Y')}"
+    "#{date_range.first.strftime(DATE_FORMAT)} - #{date_range.last.strftime(DATE_FORMAT)}"
   end
 
   def each
@@ -28,6 +30,6 @@ class Tweets::Week
   end
 
   def days
-    tweets.order(:tweet_created_at).map(&:tweet_created_at).uniq
+    tweets.order(:tweet_created_at).pluck(:tweet_created_at).uniq
   end
 end
