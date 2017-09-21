@@ -45,19 +45,83 @@ describe TweetsByWeekCollection do
       organization: organization
     )
 
-    tweets = TweetsForMonth.call(organization: organization, date: '21/08/2017')
-    tweets_by_week = TweetsByWeekCollection.new(tweets)
-
-    expect(Tweets::Report.new(tweets_by_week).generate_report).to eq(
+    expect(Tweets::Report.new(organization, '08.2017').generate_report).to eq(
+      "Week: 31.07.2017 - 06.08.2017\n" \
+      " Day: 31.07.2017\n" \
+      "   2 - sent to facebook? true for 31.07.2017\n" \
+      " Day: 01.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 02.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 03.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 04.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 05.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 06.08.2017\n" \
+      "   No tweets found for that day\n" \
+      "Week: 07.08.2017 - 13.08.2017\n" \
+      " Day: 07.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 08.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 09.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 10.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 11.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 12.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 13.08.2017\n" \
+      "   No tweets found for that day\n" \
+      "Week: 14.08.2017 - 20.08.2017\n" \
+      " Day: 14.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 15.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 16.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 17.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 18.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 19.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 20.08.2017\n" \
+      "   No tweets found for that day\n" \
       "Week: 21.08.2017 - 27.08.2017\n" \
+      " Day: 21.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 22.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 23.08.2017\n" \
+      "   No tweets found for that day\n" \
       " Day: 24.08.2017\n" \
       "   3 - sent to facebook? true for 24.08.2017\n" \
       " Day: 25.08.2017\n" \
       "   4 - sent to facebook? false for 25.08.2017\n" \
       "   5 - sent to facebook? true for 25.08.2017\n" \
+      " Day: 26.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 27.08.2017\n" \
+      "   No tweets found for that day\n" \
       "Week: 28.08.2017 - 03.09.2017\n" \
+      " Day: 28.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 29.08.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 30.08.2017\n" \
+      "   No tweets found for that day\n" \
       " Day: 31.08.2017\n" \
-      "   1 - sent to facebook? true for 31.08.2017\n"
+      "   1 - sent to facebook? true for 31.08.2017\n" \
+      " Day: 01.09.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 02.09.2017\n" \
+      "   No tweets found for that day\n" \
+      " Day: 03.09.2017\n" \
+      "   No tweets found for that day\n" \
     )
   end
 end

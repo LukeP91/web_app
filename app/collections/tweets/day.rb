@@ -13,14 +13,6 @@ class Tweets::Day
     @date.strftime(DATE_FORMAT).to_s
   end
 
-  def each
-    tweets.each do |tweet|
-      yield tweet
-    end
-  end
-
-  private
-
   def tweets
     @tweets.map do |tweet|
       Tweet.new(
