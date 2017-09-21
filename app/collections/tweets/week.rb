@@ -23,13 +23,11 @@ class Tweets::Week
   attr_reader :date_range, :tweets
 
   def days_with_tweets
-    @days_with_tweets ||= days.map do |day|
-      scoped_tweets = tweets.where(tweet_created_at: day)
-      Tweets::Day.new(day, scoped_tweets)
-    end
-  end
-
-  def days
-    tweets.order(:tweet_created_at).pluck(:tweet_created_at).uniq
+    @days_with_tweets ||= date_range.map do |day|
+      scoped_tweets = tweets.where(tweet_created_at: day.beginning_of_day..day.end_of_day)
+      if !scoped_tweets.empty?
+        Tweets::Day.new(day, scoped_tweets)
+      end
+    end.compact
   end
 end
