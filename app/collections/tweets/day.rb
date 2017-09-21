@@ -1,5 +1,6 @@
 class Tweets::Day
   include Enumerable
+  DATE_FORMAT = '%d.%m.%Y'.freeze
 
   Tweet = Struct.new(:id, :date, :status)
 
@@ -9,7 +10,7 @@ class Tweets::Day
   end
 
   def title
-    @date.strftime('%d.%m.%Y').to_s
+    @date.strftime(DATE_FORMAT).to_s
   end
 
   def each
@@ -24,7 +25,7 @@ class Tweets::Day
     @tweets.map do |tweet|
       Tweet.new(
         tweet.tweet_id,
-        tweet.tweet_created_at.strftime('%d.%m.%Y'),
+        tweet.tweet_created_at.strftime(DATE_FORMAT),
         tweet.sent_to_fb
       )
     end
