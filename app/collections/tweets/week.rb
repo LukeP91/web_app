@@ -14,7 +14,7 @@ class Tweets::Week
 
   def each
     days_with_tweets.each do |day|
-      yield day.title, day
+      yield day.title, day.tweets
     end
   end
 
@@ -25,9 +25,7 @@ class Tweets::Week
   def days_with_tweets
     @days_with_tweets ||= date_range.map do |day|
       scoped_tweets = tweets.where(tweet_created_at: day.beginning_of_day..day.end_of_day)
-      if !scoped_tweets.empty?
-        Tweets::Day.new(day, scoped_tweets)
-      end
-    end.compact
+      Tweets::Day.new(day, scoped_tweets)
+    end
   end
 end
