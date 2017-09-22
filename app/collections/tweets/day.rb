@@ -30,7 +30,7 @@ class Tweets::Day
     if tweets.present?
       tweets.map do |tweet|
         "   #{tweet.id} - sent to facebook? #{tweet.status} for #{tweet.date}\n"
-      end.join('')
+      end.join
     else
       "   No tweets found for that day\n"
     end

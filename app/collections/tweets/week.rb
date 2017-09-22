@@ -23,9 +23,7 @@ class Tweets::Week
   end
 
   def formatted_days
-    days_with_tweets.map do |day|
-      day.formatted
-    end.join('')
+    days_with_tweets.map(&:formatted).join
   end
 
   private

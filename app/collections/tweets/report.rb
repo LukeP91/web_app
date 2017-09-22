@@ -8,9 +8,7 @@ class Tweets::Report
   end
 
   def generate_report
-    tweets_by_week.map do |week|
-      week.formatted
-    end.join('')
+    tweets_by_week.map(&:formatted).join
   end
 
   private
@@ -32,8 +30,8 @@ class Tweets::Report
 
   def days_by_weeks
     date_range.group_by { |day| day.strftime(WEEK_FORMAT) }.keys.map do |week|
-      week = DateTime.strptime(week, WEEK_FORMAT)
-      week..week.end_of_week.end_of_day
+      week_first_day = DateTime.strptime(week, WEEK_FORMAT)
+      week_first_day..week_first_day.end_of_week.end_of_day
     end
   end
 end
