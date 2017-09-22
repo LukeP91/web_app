@@ -1,6 +1,5 @@
 class Category < ApplicationRecord
-  has_many :interests, through: :users_interests
-  has_many :users_interests
+  has_many :interests
   belongs_to :organization
 
   validates :name, presence: true
