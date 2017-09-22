@@ -4,6 +4,8 @@
     =t 'admin.interest_statistic'
     = Interest.female_interests_count(current_organization)
 
+#users_by_age{ "data-age-stats" => users_by_age.to_json }
+
 = render partial: 'search_postgres', locals: { users: users }
 
 = link_to ' Welcome email',
