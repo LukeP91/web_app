@@ -11,8 +11,9 @@ class Admin::UsersController < ApplicationController
 
   def index
     users = search_users.page params[:page]
+    users_by_age = UsersByAge.result_for(organization: current_organization)
     authorize users
-    render :index, locals: { users: users }
+    render :index, locals: { users: users, users_by_age: users_by_age }
   end
 
   def new
