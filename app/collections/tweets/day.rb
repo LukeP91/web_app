@@ -1,5 +1,4 @@
 class Tweets::Day
-  include Enumerable
   DATE_FORMAT = '%d.%m.%Y'.freeze
 
   Tweet = Struct.new(:id, :date, :status)
@@ -10,7 +9,7 @@ class Tweets::Day
   end
 
   def title
-    @date.strftime(DATE_FORMAT).to_s
+    @date.strftime(DATE_FORMAT)
   end
 
   def tweets
@@ -20,6 +19,20 @@ class Tweets::Day
         tweet.tweet_created_at.strftime(DATE_FORMAT),
         tweet.sent_to_fb
       )
+    end
+  end
+
+  def formatted
+    " Day: #{title}\n#{formatted_tweets}"
+  end
+
+  def formatted_tweets
+    if tweets.present?
+      tweets.map do |tweet|
+        "   #{tweet.id} - sent to facebook? #{tweet.status} for #{tweet.date}\n"
+      end.join('')
+    else
+      "   No tweets found for that day\n"
     end
   end
 end

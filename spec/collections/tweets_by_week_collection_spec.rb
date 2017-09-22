@@ -44,6 +44,14 @@ describe TweetsByWeekCollection do
       sources: [source],
       organization: organization
     )
+    create(
+      :tweet,
+      tweet_id: '6',
+      tweet_created_at: DateTime.new(2017, 9, 3, 23, 59, 59),
+      sent_to_fb: true,
+      sources: [source],
+      organization: organization
+    )
 
     expect(Tweets::Report.new(organization, '08.2017').generate_report).to eq(
       "Week: 31.07.2017 - 06.08.2017\n" \
@@ -121,7 +129,7 @@ describe TweetsByWeekCollection do
       " Day: 02.09.2017\n" \
       "   No tweets found for that day\n" \
       " Day: 03.09.2017\n" \
-      "   No tweets found for that day\n" \
+      "   6 - sent to facebook? true for 03.09.2017\n"
     )
   end
 end

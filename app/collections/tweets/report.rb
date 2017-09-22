@@ -1,5 +1,6 @@
 class Tweets::Report
   MONTH_FORMAT = '%m.%Y'.freeze
+  WEEK_FORMAT = '%W'.freeze
 
   def initialize(organization, month)
     @organization = organization
@@ -7,41 +8,32 @@ class Tweets::Report
   end
 
   def generate_report
-    report = ''
-    tweets_by_week.each do |week_title, days|
-      report << "Week: #{week_title}\n"
-      days.each do |day_title, tweets|
-        report << " Day: #{day_title}\n"
-        if !tweets.empty?
-          tweets.each do |tweet|
-            report << "   #{tweet.id} - sent to facebook? #{tweet.status} for #{tweet.date}\n"
-          end
-        else
-          report << "   No tweets found for that day\n"
-        end
-      end
-    end
-    report
+    tweets_by_week.map do |week|
+      week.formatted
+    end.join('')
   end
 
   private
 
   def tweets_by_week
     tweets = Tweet.where(tweet_created_at: date_range)
-    TweetsByWeekCollection.new(tweets, weeks: weeks)
+    TweetsByWeekCollection.new(tweets, weeks: days_by_weeks)
   end
 
   def date_range
-    month.beginning_of_month.beginning_of_week..month.end_of_month.end_of_week.end_of_day
+    first_day = month.beginning_of_month.beginning_of_week
+    last_day = month.end_of_month.end_of_week.end_of_day
+    first_day..last_day
   end
 
   def month
     DateTime.strptime(@month, MONTH_FORMAT)
   end
 
-  def weeks
-    date_range.group_by { |day| day.strftime('%W') }.keys.map do |week|
-      DateTime.strptime(week, "%W")..DateTime.strptime(week, "%W").end_of_week.end_of_day
+  def days_by_weeks
+    date_range.group_by { |day| day.strftime(WEEK_FORMAT) }.keys.map do |week|
+      week = DateTime.strptime(week, WEEK_FORMAT)
+      week..week.end_of_week.end_of_day
     end
   end
 end

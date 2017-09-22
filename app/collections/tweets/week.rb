@@ -14,8 +14,18 @@ class Tweets::Week
 
   def each
     days_with_tweets.each do |day|
-      yield day.title, day.tweets
+      yield day
     end
+  end
+
+  def formatted
+    "Week: #{title}\n#{formatted_days}"
+  end
+
+  def formatted_days
+    days_with_tweets.map do |day|
+      day.formatted
+    end.join('')
   end
 
   private
