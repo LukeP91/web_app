@@ -8,8 +8,7 @@ class TweetsByWeekCollection < Patterns::Collection
   def group_by_weeks
     weeks.map do |week|
       tweets = subject.where(tweet_created_at: week)
-      week = Tweets::Week.new(week, tweets)
-      [week.title, week]
+      Tweets::Week.new(week, tweets)
     end
   end
 
