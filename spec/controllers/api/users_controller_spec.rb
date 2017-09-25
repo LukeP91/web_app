@@ -484,7 +484,8 @@ describe Api::UsersController do
               attributes: {
                 first_name: 'Joe',
                 last_name: 'Doe',
-                email: 'joe.doe@example.com'
+                email: 'joe.doe@example.com',
+                age: 25
               }
             }
           }

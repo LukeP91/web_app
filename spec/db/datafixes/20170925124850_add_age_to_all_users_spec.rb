@@ -5,7 +5,8 @@ describe Datafixes::AddAgeToAllUsers do
   describe '.up' do
     context 'when user has no age' do
       it 'assign random value between 1 and 50 as his age' do
-        user = create(:user, age: nil)
+        user = build(:user, age: nil)
+        user.save(validate: false)
 
         Datafixes::AddAgeToAllUsers.up
 

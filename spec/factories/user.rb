@@ -3,6 +3,7 @@ FactoryGirl.define do
     sequence(:first_name) { |n| "Andrew#{n}" }
     sequence(:last_name)  { |n| "Kowalski#{n}" }
     sequence(:email) { |n| "#{first_name}.#{last_name}_#{n}@example.com".downcase }
+    age { Random.new.rand(1..50) }
     admin false
     password 'password'
     password_confirmation 'password'
