@@ -19,15 +19,19 @@ describe Admin::UsersController do
       end
 
       it 'allows to search users' do
-        admin = create(:admin, first_name: 'Luke')
-        user = create(:user, first_name: 'Pablo', organization: admin.organization)
+        admin = create(:admin, first_name: 'Luke', age: 20)
+        user = create(:user, first_name: 'Pablo', age: 20, organization: admin.organization)
         sign_in admin
 
         allow(controller).to receive(:render)
         get :index, params: { search: { text: admin.first_name } }
 
         expect(controller).to have_received(:render)
-          .with(:index, locals: { users: include(have_attributes(first_name: 'Luke')), users_by_age: [] })
+          .with(:index, locals: {
+            users: include(have_attributes(first_name: 'Luke')),
+            users_by_age: [{ range: "Adult: <18-65)", count: 2}]
+          }
+        )
         expect(controller).to_not have_received(:render)
           .with(:index, locals: { users: include(have_attributes(first_name: 'Pablo')) })
       end
@@ -98,7 +102,7 @@ describe Admin::UsersController do
       context 'when user is saved' do
         it 'broadcasts message about new user via users channel' do
           allow(ActionCable.server).to receive(:broadcast)
-          admin = create(:admin)
+          admin = create(:admin, age: 25)
           sign_in admin
 
           post :create, params: {
@@ -114,7 +118,7 @@ describe Admin::UsersController do
           }
 
           expect(ActionCable.server).to have_received(:broadcast).with(
-            'users', users_by_age: [{ range: 'Adult: <18-65)', count: 1 }]
+            'users', users_by_age: [{ range: 'Adult: <18-65)', count: 2 }]
           )
         end
 

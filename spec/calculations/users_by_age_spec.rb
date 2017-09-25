@@ -10,7 +10,6 @@ describe UsersByAge do
       create(:user, age: 15, organization: organization)
       create(:user, age: 51, organization: organization)
       create(:user, age: 55, organization: organization)
-      create(:user, age: nil, organization: organization)
       create(:user, age: 25)
 
       expect(UsersByAge.result_for(organization: organization)).to eq(

@@ -80,4 +80,6 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.render_views
+
+  config.example_status_persistence_file_path = 'specs.txt'
 end

@@ -10,9 +10,7 @@ class User < ApplicationRecord
   has_many :interests, through: :users_interests
   has_many :users_interests
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :email, presence: true
+  validates :first_name, :last_name, :email, :age, presence: true
   validate :validate_phone_number
 
   scope :in_organization, ->(organization) { where(organization: organization) }
