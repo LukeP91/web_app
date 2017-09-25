@@ -95,6 +95,30 @@ describe Admin::UsersController do
 
         expect(response).to render_template :new
       end
+
+      context 'when user is saved' do
+        it 'broadcast it using proper channel' do
+          allow(ActionCable.server).to receive(:broadcast)
+          admin = create(:admin)
+          sign_in admin
+
+          post :create, params: {
+            user: {
+              email: 'example@example.com',
+              first_name: 'Example',
+              last_name: 'Example',
+              age: 25,
+              password: 'pass',
+              password_confirmation: 'pass',
+              admin: 'false'
+            }
+          }
+
+          expect(ActionCable.server).to have_received(:broadcast).with(
+            'users', users_by_age: [{ range: 'Adult: <18-65)', count: 1 }]
+          )
+        end
+      end
     end
 
     context 'admin is not signed in' do

@@ -210,14 +210,12 @@ describe TwitterWorker do
       TwitterWorker.new.perform(source.id)
 
       expect(ActionCable.server).to have_received(:broadcast).with(
-        "tweets",
-        {
-          user_name: "luke_pawlik",
-          message: "New blog post is up #rails #ruby",
-          tweet_id: "2",
-          tweet_created_at: "07:00:04 31-08-2017",
-          hash_tags_ids: HashTag.pluck(:id)
-        }
+        'tweets',
+        user_name: 'luke_pawlik',
+        message: 'New blog post is up #rails #ruby',
+        tweet_id: '2',
+        tweet_created_at: '07:00:04 31-08-2017',
+        hash_tags_ids: HashTag.pluck(:id)
       )
     end
   end
