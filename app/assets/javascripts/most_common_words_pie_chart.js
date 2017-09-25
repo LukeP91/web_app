@@ -1,9 +1,9 @@
 $(document).ready(() => {
-  if ($('#most_common_words').length) {
-    const $container = $('<div>').appendTo($('#most_common_words'));
-    const totalWords = $('#most_common_words').data('wordsStats').map((wordStats) => wordStats.count)
+  if ($('.most_common_words').length) {
+    const $container = $('<div>').appendTo($('.most_common_words'));
+    const totalWords = $('.most_common_words').data('wordsStats').map((wordStats) => wordStats.count)
       .reduce((totalCount, current) => totalCount + current);
-    const wordsStats = $('#most_common_words').data('wordsStats')
+    const wordsStats = $('.most_common_words').data('wordsStats')
       .map((wordStats) => ({ name: wordStats.word, y: +(wordStats.count * 100 / totalWords).toFixed(2) }));
 
     window.chart = new Highcharts.Chart({
