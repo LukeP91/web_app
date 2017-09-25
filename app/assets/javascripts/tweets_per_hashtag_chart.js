@@ -1,8 +1,8 @@
 $(document).ready(() => {
-  if ($('#tweets_per_hashtag').length) {
-    const $container = $('<div>').appendTo($('#tweets_per_hashtag'));
-    const hashtags = $('#tweets_per_hashtag').data('tweetsStats').map((tweetStats) => tweetStats.name);
-    const tweetsCount = $('#tweets_per_hashtag').data('tweetsStats').map((tweetStats) => tweetStats.count);
+  if ($('.tweets_per_hashtag').length) {
+    const $container = $('<div>').appendTo($('.tweets_per_hashtag'));
+    const hashtags = $('.tweets_per_hashtag').data('tweetsStats').map((tweetStats) => tweetStats.name);
+    const tweetsCount = $('.tweets_per_hashtag').data('tweetsStats').map((tweetStats) => tweetStats.count);
 
     window.chart = new Highcharts.Chart({
       chart: {
