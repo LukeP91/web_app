@@ -11,8 +11,9 @@ class Admin::CategoriesController < ApplicationController
 
   def index
     categories = Category.in_organization(current_organization)
+    users_count_per_category = UsersCountPerCategory.result_for(organization: current_organization)
     authorize categories
-    render :index, locals: { categories: categories }
+    render :index, locals: { categories: categories, users_count_per_category: users_count_per_category }
   end
 
   def new
