@@ -33,6 +33,7 @@ class Admin::UsersController < ApplicationController
       user.send_reset_password_instructions
       ActionCable.server.broadcast 'users',
         users_by_age: UsersByAge.result_for(organization: current_organization)
+      Broadcast::UpdateCategoriesStats.call(organization: current_organization)
       redirect_to admin_user_path(user)
     else
       render :new, locals: { user: user }
@@ -51,6 +52,7 @@ class Admin::UsersController < ApplicationController
     user = User.in_organization(current_organization).find(params[:id])
     authorize user
     if user.update(user_params)
+      Broadcast::UpdateCategoriesStats.call(organization: current_organization)
       flash[:notice] = t('admin.notices.user_updated')
       redirect_to admin_user_path(user)
     else
