@@ -14,8 +14,6 @@ describe ExportUsersAsCSV do
       interests: [reading, horse_riding]
     )
 
-    test = ExportUsersAsCSV.new([user]).call
-
-    expect(test).to eq "Joe,Doe,joe.doe@example.com,male,34,Reading,Horse Riding\n"
+    expect(ExportUsersAsCSV.call([user]).result).to eq "Joe,Doe,joe.doe@example.com,male,34,Reading,Horse Riding\n"
   end
 end
