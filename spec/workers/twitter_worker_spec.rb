@@ -215,7 +215,7 @@ describe TwitterWorker do
         message: 'New blog post is up #rails #ruby',
         tweet_id: '2',
         tweet_created_at: '07:00:04 31-08-2017',
-        hash_tags_ids: HashTag.pluck(:id)
+        hash_tags_ids: match_array(HashTag.where(name: %w[rails ruby]).pluck(:id))
       )
     end
   end
