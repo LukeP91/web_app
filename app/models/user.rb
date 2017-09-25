@@ -57,7 +57,7 @@ class User < ApplicationRecord
   def validate_phone_number
     if mobile_phone.present?
       unless TwilioWrapper.new.valid_phone_number?(mobile_phone)
-        errors.add(:mobile_phone, "Given mobile phone is invalid")
+        errors.add(:mobile_phone, 'Given mobile phone is invalid')
       end
     end
   end
