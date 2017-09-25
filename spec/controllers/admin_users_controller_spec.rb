@@ -28,7 +28,7 @@ describe Admin::UsersController do
         get :index, params: { search: { text: admin.first_name } }
 
         expect(controller).to have_received(:render)
-          .with(:index, locals: { users: include(have_attributes(first_name: 'Luke')) })
+          .with(:index, locals: { users: include(have_attributes(first_name: 'Luke')), users_by_age: [] })
         expect(controller).to_not have_received(:render)
           .with(:index, locals: { users: include(have_attributes(first_name: 'Pablo')) })
       end
