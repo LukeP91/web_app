@@ -4,6 +4,8 @@ class UserNotifications::SmsSender < Pattern::ServicePattern
     @message = message
   end
 
+  private
+
   def call
     TwilioWrapper.new.send_sms(to: @mobile_phone, message: @message)
   end

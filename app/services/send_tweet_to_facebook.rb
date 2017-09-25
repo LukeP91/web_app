@@ -5,6 +5,8 @@ class SendTweetToFacebook < Pattern::ServicePattern
     @organization = organization
   end
 
+  private
+
   def call
     tweet = Tweet.in_organization(organization).find(tweet_id)
     raise Pundit::NotAuthorizedError if !Pundit.policy(user, tweet).send_to_facebook?
@@ -12,8 +14,6 @@ class SendTweetToFacebook < Pattern::ServicePattern
       tweet.update_attributes(sent_to_fb: true)
     end
   end
-
-  private
 
   attr_reader :organization, :tweet_id, :user
 end

@@ -75,7 +75,7 @@ class Admin::UsersController < ApplicationController
     users = User.in_organization(current_organization)
     respond_to do |format|
       format.csv do
-        send_data ExportUsersAsCSV.new(users).call,
+        send_data ExportUsersAsCSV.call(users),
                   filename: "users_export-#{Date.today}.csv"
       end
     end
@@ -84,7 +84,7 @@ class Admin::UsersController < ApplicationController
   def send_email
     user = User.in_organization(current_organization).find(params[:id])
     authorize user
-    SendEmail.new(current_user, user).call
+    SendEmail.call(current_user, user)
     respond_to do |format|
       format.js
     end
@@ -94,7 +94,7 @@ class Admin::UsersController < ApplicationController
 
   def welcome_email
     authorize current_user
-    SendWelcomeEmail.new(current_user).call
+    SendWelcomeEmail.call(current_user)
     respond_to do |format|
       format.js
     end
