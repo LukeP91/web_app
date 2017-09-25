@@ -1,6 +1,9 @@
 - model_class = Category
 .page-header
   %h1=t '.title', default: model_class.model_name.human.pluralize.titleize
+
+.users-by-category{ "data-category-stats" => users_count_per_category.to_json }
+
 %table.table.table-striped
   %thead
     %tr
