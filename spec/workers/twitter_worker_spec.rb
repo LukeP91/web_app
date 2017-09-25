@@ -188,4 +188,37 @@ describe TwitterWorker do
       expect(Tweet.first.sent_to_fb).to eq false
     end
   end
+
+  context 'when tweet is successfully saved to db' do
+    it 'broadcast infromation via proper action cabel channel' do
+      source = create(:source, name: '#Rails')
+      twitter_wrapper = double('TwitterWrapper')
+      allow(twitter_wrapper).to receive(:fetch).and_return(
+        [
+          {
+            user_name: 'luke_pawlik',
+            message: 'New blog post is up #rails #ruby',
+            hashtags: %w[rails ruby],
+            tweet_id: '2',
+            tweet_created_at: 'Thu Aug 31 07:00:04 +0000 2017'
+          }
+        ]
+      )
+      allow(TwitterWrapper).to receive(:new).and_return(twitter_wrapper)
+      allow(ActionCable.server).to receive(:broadcast)
+
+      TwitterWorker.new.perform(source.id)
+
+      expect(ActionCable.server).to have_received(:broadcast).with(
+        "tweets",
+        {
+          user_name: "luke_pawlik",
+          message: "New blog post is up #rails #ruby",
+          tweet_id: "2",
+          tweet_created_at: "07:00:04 31-08-2017",
+          hash_tags_ids: HashTag.pluck(:id)
+        }
+      )
+    end
+  end
 end
