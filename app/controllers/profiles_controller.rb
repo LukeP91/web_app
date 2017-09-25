@@ -7,6 +7,7 @@ class ProfilesController < ApplicationController
 
   def update
     if current_user.update(user_params)
+      Broadcast::UpdateCategoriesStats.call(organization: current_organization)
       redirect_to root_path
     else
       render 'edit'

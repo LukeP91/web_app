@@ -4,7 +4,6 @@ describe Admin::UsersController do
   include Devise::Test::ControllerHelpers
   include ActiveJob::TestHelper
 
-  render_views
   before { request.env['devise.mapping'] = Devise.mappings[:admin] }
 
   describe '#index' do
@@ -97,7 +96,7 @@ describe Admin::UsersController do
       end
 
       context 'when user is saved' do
-        it 'broadcast it using proper channel' do
+        it 'broadcasts message about new user via users channel' do
           allow(ActionCable.server).to receive(:broadcast)
           admin = create(:admin)
           sign_in admin
@@ -117,6 +116,26 @@ describe Admin::UsersController do
           expect(ActionCable.server).to have_received(:broadcast).with(
             'users', users_by_age: [{ range: 'Adult: <18-65)', count: 1 }]
           )
+        end
+
+        it 'calls service object to broadcast categories stats update' do
+          allow(Broadcast::UpdateCategoriesStats).to receive(:call)
+          admin = create(:admin)
+          sign_in admin
+
+          post :create, params: {
+            user: {
+              email: 'example@example.com',
+              first_name: 'Example',
+              last_name: 'Example',
+              age: 25,
+              password: 'pass',
+              password_confirmation: 'pass',
+              admin: 'false'
+            }
+          }
+
+          expect(Broadcast::UpdateCategoriesStats).to have_received(:call).with(organization: admin.organization)
         end
       end
     end
@@ -155,6 +174,29 @@ describe Admin::UsersController do
         get :edit, params: { id: user.id }
 
         expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe '#update' do
+    context 'when user is updated' do
+      it 'calls service object to broadcast categories stats update' do
+        allow(Broadcast::UpdateCategoriesStats).to receive(:call)
+        admin = create(:admin)
+        user = create(:user, organization: admin.organization)
+        sign_in admin
+
+        post :update, params: {
+          id: user.id,
+          user: {
+            email: 'example@example.com',
+            first_name: 'Example',
+            last_name: 'Example',
+            age: 25
+          }
+        }
+
+        expect(Broadcast::UpdateCategoriesStats).to have_received(:call).with(organization: admin.organization)
       end
     end
   end
