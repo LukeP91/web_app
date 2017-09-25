@@ -5,7 +5,7 @@ describe TwilioWrapper do
     context 'when phone number is valid' do
       it 'returns true' do
         client = double('TwilioClient')
-        allow(client).to receive_message_chain('lookups.v1.phone_numbers.fetch').and_return('data')
+        allow(client).to receive_message_chain('lookups.v1.phone_numbers.fetch.carrier').and_return('data')
         allow(Twilio::REST::Client).to receive(:new).and_return(client)
         expect(TwilioWrapper.new.valid_phone_number?('+48508692030')).to eq true
       end

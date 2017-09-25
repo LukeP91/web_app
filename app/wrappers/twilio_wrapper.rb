@@ -4,7 +4,7 @@ class TwilioWrapper
   end
 
   def valid_phone_number?(phone_number)
-    @twilio_client.lookups.v1.phone_numbers(phone_number).fetch('carriers')
+    @twilio_client.lookups.v1.phone_numbers(phone_number).fetch.carrier
     true
   rescue Twilio::REST::RestError
     false
