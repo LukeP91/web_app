@@ -9,6 +9,7 @@ class User < ApplicationRecord
   belongs_to :organization
   has_many :interests, through: :users_interests
   has_many :users_interests
+  has_many :categories, through: :interests
 
   validates :first_name, :last_name, :email, :age, presence: true
   validate :validate_phone_number
