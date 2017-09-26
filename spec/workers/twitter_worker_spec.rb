@@ -190,7 +190,7 @@ describe TwitterWorker do
   end
 
   context 'when tweet is successfully saved to db' do
-    it 'broadcast infromation via proper action cabel channel' do
+    it 'broadcasts infromation via tweets channel' do
       source = create(:source, name: '#Rails')
       twitter_wrapper = double('TwitterWrapper')
       allow(twitter_wrapper).to receive(:fetch).and_return(

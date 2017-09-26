@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe UsersByAge do
   describe '.result_for' do
-    it 'returns sorted array of age ranges with users count withing organization' do
+    it 'returns sorted age ranges with users count for organization' do
       organization = create(:organization)
       create(:user, age: 77, organization: organization)
       create(:user, age: 6, organization: organization)
