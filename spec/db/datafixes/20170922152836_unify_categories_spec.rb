@@ -1,8 +1,8 @@
-require "rails_helper"
-require Rails.root.join("db", "datafixes", "20170922152836_unify_categories")
+require 'rails_helper'
+require Rails.root.join('db', 'datafixes', '20170922152836_unify_categories')
 
 describe Datafixes::UnifyCategories do
-  describe ".up" do
+  describe '.up' do
     it 'removes duplicated categories and assign interests to one of them' do
       organization = create(:organization)
       create(:category, name: 'health', organization: organization)
@@ -22,6 +22,8 @@ describe Datafixes::UnifyCategories do
       duplicated_category = create(:category, name: 'work')
       create(:interest, category: category, organization: category.organization)
       create(:interest, category: duplicated_category, organization: duplicated_category.organization)
+
+      Datafixes::UnifyCategories.up
 
       expect(Category.count).to eq 2
       expect(Category.first.interests.count).to eq 1

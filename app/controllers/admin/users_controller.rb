@@ -31,8 +31,7 @@ class Admin::UsersController < ApplicationController
     if user.save
       flash[:notice] = t('admin.notices.user_created')
       user.send_reset_password_instructions
-      ActionCable.server.broadcast 'users',
-        users_by_age: UsersByAge.result_for(organization: current_organization)
+      broadcast_user
       Broadcast::UpdateCategoriesStats.call(organization: current_organization)
       redirect_to admin_user_path(user)
     else
@@ -131,6 +130,13 @@ private
   def search_users
     users = User.in_organization(current_organization).order(:email)
     search_params.present? ? users.search_by(search_params) : users
+  end
+
+  def broadcast_user
+    ActionCable.server.broadcast(
+      'users',
+      users_by_age: UsersByAge.result_for(organization: current_organization)
+    )
   end
 
   helper_method def gender_list

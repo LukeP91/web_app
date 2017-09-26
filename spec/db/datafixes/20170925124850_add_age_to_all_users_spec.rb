@@ -21,7 +21,7 @@ describe Datafixes::AddAgeToAllUsers do
 
         expect do
           Datafixes::AddAgeToAllUsers.up
-        end.not_to change { user.age }
+        end.not_to change { user.reload.age }
       end
     end
   end

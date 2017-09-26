@@ -1,8 +1,9 @@
 $(document).ready(() => {
-  if ($('.users-by-age').length) {
-    const $container = $('<div>').appendTo($('.users-by-age'));
-    const ageRanges = $('.users-by-age').data('ageStats').map((ageStats) => ageStats.range);
-    const usersCount = $('.users-by-age').data('ageStats').map((ageStats) => ageStats.count);
+  const usersByAge = $('.users-by-age');
+  if (usersByAge.length) {
+    const $container = $('<div>').appendTo(usersByAge);
+    const ageRanges = usersByAge.data('ageStats').map((ageStats) => ageStats.range);
+    const usersCount = usersByAge.data('ageStats').map((ageStats) => ageStats.count);
 
     window.chart = new Highcharts.Chart({
       chart: {

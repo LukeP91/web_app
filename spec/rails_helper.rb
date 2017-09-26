@@ -81,5 +81,5 @@ RSpec.configure do |config|
 
   config.render_views
 
-  config.example_status_persistence_file_path = 'specs.txt'
+  config.example_status_persistence_file_path = 'tmp/specs.txt'
 end
