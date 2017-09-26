@@ -15,6 +15,6 @@ class UsersCountPerCategory < Patterns::Calculation
   end
 
   def users_count(category)
-    category.interests.map { |i| i.users.count }.inject(0, :+)
+    category.users.count
   end
 end
