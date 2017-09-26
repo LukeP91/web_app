@@ -66,14 +66,14 @@ describe MostCommonWords do
         tweets = HashTag.find(ruby.id).tweets
 
         expect(MostCommonWords.result_for(tweets: tweets, organization: organization, limit: 10)).to eq(
-        [
-          { word: 'ruby', count: 2 },
-          { word: 'tweet', count: 2 },
-          { word: 'first', count: 1 },
-          { word: 'oreilly', count: 1 },
-          { word: 'rails', count: 1 }
-        ]
-      )
+          [
+            { word: 'ruby', count: 2 },
+            { word: 'tweet', count: 2 },
+            { word: 'first', count: 1 },
+            { word: 'oreilly', count: 1 },
+            { word: 'rails', count: 1 }
+          ]
+        )
       end
     end
   end
