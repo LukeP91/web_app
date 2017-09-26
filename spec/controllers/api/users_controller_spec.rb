@@ -201,7 +201,7 @@ describe Api::UsersController do
 
       context 'when non existing user is send in jwt' do
         it 'returns not found' do
-          token  = JsonWebToken.encode(id: 1)
+          token = JsonWebToken.encode(id: 1)
 
           request.headers['Authorization'] = "Bearer: #{token}"
           get :index
@@ -212,7 +212,7 @@ describe Api::UsersController do
 
       context 'when incorrect jwt is send' do
         it 'returns unauthorized' do
-          request.headers['Authorization'] = "Bearer: incorrect_token"
+          request.headers['Authorization'] = 'Bearer: incorrect_token'
           get :index
 
           expect(response).to have_http_status(:unauthorized)
@@ -222,7 +222,7 @@ describe Api::UsersController do
 
     context 'when incorrect Authorization header is send' do
       it 'returns invalid request' do
-        request.headers['Authorization'] = "invalid header"
+        request.headers['Authorization'] = 'invalid header'
         get :index
 
         expect(response).to have_http_status(:bad_request)
@@ -296,13 +296,13 @@ describe Api::UsersController do
               },
               relationships: {
                 interests: {
-                  links:{
+                  links: {
                     self: "http://test.host/api/users/#{user.id}/interests",
                     related: "http://test.host/api/users/#{user.id}/interests"
                   },
                   data: [
-                    { type: 'interests', id: book_reading.id, data: { name: 'Book Reading', category: 'hobby'}},
-                    { type: 'interests', id: swimming.id, data: { name: 'Swimming', category: 'hobby'}}
+                    { type: 'interests', id: book_reading.id, data: { name: 'Book Reading', category: 'hobby' } },
+                    { type: 'interests', id: swimming.id, data: { name: 'Swimming', category: 'hobby' } }
                   ]
                 }
               },
@@ -384,7 +384,6 @@ describe Api::UsersController do
         it 'returns unauthorized' do
           user = create(:user)
 
-
           get :show, params: { id: user.id }
 
           expect(response).to have_http_status(:unauthorized)
@@ -394,7 +393,7 @@ describe Api::UsersController do
       context 'when non existing user is send in jwt' do
         it 'returns not found' do
           id = create(:user)
-          token  = JsonWebToken.encode(id: 2)
+          token = JsonWebToken.encode(id: 2)
 
           request.headers['Authorization'] = "Bearer: #{token}"
           get :show, params: { id: 1 }
@@ -405,7 +404,7 @@ describe Api::UsersController do
 
       context 'when incorrect jwt is send' do
         it 'returns unauthorized' do
-          request.headers['Authorization'] = "Bearer: incorrect_token"
+          request.headers['Authorization'] = 'Bearer: incorrect_token'
           get :show, params: { id: 1 }
 
           expect(response).to have_http_status(:unauthorized)
@@ -415,7 +414,7 @@ describe Api::UsersController do
 
     context 'when incorrect Authorization header is send' do
       it 'returns invalid request' do
-        request.headers['Authorization'] = "invalid header"
+        request.headers['Authorization'] = 'invalid header'
         get :show, params: { id: 1 }
 
         expect(response).to have_http_status(:bad_request)
@@ -576,7 +575,7 @@ describe Api::UsersController do
 
       context 'when non existing user is send in jwt' do
         it 'returns not found' do
-          token  = JsonWebToken.encode(id: 1)
+          token = JsonWebToken.encode(id: 1)
 
           request.headers['Authorization'] = "Bearer: #{token}"
           post :create, params: {
@@ -596,7 +595,7 @@ describe Api::UsersController do
 
       context 'when incorrect jwt is send' do
         it 'returns unauthorized' do
-          request.headers['Authorization'] = "Bearer: incorrect_token"
+          request.headers['Authorization'] = 'Bearer: incorrect_token'
           post :create, params: {
             data: {
               type: 'users',
@@ -615,17 +614,17 @@ describe Api::UsersController do
 
     context 'when incorrect Authorization header is send' do
       it 'returns invalid request' do
-        request.headers['Authorization'] = "invalid header"
+        request.headers['Authorization'] = 'invalid header'
         post :create, params: {
-            data: {
-              type: 'users',
-              attributes: {
-                first_name: '',
-                last_name: 'Doe',
-                email: 'joe.doe@example.com'
-              }
+          data: {
+            type: 'users',
+            attributes: {
+              first_name: '',
+              last_name: 'Doe',
+              email: 'joe.doe@example.com'
             }
           }
+        }
 
         expect(response).to have_http_status(:bad_request)
       end
@@ -661,7 +660,6 @@ describe Api::UsersController do
             }
           }
         }
-
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include_json(
@@ -893,7 +891,7 @@ describe Api::UsersController do
 
       context 'when non existing user is send in jwt' do
         it 'returns not found' do
-          token  = JsonWebToken.encode(id: 1)
+          token = JsonWebToken.encode(id: 1)
 
           request.headers['Authorization'] = "Bearer: #{token}"
           patch :update, params: {
@@ -917,7 +915,7 @@ describe Api::UsersController do
 
       context 'when incorrect jwt is send' do
         it 'returns unauthorized' do
-          request.headers['Authorization'] = "Bearer: incorrect_token"
+          request.headers['Authorization'] = 'Bearer: incorrect_token'
           patch :update, params: {
             id: 2,
             data: {
@@ -940,21 +938,21 @@ describe Api::UsersController do
 
     context 'when incorrect Authorization header is send' do
       it 'returns invalid request' do
-        request.headers['Authorization'] = "invalid header"
+        request.headers['Authorization'] = 'invalid header'
         patch :update, params: {
-            id: 2,
-            data: {
-              type: 'users',
-              id: 1,
-              attributes: {
-                first_name: 'Alice',
-                last_name: 'Kowalski',
-                email: 'alice.kowalski@example.com',
-                age: 30,
-                gender: 'female'
-              }
+          id: 2,
+          data: {
+            type: 'users',
+            id: 1,
+            attributes: {
+              first_name: 'Alice',
+              last_name: 'Kowalski',
+              email: 'alice.kowalski@example.com',
+              age: 30,
+              gender: 'female'
             }
           }
+        }
 
         expect(response).to have_http_status(:bad_request)
       end
@@ -1021,7 +1019,7 @@ describe Api::UsersController do
     context 'when user is unauthorized' do
       context 'when Authorization header is not send' do
         it 'returns unauthorized' do
-          delete :destroy, params: { id: 1}
+          delete :destroy, params: { id: 1 }
 
           expect(response).to have_http_status(:unauthorized)
         end
@@ -1029,7 +1027,7 @@ describe Api::UsersController do
 
       context 'when non existing user is send in jwt' do
         it 'returns not found' do
-          token  = JsonWebToken.encode(id: 1)
+          token = JsonWebToken.encode(id: 1)
 
           request.headers['Authorization'] = "Bearer: #{token}"
           delete :destroy, params: { id: 1 }
@@ -1040,7 +1038,7 @@ describe Api::UsersController do
 
       context 'when incorrect jwt is send' do
         it 'returns unauthorized' do
-          request.headers['Authorization'] = "Bearer: incorrect_token"
+          request.headers['Authorization'] = 'Bearer: incorrect_token'
           delete :destroy, params: { id: 1 }
 
           expect(response).to have_http_status(:unauthorized)
@@ -1050,7 +1048,7 @@ describe Api::UsersController do
 
     context 'when incorrect Authorization header is send' do
       it 'returns invalid request' do
-        request.headers['Authorization'] = "invalid header"
+        request.headers['Authorization'] = 'invalid header'
         get :destroy, params: { id: 1 }
 
         expect(response).to have_http_status(:bad_request)

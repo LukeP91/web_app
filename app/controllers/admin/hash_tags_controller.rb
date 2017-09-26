@@ -7,7 +7,11 @@ class Admin::HashTagsController < ApplicationController
 
   def show
     hash_tag = HashTag.find(params[:id])
-    most_common_words = MostCommonWords.result_for(tweets: hash_tag.tweets, organization: current_organization, limit: 5)
+    top_most_common_words = MostCommonWords.result_for(
+      tweets: hash_tag.tweets,
+      organization: current_organization,
+      limit: 5
+    )
     tweets = hash_tag.tweets.order(tweet_id: :desc).limit(20)
 
     render :show, locals: { hash_tag: hash_tag, tweets: tweets, most_common_words: most_common_words }

@@ -3,6 +3,6 @@ class WelcomeMailer < ApplicationMailer
 
   def welcome_email(sender, recipient)
     @sender = sender
-    mail(from: @sender.email, to: recipient.email, subject: "Welcome!")
+    mail(from: @sender.email, to: recipient.email, subject: 'Welcome!')
   end
 end

@@ -34,8 +34,8 @@ describe TweetsCountPerHashtag do
 
       expect(TweetsCountPerHashtag.result_for(organization: organization, limit: 2)).to eq(
         [
-          { name: '#rails', count: 3},
-          { name: '#ruby', count: 2}
+          { name: '#rails', count: 3 },
+          { name: '#ruby', count: 2 }
         ]
       )
     end
