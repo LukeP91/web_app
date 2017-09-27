@@ -1,12 +1,12 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
 
+  rescue_from ActiveRecord::RecordNotFound, with: :user_not_found
+
   def show
     user = User.in_organization(current_organization).find(params[:id])
     authorize user
     render :show, locals: { user: user }
-  rescue ActiveRecord::RecordNotFound
-    redirect_to admin_users_path
   end
 
   def index
@@ -43,8 +43,6 @@ class Admin::UsersController < ApplicationController
     user = User.in_organization(current_organization).find(params[:id])
     authorize user
     render :edit, locals: { user: user }
-  rescue ActiveRecord::RecordNotFound
-    redirect_to admin_users_path
   end
 
   def update
@@ -57,8 +55,6 @@ class Admin::UsersController < ApplicationController
     else
       render :edit, locals: { user: user }
     end
-  rescue ActiveRecord::RecordNotFound
-    redirect_to admin_users_path
   end
 
   def destroy
@@ -66,8 +62,6 @@ class Admin::UsersController < ApplicationController
     authorize user
     user.destroy
     flash[:notice] = t('admin.notices.user_deleted')
-    redirect_to admin_users_path
-  rescue ActiveRecord::RecordNotFound
     redirect_to admin_users_path
   end
 
@@ -88,8 +82,6 @@ class Admin::UsersController < ApplicationController
     respond_to do |format|
       format.js
     end
-  rescue ActiveRecord::RecordNotFound
-    redirect_to admin_users_path
   end
 
   def welcome_email
@@ -137,6 +129,8 @@ private
       'users',
       users_by_age: UsersByAge.result_for(organization: current_organization)
     )
+  def user_not_found
+    redirect_to admin_users_path
   end
 
   helper_method def gender_list

@@ -3,7 +3,7 @@ module Profile
     section :menu, Sections::Menu, '.navbar'
     set_url '/'
 
-    element :edit_button, "#edit_button"
+    element :edit_button, '#edit_button'
     element :full_name_field, '.page-header h1'
 
     def field_by_label(label)

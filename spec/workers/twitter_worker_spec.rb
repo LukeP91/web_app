@@ -3,7 +3,14 @@ require 'rails_helper'
 describe TwitterWorker do
   it 'saves tweets to DB' do
     source = create(:source, name: '#Rails')
-    create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source], organization: source.organization)
+    create(
+      :tweet,
+      user_name: 'lp',
+      message: 'message',
+      tweet_id: 1,
+      sources: [source],
+      organization: source.organization
+    )
     twitter_wrapper = double('TwitterWrapper')
     allow(twitter_wrapper).to receive(:fetch).and_return(
       [
@@ -34,7 +41,14 @@ describe TwitterWorker do
 
   it 'saves hashtags to DB' do
     source = create(:source, name: '#Rails')
-    create(:tweet, user_name: 'lp', message: 'message', tweet_id: 1, sources: [source], organization: source.organization)
+    create(
+      :tweet,
+      user_name: 'lp',
+      message: 'message',
+      tweet_id: 1,
+      sources: [source],
+      organization: source.organization
+    )
     twitter_wrapper = double('TwitterWrapper')
     allow(twitter_wrapper).to receive(:fetch).and_return(
       [
@@ -166,7 +180,12 @@ describe TwitterWorker do
 
   context 'when facebook_access_token is expired' do
     it 'sets tweet as not sent' do
-      organization = create(:organization, name: 'test', facebook_access_token: 'test1234', facebook_access_token_expired: true)
+      organization = create(
+        :organization,
+        name: 'test',
+        facebook_access_token: 'test1234',
+        facebook_access_token_expired: true
+      )
       source = create(:source, name: '#Rails', organization: organization)
       twitter_wrapper = double('TwitterWrapper')
       allow(twitter_wrapper).to receive(:fetch).and_return(

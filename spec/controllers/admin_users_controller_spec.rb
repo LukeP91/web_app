@@ -20,7 +20,7 @@ describe Admin::UsersController do
 
       it 'allows to search users' do
         admin = create(:admin, first_name: 'Luke', age: 20)
-        user = create(:user, first_name: 'Pablo', age: 20, organization: admin.organization)
+        create(:user, first_name: 'Pablo', age: 20, organization: admin.organization)
         sign_in admin
 
         allow(controller).to receive(:render)
@@ -94,7 +94,16 @@ describe Admin::UsersController do
         admin = create(:admin)
         sign_in admin
 
-        post :create, params: { user: { email: '', first_name: '', last_name: '', password: '', password_confirmation: '', admin: 'false' } }
+        post :create, params: {
+          user: {
+            email: '',
+            first_name: '',
+            last_name: '',
+            password: '',
+            password_confirmation: '',
+            admin: 'false'
+          }
+        }
 
         expect(response).to render_template :new
       end
@@ -149,7 +158,16 @@ describe Admin::UsersController do
         user = create(:user)
         sign_in user
 
-        post :create, params: { user: { email: '', first_name: '', last_name: '', password: '', password_confirmation: '', admin: 'false' } }
+        post :create, params: {
+          user: {
+            email: '',
+            first_name: '',
+            last_name: '',
+            password: '',
+            password_confirmation: '',
+            admin: 'false'
+          }
+        }
 
         expect(response).to redirect_to(root_path)
       end
@@ -312,7 +330,13 @@ describe Admin::UsersController do
     it 'call service to send welcome sms' do
       allow_any_instance_of(TwilioWrapper).to receive_messages(valid_phone_number?: true)
       admin = create(:admin)
-      user = create(:user, first_name: 'Joe', last_name: 'Doe', mobile_phone: '+01555555555', organization: admin.organization)
+      user = create(
+        :user,
+        first_name: 'Joe',
+        last_name: 'Doe',
+        mobile_phone: '+01555555555',
+        organization: admin.organization
+      )
       allow(UserNotifications::SmsSender).to receive(:call)
       sign_in admin
 

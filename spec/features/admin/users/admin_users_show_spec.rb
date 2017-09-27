@@ -5,7 +5,15 @@ describe 'Admin show' do
     scenario 'can see users profiles from his organization' do
       organization = create(:organization)
       admin = create(:admin, organization: organization)
-      user = create(:user_with_interests, email: 'john.doe@example.com', first_name: 'John', last_name: 'Doe', age: 25, gender: 'male', organization: organization)
+      user = create(
+        :user_with_interests,
+        email: 'john.doe@example.com',
+        first_name: 'John',
+        last_name: 'Doe',
+        age: 25,
+        gender: 'male',
+        organization: organization
+      )
 
       app = App.new
       app.home_page.load
