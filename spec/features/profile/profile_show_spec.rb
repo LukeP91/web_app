@@ -4,7 +4,14 @@ require 'support/pages/app'
 describe 'Show profile' do
   context 'signed in user' do
     scenario 'with complete data can see all his info on profile' do
-      user = create(:user_with_interests, :male, email: 'joe.doe@example.com', first_name: 'Joe', last_name: 'Doe', age: 25)
+      user = create(
+        :user_with_interests,
+        :male,
+        email: 'joe.doe@example.com',
+        first_name: 'Joe',
+        last_name: 'Doe',
+        age: 25
+      )
       app = App.new
       app.home_page.load
       app.login_page.login(user)

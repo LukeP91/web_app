@@ -392,7 +392,7 @@ describe Api::UsersController do
 
       context 'when non existing user is send in jwt' do
         it 'returns not found' do
-          id = create(:user)
+          create(:user)
           token = JsonWebToken.encode(id: 2)
 
           request.headers['Authorization'] = "Bearer: #{token}"
