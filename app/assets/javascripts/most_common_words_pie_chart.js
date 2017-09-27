@@ -1,10 +1,10 @@
 $(document).ready(() => {
-  const mostCommonWords = $('.most-common-words');
-  if (mostCommonWords.length) {
-    const $container = $('<div>').appendTo(mostCommonWords);
-    const totalWords = mostCommonWords.data('wordsStats').map((wordStats) => wordStats.count)
+  const $mostCommonWords = $('.most-common-words');
+  if ($mostCommonWords.length) {
+    const $container = $('<div>').appendTo($mostCommonWords);
+    const totalWords = $mostCommonWords.data('wordsStats').map((wordStats) => wordStats.count)
       .reduce((totalCount, current) => totalCount + current);
-    const wordsStats = mostCommonWords.data('wordsStats')
+    const wordsStats = $mostCommonWords.data('wordsStats')
       .map((wordStats) => ({ name: wordStats.word, y: +(wordStats.count * 100 / totalWords).toFixed(2) }));
 
     window.chart = new Highcharts.Chart({
