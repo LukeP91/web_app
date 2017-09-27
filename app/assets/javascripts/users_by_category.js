@@ -1,9 +1,9 @@
 $(document).ready(() => {
-  const usersByCategory = $('.users-by-category');
-  if (usersByCategory.length) {
-    const $container = $('<div>').appendTo(usersByCategory);
-    const categories = usersByCategory.data('categoryStats').map((categoryStats) => categoryStats.category);
-    const usersCount = usersByCategory.data('categoryStats').map((categoryStats) => categoryStats.count);
+  const $usersByCategory = $('.users-by-category');
+  if ($usersByCategory.length) {
+    const $container = $('<div>').appendTo($usersByCategory);
+    const categories = $usersByCategory.data('categoryStats').map((categoryStats) => categoryStats.category);
+    const usersCount = $usersByCategory.data('categoryStats').map((categoryStats) => categoryStats.count);
 
     window.chart = new Highcharts.Chart({
       chart: {

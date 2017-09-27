@@ -5,16 +5,12 @@ class UsersCountPerCategory < Patterns::Calculation
     Category.where(organization: organization).map do |category|
       {
         category: category.name,
-        count: users_count(category)
+        count: category.users.count
       }
     end
   end
 
   def organization
     options.fetch(:organization)
-  end
-
-  def users_count(category)
-    category.users.count
   end
 end

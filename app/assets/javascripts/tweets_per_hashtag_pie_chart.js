@@ -1,10 +1,10 @@
 $(document).ready(() => {
-  const tweetsPerHashTag = $('.tweets-per-hashtag')
-  if (tweetsPerHashTag.length) {
-    const $container = $('<div>').appendTo(tweetsPerHashTag);
-    const totalHashTags = tweetsPerHashTag.data('tweetsStats').map((tweetStats) => tweetStats.count)
+  const $tweetsPerHashTag = $('.tweets-per-hashtag')
+  if ($tweetsPerHashTag.length) {
+    const $container = $('<div>').appendTo($tweetsPerHashTag);
+    const totalHashTags = $tweetsPerHashTag.data('tweetsStats').map((tweetStats) => tweetStats.count)
       .reduce((totalCount, current) => totalCount + current);
-    const hashTagsStats = tweetsPerHashTag.data('tweetsStats')
+    const hashTagsStats = $tweetsPerHashTag.data('tweetsStats')
       .map((tweetStats) => ({ name: tweetStats.name, y: +(tweetStats.count * 100 / totalHashTags).toFixed(2) }));
 
     window.chart = new Highcharts.Chart({
