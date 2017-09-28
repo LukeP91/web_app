@@ -27,11 +27,12 @@ describe Admin::UsersController do
         get :index, params: { search: { text: admin.first_name } }
 
         expect(controller).to have_received(:render)
-          .with(:index, locals: {
-            users: include(have_attributes(first_name: 'Luke')),
-            users_by_age: [{ range: "Adult: <18-65)", count: 2}]
-          }
-        )
+          .with(:index, locals:
+            {
+              users: include(have_attributes(first_name: 'Luke')),
+              users_by_age: [{ range: "Adult: <18-65)", count: 2 }]
+            }
+          )
         expect(controller).to_not have_received(:render)
           .with(:index, locals: { users: include(have_attributes(first_name: 'Pablo')) })
       end
@@ -47,7 +48,7 @@ describe Admin::UsersController do
         expect(response).to redirect_to(root_path)
       end
     end
-  end\
+  end
 
   describe '#show' do
     context 'admin is signed in' do
