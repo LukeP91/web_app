@@ -1,8 +1,7 @@
 class FemaleHealthInterestsCount < Patterns::Calculation
   private
 
-  GENDER = 'female'.freeze
-  AGE_RANGE = 20..30.freeze
+  AGE_RANGE = (20..30).freeze
   INTEREST_PREFIX = 'cosm'.freeze
   INTEREST_CATEGORY = 'health'.freeze
 
@@ -15,7 +14,7 @@ class FemaleHealthInterestsCount < Patterns::Calculation
   end
 
   def users
-    User.in_organization(organization).with_gender(GENDER).with_age_between(AGE_RANGE)
+    User.in_organization(organization).with_gender('female').with_age_between(AGE_RANGE)
   end
 
   def interests

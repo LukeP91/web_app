@@ -129,6 +129,8 @@ private
       'users',
       users_by_age: UsersByAge.result_for(organization: current_organization)
     )
+  end
+
   def user_not_found
     redirect_to admin_users_path
   end

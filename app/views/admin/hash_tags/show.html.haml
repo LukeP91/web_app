@@ -3,7 +3,7 @@
   %h1=t '.title', default: hash_tag.name
 
 %h4 Number of tweets with "#{hash_tag.name}": #{hash_tag.tweets_count}
-.most-common-words{ "data-words-stats" => most_common_words.to_json }
+.most-common-words{ "data-words-stats" => top_most_common_words.to_json }
 
 %h2 Latests tweets:
 %table.table.table-striped
