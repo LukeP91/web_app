@@ -1,6 +1,6 @@
 # Web app
 
-* Practice project that was supposed to teach me how to solve most common tasks in Rails application. Most of work done in that project is described [here](todo.md).
+* App allows users to register under theirs organization and share with others their interests. In addition admin can add twitter's hash tags from which app will fetch tweets and later post them on Facebook's wall.
 
 ## Prerequisites
 
